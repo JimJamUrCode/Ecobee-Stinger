@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Graphs"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		creationComplete="viewLoaded()"
+		xmlns:maximporges="com.maximporges.*">	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.AxisLabel;
+			import mx.charts.series.LineSeries;
+			import mx.collections.ArrayCollection;
+			import mx.graphics.Stroke;
+			
+			protected var mFile:File;
+			protected var mFileLines:Array;
+			protected var lastX:Number = 0;
+			
+			
+			[Bindable]
+			private var desiredTempData:ArrayCollection;
+			
+			[Bindable]
+			protected var viewportMax:Date;
+			
+			[Bindable]
+			protected var viewportMin:Date;
+			
+			public function viewLoaded():void 
+			{
+				trace("Hello");
+			}
+			
+			public function onLoad(e:Event):void 
+			{
+				mFile = new File();
+				var txtFilter:FileFilter = new FileFilter("Results Files", "*.csv"); 
+				mFile.browseForOpen("Open", [txtFilter]); 
+				mFile.addEventListener(Event.SELECT, onResultsFileSelected); 
+			}
+			
+			public function onResultsFileSelected(evt:Event):void 
+			{ 
+				var ba:ByteArray = new ByteArray();
+				
+				var fileStream:FileStream = new FileStream(); 
+				fileStream.open(mFile, FileMode.READ); 
+				fileStream.readBytes(ba);
+				fileStream.close();
+				
+				loadResults(ba);
+			} 
+			
+			public function loadResults(ba:ByteArray):void 
+			{ 
+				var str:String = ba.toString();
+				mFileLines = str.split("\n");
+				mFileLines.shift();
+				getDesiredTempLine();
+			} 
+			
+			private function getDesiredTempLine():void
+			{
+				desiredTempData = new ArrayCollection();
+				var parts:Array = new Array();
+				parts = mFileLines[i].split(",");
+				viewportMax = new Date(parts[0]);
+				viewportMin = new Date(parts[0]);
+				
+				var len:int = mFileLines.length;
+				for(var i:int = 0; i < len; i++)
+				{
+					
+					parts = mFileLines[i].split(",");
+					if(mFileLines[i].indexOf(",,") >= 0 || parts[5].indexOf("/r") >= 0)
+						continue;
+					trace(JSON.stringify(parts));
+					desiredTempData.addItem({date:parts[0], desiredTemp:parts[1], upstairsTemp:parts[2], downstairsTemp:parts[5], outdoorTemp:parts[4], avg:parts[3]});//Date, set temp
+					trace(JSON.stringify(desiredTempData[desiredTempData.length-1]));
+					
+					var currDate:Date = parseDate(parts[0]);
+					
+					if(currDate.getTime() < viewportMin.getTime())
+						viewportMin = currDate;
+					if(currDate.getTime() > viewportMax.getTime())
+						viewportMax = currDate;
+				}
+				
+				tempChart.series = [addSeries("upstairsTemp", "date", "Upstairs")];
+				tempChart.series[1] = addSeries("downstairsTemp", "date", "Downstairs");
+				tempChart.series[2] = addSeries("outdoorTemp", "date", "Outdoor");
+				tempChart.series[3] = addSeries("desiredTemp", "date", "Desired");
+				tempChart.series[4] = addSeries("avg", "date", "Average");
+				
+				tempChart.dataProvider = desiredTempData;
+				
+				dateAxis.minimum = viewportMin;
+				
+				viewportMax = new Date(viewportMin.getTime() + (1000*60*616));
+				dateAxis.maximum = viewportMax;
+			}
+			
+			private function addSeries(idY:String, idX:String,displayName:String):LineSeries
+			{
+				var series:LineSeries = new LineSeries();
+				series.xField = idX;
+				series.yField = idY;
+				series.displayName = displayName;
+				series.setStyle("lineStroke", new Stroke(Math.random() * 0xFFFFFF,1,1));
+				return series;
+			}
+			
+			public function parseDate(s:String):Date 
+			{ 
+				var newDate:Date = new Date(s);
+				return newDate;
+			}
+			
+			//Scrolling chart code
+			protected function mouseDownHandler(event:MouseEvent):void
+			{
+				lastX = event.stageX;
+				systemManager.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+				systemManager.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			}
+			
+			public function onAddTime(e:Event):void 
+			{
+				dateAxis.minimum = new Date(dateAxis.minimum.getTime() + 1000*60*60*24);
+				dateAxis.maximum = new Date(dateAxis.maximum.getTime() + 1000*60*60*24);
+			}
+			
+			protected function mouseMoveHandler(event:MouseEvent):void
+			{
+				var maxMinDiffMilli:Number = viewportMax.getTime() - viewportMin.getTime();
+				var maxMinDiffHours:Number = ((maxMinDiffMilli/1000)/60) / 60;
+				
+				trace("Max Min Difference (Hours): " + maxMinDiffHours);
+				
+				trace("Temp Chart Width: " + tempChart.width);
+				var milliPerPixel:Number = tempChart.width / maxMinDiffHours;
+				
+				var delta:Number = (lastX - event.stageX) * milliPerPixel;// tempChart.width * viewportMax.getTime();
+				trace("Delta: " + delta);
+				if (dateAxis.minimum.getTime() + delta < 0)
+				{
+					dateAxis.minimum = new Date(0);
+					dateAxis.maximum = viewportMax;
+				}
+				else if (dateAxis.maximum.getTime() + delta  > new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date).getTime())
+				{
+					var date:Date = new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date);
+					trace(date);
+					dateAxis.maximum = date;
+					dateAxis.minimum = new Date(dateAxis.maximum.getTime() - viewportMax.getTime());
+				}
+				else
+				{
+					dateAxis.minimum = new Date(dateAxis.minimum.getTime() + delta*1232);
+					dateAxis.maximum = new Date(dateAxis.maximum.getTime() + delta*1232);
+				}
+				
+				dateAxis = new DateTimeAxis();
+				dateAxis.title = dateAxis.minimum.toDateString() + " - " + dateAxis.maximum.toDateString();
+				dateAxis.dataUnits="minutes";
+				dateAxis.dataInterval = 5;
+				dateAxis.parseFunction = parseDate;
+				
+				tempChart.horizontalAxis = dateAxis;
+				lastX = event.stageX;
+			}
+			
+			protected function mouseUpHandler(event:MouseEvent):void
+			{
+				systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+				systemManager.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Panel title="Customize" fontSize="15" width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingLeft="10" paddingRight="10"
+								paddingTop="10" paddingBottom="10" horizontalAlign="center" verticalAlign="bottom" variableRowHeight="true"/>
+		</s:layout>
+		
+		<s:Panel title="Options" fontSize="15" width="100%">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" variableColumnWidth="true"/>
+			</s:layout>
+			<s:Button id="LoadButton" label="LOAD" width="130" height="60" click="onLoad(event)"/>
+			<s:Button id="OtherButton" label="ADD +" width="130" height="60" click="onAddTime(event)"/>
+		</s:Panel>
+		<s:Panel fontSize="15" title="Graph" width="100%" height="100%">	
+			<mx:LineChart  id="tempChart" 
+						   width="100%" height="100%" 
+						   showDataTips="true" 
+						   paddingLeft="10" paddingRight="10" 
+						   paddingTop="10" paddingBottom="10"
+						   dataProvider="desiredTempData"
+						   mouseDown="mouseDownHandler(event)">
+				<mx:horizontalAxis>
+					<mx:DateTimeAxis id="dateAxis" dataUnits="minutes" dataInterval="5" title="Date" parseFunction="parseDate"/>
+				</mx:horizontalAxis>
+				<mx:verticalAxis>
+					<mx:LinearAxis baseAtZero="false" title="Temperature (°F)" />
+				</mx:verticalAxis>
+				
+			</mx:LineChart>
+		</s:Panel>
+	</s:Panel>
+	
+</s:View>

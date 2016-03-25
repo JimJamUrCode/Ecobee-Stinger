@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:comp="com.connectedpixel.charts.*"
+	layout="vertical">
+	
+	<mx:XML xmlns="" id="myData">
+		<items>
+			<item year="1960" rain="92" />
+			<item year="1961" rain="192" />
+			<item year="1962" rain="32" />
+			<item year="1963" rain="52" />
+			<item year="1964" rain="112" />
+			<item year="1965" rain="52" />
+			<item year="1966" rain="88" />
+			<item year="1967" rain="52" />
+			<item year="1968" rain="66" />
+			<item year="1969" rain="39" />
+			<item year="1970" rain="192" />
+			<item year="1971" rain="182" />
+			<item year="1972" rain="177" />
+			<item year="1973" rain="179" />
+			<item year="1974" rain="198" />
+			<item year="1975" rain="207" />
+			<item year="1976" rain="388" />
+			<item year="1977" rain="372" />
+			<item year="1978" rain="352" />
+			<item year="1979" rain="33" />
+			<item year="1980" rain="32" />
+			<item year="1981" rain="56" />
+			<item year="1982" rain="52" />
+			<item year="1983" rain="49" />
+			<item year="1984" rain="38" />
+			<item year="1985" rain="48" />
+			<item year="1986" rain="47" />
+			<item year="1987" rain="38" />
+			<item year="1988" rain="79" />
+			<item year="1989" rain="83" />
+			<item year="1990" rain="65" />
+			<item year="1991" rain="56" />
+			<item year="1992" rain="104" />
+			<item year="1993" rain="98" />
+			<item year="1994" rain="68" />
+			<item year="1995" rain="74" />
+			<item year="1996" rain="81" />
+			<item year="1997" rain="85" />
+			<item year="1998" rain="52" />
+			<item year="1999" rain="72" />
+			<item year="2000" rain="72" />
+			<item year="2001" rain="121" />
+			<item year="2002" rain="145" />
+			<item year="2003" rain="245" />
+			<item year="2004" rain="205" />
+			<item year="2005" rain="315" />
+		</items>
+	</mx:XML>
+	
+	<mx:Label text="Annual Rainfall in Inches" />
+	<mx:HBox width="350" height="220">
+		
+	<mx:ColumnChart id="myChart"  
+			width="1450" height="200" 
+			dataProvider="{myData.children()}"   >
+			
+		<mx:horizontalAxis>
+			<mx:CategoryAxis id="yearAxis"  categoryField="@year"   />
+		</mx:horizontalAxis>
+			
+		<mx:series>
+			<mx:ColumnSeries xField="@year"  yField="@rain" displayName="Rain" >
+			</mx:ColumnSeries>
+		</mx:series>
+		
+	</mx:ColumnChart>
+	</mx:HBox>
+		
+		
+</mx:Application>

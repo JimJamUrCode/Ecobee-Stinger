@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="320"
+								  xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<s:ViewNavigator label="Graphs" width="100%" height="100%" firstView="views.GraphsView"/>
+	<s:ViewNavigator label="Settings" width="100%" height="100%" firstView="views.SettingsView"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+</s:TabbedViewNavigatorApplication>
