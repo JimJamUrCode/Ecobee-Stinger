@@ -7,19 +7,15 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.charts.AxisLabel;
 			import mx.charts.series.LineSeries;
 			import mx.collections.ArrayCollection;
 			import mx.graphics.Stroke;
 			
-			protected var mFile:File;
-			protected var mFileLines:Array;
-			protected var lastX:Number = 0;
-			private var mLastDateInSet:Date;
-			private var mFirstDateInSet:Date;
+			import graph.ScrollingGraph;
 			
-			private var GRAPHTIMEWINDOW:Number = (1000*60*60*18);//This is used to set the zoom of the graph
-			private var DELTADIVIDER:Number = (1000*60*60*18)/1000/60;//This is used to adjust slider sensitivity
+			private var mFile:File;
+			private var mFileLines:Array;
+			private var mScrollingGraph:ScrollingGraph;
 			
 			[Bindable]
 			private var mImportedTempData:ArrayCollection;
@@ -68,16 +64,14 @@
 				var len:int = mFileLines.length;
 				for(var i:int = 0; i < len; i++)
 				{
-					
 					parts = mFileLines[i].split(",");
-					if(mFileLines[i].indexOf(",,") >= 0 || parts[5].indexOf("/r") >= 0)
+					if(mFileLines[i].indexOf(",,") >= 0 || parts[5].indexOf("/r") >= 0)//Parsing out readings from the ecobee that are invalid
 						continue;
-					trace(JSON.stringify(parts));
+					
 					mImportedTempData.addItem({date:parts[0], desiredTemp:parts[1], upstairsTemp:parts[2], downstairsTemp:parts[5], outdoorTemp:parts[4], avg:parts[3]});//Date, set temp
-					trace(JSON.stringify(mImportedTempData[mImportedTempData.length-1]));
 					
+					//Determining max an min as we traverse
 					var currDate:Date = parseDate(parts[0]);
-					
 					if(currDate.getTime() < viewportMin.getTime())
 						viewportMin = currDate;
 					if(currDate.getTime() > viewportMax.getTime())
@@ -93,14 +87,21 @@
 				
 				tempChart.dataProvider = mImportedTempData;
 				
-				//Setting initial vars
-				mFirstDateInSet = viewportMin;
-				mLastDateInSet = viewportMax;
+				//Setting initial vars				
+				mScrollingGraph = new ScrollingGraph(dateAxis,tempChart, viewportMin, viewportMax);
 				
 				//Setting the view of the graph
 				dateAxis.minimum = viewportMin;
-				viewportMax = new Date(viewportMin.getTime() + GRAPHTIMEWINDOW);
+				viewportMax = new Date(viewportMin.getTime() + ScrollingGraph.GRAPHTIMEWINDOW);
 				dateAxis.maximum = viewportMax;
+			}
+			
+			public function onAddTime(e:Event):void 
+			{
+				if(mScrollingGraph != null)
+				{
+					mScrollingGraph.onAddTime();
+				}
 			}
 			
 			private function addSeries(idY:String, idX:String,displayName:String):LineSeries
@@ -119,91 +120,7 @@
 				return newDate;
 			}
 			
-			//Scrolling chart code
-			protected function mouseDownHandler(event:MouseEvent):void
-			{
-				lastX = event.stageX;
-				systemManager.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
-				systemManager.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			}
 			
-			public function onAddTime(e:Event):void 
-			{
-				dateAxis.minimum = new Date(dateAxis.minimum.getTime() + 1000*60*60*4);//add 4 hours
-				dateAxis.maximum = new Date(dateAxis.maximum.getTime() + 1000*60*60*4);
-			}
-			
-			protected function mouseMoveHandler(event:MouseEvent):void
-			{
-				var maxMinDiffHours:Number = ((DELTADIVIDER/1000)/60) / 60;
-				
-				//trace("Max Min Difference (Hours): " + maxMinDiffHours);
-				
-				//trace("Temp Chart Width: " + tempChart.width);
-				var milliPerPixel:Number = tempChart.width / DELTADIVIDER;
-				trace("Graph Time Window: " + GRAPHTIMEWINDOW);
-				var delta:Number = (lastX - event.stageX) * milliPerPixel;// tempChart.width * viewportMax.getTime();
-				//trace("Delta: " + delta);				
-				
-				if(delta < 1 && delta > -1)
-				{
-					trace("Breaking...");
-					return;
-				}
-				else if(delta > -1 && delta < 1)
-				{
-					trace("Breaking...");
-					return;
-				}
-				
-				delta = int(delta) * 3600000;
-				trace("Max Date: " + dateAxis.maximum.toString());
-				trace("Min Date: " + dateAxis.minimum.toString());
-				trace("Diff in Date: " + (dateAxis.maximum.getTime() - dateAxis.minimum.getTime()));
-				//mLastDate = new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date).getTime();
-				trace("Last Date in set: " + mLastDateInSet.toString());
-				
-				if (dateAxis.minimum.getTime() + delta < mFirstDateInSet.getTime())
-				{
-					trace("Reached Begining");
-					dateAxis.minimum = mFirstDateInSet;
-					//dateAxis.maximum = viewportMax;
-				}
-				else if (dateAxis.maximum.getTime() + delta  > mLastDateInSet.getTime())
-				{
-					var date:Date = new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date);
-					//trace(date);
-					trace("Reached End");
-					dateAxis.maximum = date;
-					dateAxis.minimum = new Date(dateAxis.maximum.getTime() - GRAPHTIMEWINDOW);
-				}
-				else
-				{
-					trace("Somewhere inbetween");
-						
-					trace("New Min Date: " + new Date(dateAxis.minimum.getTime() + delta));
-					trace("New Man Date: " + new Date(dateAxis.maximum.getTime() + delta));
-					dateAxis.minimum = new Date(dateAxis.minimum.getTime() + delta);
-					dateAxis.maximum = new Date(dateAxis.maximum.getTime() + delta);
-				}
-				
-				trace("Delta: " + delta);	
-				
-//				dateAxis = new DateTimeAxis();
-//				dateAxis.title = dateAxis.minimum.toDateString() + " - " + dateAxis.maximum.toDateString();
-//				dateAxis.dataUnits="minutes";
-//				dateAxis.dataInterval = 5;
-//				dateAxis.parseFunction = parseDate;
-				
-				tempChart.horizontalAxis = dateAxis;
-				lastX = event.stageX;
-			}
-			
-			protected function mouseUpHandler(event:MouseEvent):void
-			{
-				systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
-				systemManager.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			}
 		]]>
 	</fx:Script>
 	
@@ -213,17 +130,10 @@
 	
 	<s:Panel title="Customize" fontSize="15" width="100%" height="100%">
 		<s:layout>
-			<s:VerticalLayout paddingLeft="10" paddingRight="10"
-								paddingTop="10" paddingBottom="10" horizontalAlign="center" verticalAlign="bottom" variableRowHeight="true"/>
+			<s:HorizontalLayout paddingLeft="10" paddingRight="10"
+								paddingTop="10" paddingBottom="10" horizontalAlign="center" verticalAlign="bottom"/>
 		</s:layout>
 		
-		<s:Panel title="Options" fontSize="15" width="100%">
-			<s:layout>
-				<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" variableColumnWidth="true"/>
-			</s:layout>
-			<s:Button id="LoadButton" label="LOAD" width="130" height="60" click="onLoad(event)"/>
-			<s:Button id="OtherButton" label="ADD +" width="130" height="60" click="onAddTime(event)"/>
-		</s:Panel>
 		<s:Panel fontSize="15" title="Graph" width="100%" height="100%">	
 			<mx:LineChart  id="tempChart" 
 						   width="100%" height="100%" 
@@ -231,7 +141,7 @@
 						   paddingLeft="10" paddingRight="10" 
 						   paddingTop="10" paddingBottom="10"
 						   dataProvider="desiredTempData"
-						   mouseDown="mouseDownHandler(event)">
+						   mouseDown="mScrollingGraph.mouseDownHandler(event)">
 				<mx:horizontalAxis>
 					<mx:DateTimeAxis id="dateAxis" dataUnits="minutes" dataInterval="5" title="Date" parseFunction="parseDate"/>
 				</mx:horizontalAxis>
@@ -241,6 +151,15 @@
 				
 			</mx:LineChart>
 		</s:Panel>
+		
+		<s:Panel title="Options" fontSize="15" width="25%" height="100%">
+			<s:layout>
+				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
+			</s:layout>
+			<s:Button id="LoadButton" label="LOAD" width="130" height="60" click="onLoad(event)"/>
+			<s:Button id="OtherButton" label="ADD +" width="130" height="60" click="onAddTime(event)"/>
+		</s:Panel>
+		
 	</s:Panel>
 	
 </s:View>
