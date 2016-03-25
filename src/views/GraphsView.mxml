@@ -15,16 +15,14 @@
 			protected var mFile:File;
 			protected var mFileLines:Array;
 			protected var lastX:Number = 0;
+			private var mLastDateInSet:Date;
+			private var mFirstDateInSet:Date;
 			
-			
-			[Bindable]
-			private var desiredTempData:ArrayCollection;
-			
-			[Bindable]
-			protected var viewportMax:Date;
+			private var GRAPHTIMEWINDOW:Number = (1000*60*60*18);//This is used to set the zoom of the graph
+			private var DELTADIVIDER:Number = (1000*60*60*18)/1000/60;//This is used to adjust slider sensitivity
 			
 			[Bindable]
-			protected var viewportMin:Date;
+			private var mImportedTempData:ArrayCollection;
 			
 			public function viewLoaded():void 
 			{
@@ -56,16 +54,16 @@
 				var str:String = ba.toString();
 				mFileLines = str.split("\n");
 				mFileLines.shift();
-				getDesiredTempLine();
+				parseImportedData();
 			} 
 			
-			private function getDesiredTempLine():void
+			private function parseImportedData():void
 			{
-				desiredTempData = new ArrayCollection();
+				mImportedTempData = new ArrayCollection();
 				var parts:Array = new Array();
 				parts = mFileLines[i].split(",");
-				viewportMax = new Date(parts[0]);
-				viewportMin = new Date(parts[0]);
+				var viewportMax:Date = new Date(parts[0]);
+				var viewportMin:Date = new Date(parts[0]);
 				
 				var len:int = mFileLines.length;
 				for(var i:int = 0; i < len; i++)
@@ -75,8 +73,8 @@
 					if(mFileLines[i].indexOf(",,") >= 0 || parts[5].indexOf("/r") >= 0)
 						continue;
 					trace(JSON.stringify(parts));
-					desiredTempData.addItem({date:parts[0], desiredTemp:parts[1], upstairsTemp:parts[2], downstairsTemp:parts[5], outdoorTemp:parts[4], avg:parts[3]});//Date, set temp
-					trace(JSON.stringify(desiredTempData[desiredTempData.length-1]));
+					mImportedTempData.addItem({date:parts[0], desiredTemp:parts[1], upstairsTemp:parts[2], downstairsTemp:parts[5], outdoorTemp:parts[4], avg:parts[3]});//Date, set temp
+					trace(JSON.stringify(mImportedTempData[mImportedTempData.length-1]));
 					
 					var currDate:Date = parseDate(parts[0]);
 					
@@ -86,17 +84,22 @@
 						viewportMax = currDate;
 				}
 				
+				//Adding the series tot the chart, eventually these should be user selectable
 				tempChart.series = [addSeries("upstairsTemp", "date", "Upstairs")];
 				tempChart.series[1] = addSeries("downstairsTemp", "date", "Downstairs");
 				tempChart.series[2] = addSeries("outdoorTemp", "date", "Outdoor");
 				tempChart.series[3] = addSeries("desiredTemp", "date", "Desired");
 				tempChart.series[4] = addSeries("avg", "date", "Average");
 				
-				tempChart.dataProvider = desiredTempData;
+				tempChart.dataProvider = mImportedTempData;
 				
+				//Setting initial vars
+				mFirstDateInSet = viewportMin;
+				mLastDateInSet = viewportMax;
+				
+				//Setting the view of the graph
 				dateAxis.minimum = viewportMin;
-				
-				viewportMax = new Date(viewportMin.getTime() + (1000*60*616));
+				viewportMax = new Date(viewportMin.getTime() + GRAPHTIMEWINDOW);
 				dateAxis.maximum = viewportMax;
 			}
 			
@@ -126,45 +129,71 @@
 			
 			public function onAddTime(e:Event):void 
 			{
-				dateAxis.minimum = new Date(dateAxis.minimum.getTime() + 1000*60*60*24);
-				dateAxis.maximum = new Date(dateAxis.maximum.getTime() + 1000*60*60*24);
+				dateAxis.minimum = new Date(dateAxis.minimum.getTime() + 1000*60*60*4);//add 4 hours
+				dateAxis.maximum = new Date(dateAxis.maximum.getTime() + 1000*60*60*4);
 			}
 			
 			protected function mouseMoveHandler(event:MouseEvent):void
 			{
-				var maxMinDiffMilli:Number = viewportMax.getTime() - viewportMin.getTime();
-				var maxMinDiffHours:Number = ((maxMinDiffMilli/1000)/60) / 60;
+				var maxMinDiffHours:Number = ((DELTADIVIDER/1000)/60) / 60;
 				
-				trace("Max Min Difference (Hours): " + maxMinDiffHours);
+				//trace("Max Min Difference (Hours): " + maxMinDiffHours);
 				
-				trace("Temp Chart Width: " + tempChart.width);
-				var milliPerPixel:Number = tempChart.width / maxMinDiffHours;
-				
+				//trace("Temp Chart Width: " + tempChart.width);
+				var milliPerPixel:Number = tempChart.width / DELTADIVIDER;
+				trace("Graph Time Window: " + GRAPHTIMEWINDOW);
 				var delta:Number = (lastX - event.stageX) * milliPerPixel;// tempChart.width * viewportMax.getTime();
-				trace("Delta: " + delta);
-				if (dateAxis.minimum.getTime() + delta < 0)
+				//trace("Delta: " + delta);				
+				
+				if(delta < 1 && delta > -1)
 				{
-					dateAxis.minimum = new Date(0);
-					dateAxis.maximum = viewportMax;
+					trace("Breaking...");
+					return;
 				}
-				else if (dateAxis.maximum.getTime() + delta  > new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date).getTime())
+				else if(delta > -1 && delta < 1)
+				{
+					trace("Breaking...");
+					return;
+				}
+				
+				delta = int(delta) * 3600000;
+				trace("Max Date: " + dateAxis.maximum.toString());
+				trace("Min Date: " + dateAxis.minimum.toString());
+				trace("Diff in Date: " + (dateAxis.maximum.getTime() - dateAxis.minimum.getTime()));
+				//mLastDate = new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date).getTime();
+				trace("Last Date in set: " + mLastDateInSet.toString());
+				
+				if (dateAxis.minimum.getTime() + delta < mFirstDateInSet.getTime())
+				{
+					trace("Reached Begining");
+					dateAxis.minimum = mFirstDateInSet;
+					//dateAxis.maximum = viewportMax;
+				}
+				else if (dateAxis.maximum.getTime() + delta  > mLastDateInSet.getTime())
 				{
 					var date:Date = new Date(tempChart.dataProvider[tempChart.dataProvider.length - 1].date);
-					trace(date);
+					//trace(date);
+					trace("Reached End");
 					dateAxis.maximum = date;
-					dateAxis.minimum = new Date(dateAxis.maximum.getTime() - viewportMax.getTime());
+					dateAxis.minimum = new Date(dateAxis.maximum.getTime() - GRAPHTIMEWINDOW);
 				}
 				else
 				{
-					dateAxis.minimum = new Date(dateAxis.minimum.getTime() + delta*1232);
-					dateAxis.maximum = new Date(dateAxis.maximum.getTime() + delta*1232);
+					trace("Somewhere inbetween");
+						
+					trace("New Min Date: " + new Date(dateAxis.minimum.getTime() + delta));
+					trace("New Man Date: " + new Date(dateAxis.maximum.getTime() + delta));
+					dateAxis.minimum = new Date(dateAxis.minimum.getTime() + delta);
+					dateAxis.maximum = new Date(dateAxis.maximum.getTime() + delta);
 				}
 				
-				dateAxis = new DateTimeAxis();
-				dateAxis.title = dateAxis.minimum.toDateString() + " - " + dateAxis.maximum.toDateString();
-				dateAxis.dataUnits="minutes";
-				dateAxis.dataInterval = 5;
-				dateAxis.parseFunction = parseDate;
+				trace("Delta: " + delta);	
+				
+//				dateAxis = new DateTimeAxis();
+//				dateAxis.title = dateAxis.minimum.toDateString() + " - " + dateAxis.maximum.toDateString();
+//				dateAxis.dataUnits="minutes";
+//				dateAxis.dataInterval = 5;
+//				dateAxis.parseFunction = parseDate;
 				
 				tempChart.horizontalAxis = dateAxis;
 				lastX = event.stageX;
