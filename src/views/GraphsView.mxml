@@ -14,8 +14,9 @@
 			
 			import graph.ScrollingGraph;
 			
-			private var mFile:File;
-			private var mFileLines:Array;
+			import tools.FileManager;
+			
+			private var mFileManager:FileManager;
 			private var mScrollingGraph:ScrollingGraph;
 			
 			[Bindable]
@@ -52,48 +53,37 @@
 				reloadBtn.scaleY = .5;
 			}
 			
-			public function onLoad(e:Event):void 
+			private function loadFile(evt:Event):void
 			{
-				mFile = new File();
-				var txtFilter:FileFilter = new FileFilter("Results Files", "*.csv"); 
-				mFile.browseForOpen("Open", [txtFilter]); 
-				mFile.addEventListener(Event.SELECT, onResultsFileSelected); 
+				mFileManager = new FileManager();
+				mFileManager.SelectFileToLoad(fileLoadedSuccess, fileLoadedFailed);
 			}
-			
-			public function onResultsFileSelected(evt:Event):void 
-			{ 
-				var ba:ByteArray = new ByteArray();
-				
-				var fileStream:FileStream = new FileStream(); 
-				fileStream.open(mFile, FileMode.READ); 
-				fileStream.readBytes(ba);
-				fileStream.close();
-				
-				loadResults(ba);
-				
-				var so:SharedObject = SharedObject.getLocal("ecobeeStinger");
-				so.data["fileToLoad"] = mFile.nativePath;
-				so.flush();
-				
-				reloadBtn.enabled = true;
-			} 
 			
 			private function reloadFile(evt:Event):void
 			{
 				var so:SharedObject = SharedObject.getLocal("ecobeeStinger");
-				mFile = new File(so.data["fileToLoad"]);
-				onResultsFileSelected(evt);
+				if(mFileManager == null)
+					mFileManager = new FileManager();
+				mFileManager.reloadFile(so.data["fileToLoad"], fileLoadedSuccess, fileLoadedFailed);
 			}
 			
-			public function loadResults(ba:ByteArray):void 
-			{ 
-				var str:String = ba.toString();
-				mFileLines = str.split("\n");
-				mFileLines.shift();
-				parseImportedData();
-			} 
+			private function fileLoadedFailed():void
+			{
+				
+			}
 			
-			private function parseImportedData():void
+			private function fileLoadedSuccess(file:File, fileLines:Array):void
+			{
+				var so:SharedObject = SharedObject.getLocal("ecobeeStinger");
+				so.data["fileToLoad"] = file.nativePath;
+				so.flush();
+				
+				reloadBtn.enabled = true;
+				
+				parseImportedData(fileLines);
+			}
+			
+			private function parseImportedData(mFileLines:Array):void
 			{
 				tempChart.dataProvider = null;
 				mImportedTempData = new ArrayCollection();
@@ -116,22 +106,22 @@
 						if(parts[1] != null && parts[1] != "" && parts[1] != "\r")
 							obj.desiredTemp = parts[1];
 						else
-							obj.desiredTemp = calcAvg(i, 1);;
+							obj.desiredTemp = calcAvg(mFileLines, i, 1);;
 						
 						if(parts[2] != null && parts[2] != "" && parts[2] != "\r")
 							obj.upstairsTemp = parts[2];
 						else
-							obj.upstairsTemp = calcAvg(i, 2);
+							obj.upstairsTemp = calcAvg(mFileLines, i, 2);
 						
 						if(parts[4] != null && parts[4] != "" && parts[4] != "\r")
 							obj.outdoorTemp = parts[4];
 						else
-							obj.outdoorTemp = calcAvg(i, 4);
+							obj.outdoorTemp = calcAvg(mFileLines, i, 4);
 						
 						if(parts[5] != null && parts[5] != "" && parts[5] != "\r")
 							obj.downstairsTemp = parts[5];
 						else
-							obj.downstairsTemp = calcAvg(i, 5);
+							obj.downstairsTemp = calcAvg(mFileLines, i, 5);
 						
 						obj.avg = (Number(obj.downstairsTemp) + Number(obj.upstairsTemp)) /2;
 						
@@ -150,7 +140,6 @@
 				
 				//Adding the series tot the chart, eventually these should be user selectable
 				addAllUserSelectedSeries(new MouseEvent(""));
-				
 				
 				tempChart.dataProvider = mImportedTempData;
 				
@@ -194,15 +183,15 @@
 				}
 			}
 			
-			private function calcAvg(index:int, property:int):Number
+			private function calcAvg(mFileLines:Array, index:int, property:int):Number
 			{
-				var below:Number = Number(checkIndexForItem(index-1, property, -1));
-				var above:Number = Number(checkIndexForItem(index+1, property, 1));
+				var below:Number = Number(checkIndexForItem(mFileLines, index-1, property, -1));
+				var above:Number = Number(checkIndexForItem(mFileLines, index+1, property, 1));
 				var avg:Number = (below + above) / 2;
 				return avg;
 			}
 			
-			private function checkIndexForItem(index:int, property:int, searchingDirection:int = -1):Object
+			private function checkIndexForItem(mFileLines:Array,index:int, property:int, searchingDirection:int = -1):Object
 			{
 				if(index > mFileLines.length-1)
 					index = mFileLines.length-1;
@@ -211,7 +200,7 @@
 					
 				var parts:Array = mFileLines[index].split(",");
 				if(parts[property] == "" || parts[property] == "\r" || parts[property] == null)
-					return checkIndexForItem((index + searchingDirection), property);
+					return checkIndexForItem(mFileLines, (index + searchingDirection), property);
 				
 				return parts[property];
 			}
@@ -276,7 +265,7 @@
 			<s:layout>
 				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
 			</s:layout>
-			<s:Button id="LoadButton" label="LOAD" width="150" height="60" click="onLoad(event)"/>
+			<s:Button id="LoadButton" label="LOAD" width="150" height="60" click="loadFile(event)"/>
 			<s:Button id="reloadBtn" label="RELOAD" width="150" height="60" click="reloadFile(event)"/>
 			
 			<s:VGroup left="10" right="10" top="10" bottom="10" height="100%">
