@@ -40,6 +40,11 @@ package tools
 			onResultsFileSelected(new Event(""));
 		}
 		
+		public function getFileData():Array
+		{
+			return mFileLines;
+		}
+		
 		private function onCanceled(evt:Event):void
 		{
 			log("User Canceled File Selection");
@@ -66,8 +71,7 @@ package tools
 		{ 
 			var str:String = ba.toString();
 			mFileLines = str.split("\n");
-			mFileLines.shift();
-			mSuccessCallback(mFile, mFileLines);
+			mSuccessCallback(mFile);
 		} 
 		
 		private function log(message:String):void
