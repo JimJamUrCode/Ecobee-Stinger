@@ -122,15 +122,10 @@ package graph
 			}
 		}
 		
-		private function setGraphLabel():void
+		public function setGraphLabel():void
 		{
 			if(mGraphPanel != null)
 				mGraphPanel.title = mDateAxis.minimum.toUTCString() + " - " + mDateAxis.maximum.toUTCString();
-//			mDateAxis = new DateTimeAxis();
-//			mDateAxis.title = mDateAxis.minimum.toDateString() + " - " + mDateAxis.maximum.toDateString();
-//			mDateAxis.dataUnits="minutes";
-//			mDateAxis.dataInterval = 5;
-//			mDateAxis.parseFunction = parseDate;
 		}
 		
 		private function mouseUpHandler(event:MouseEvent):void

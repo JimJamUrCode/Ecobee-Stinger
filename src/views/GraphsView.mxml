@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		xmlns:s="library://ns.adobe.com/flex/spark" title="Graphs"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Graphs"
 		xmlns:mx="library://ns.adobe.com/flex/mx"
 		creationComplete="viewLoaded()"
 		xmlns:maximporges="com.maximporges.*">	
@@ -20,12 +21,35 @@
 			[Bindable]
 			private var mImportedTempData:ArrayCollection;
 			
+			private var mAllCheckBoxes:Object;
+			
 			public function viewLoaded():void 
 			{
 				trace("Hello");
 				var so:SharedObject = SharedObject.getLocal("ecobeeStinger");
 				if(so.data["fileToLoad"] == null || so.data["fileToLoad"] == "")
 					reloadBtn.enabled = false;
+				
+				mAllCheckBoxes = new Dictionary();
+				
+				mAllCheckBoxes["AverageTemp"] = AverageTempChkBox;				
+				mAllCheckBoxes["DownstairsTemp"] = DownstairsTempChkBox;
+				mAllCheckBoxes["ThermostatTemp"] = ThermostatTempChkBox;
+				mAllCheckBoxes["OutdoorTemp"] = OutdoorTempChkBox;
+				mAllCheckBoxes["DesiredTemp"] = DesiredTempChkBox;
+				
+				var chkbx:CheckBox;
+				for each (var k:CheckBox in mAllCheckBoxes)
+				{
+					//chkbx = mAllCheckBoxes[i] as CheckBox;
+					k.scaleX = .50;
+					k.scaleY = .50;
+					k.selected = true;
+				}
+				LoadButton.scaleX = .5;
+				LoadButton.scaleY = .5;
+				reloadBtn.scaleX = .5;
+				reloadBtn.scaleY = .5;
 			}
 			
 			public function onLoad(e:Event):void 
@@ -71,7 +95,9 @@
 			
 			private function parseImportedData():void
 			{
+				tempChart.dataProvider = null;
 				mImportedTempData = new ArrayCollection();
+				
 				var parts:Array = new Array();
 				parts = mFileLines[i].split(",");
 				var viewportMax:Date = new Date(parts[0]);
@@ -123,11 +149,8 @@
 				}
 				
 				//Adding the series tot the chart, eventually these should be user selectable
-				tempChart.series = [addSeries("upstairsTemp", "date", "Upstairs")];
-				tempChart.series[1] = addSeries("downstairsTemp", "date", "Downstairs");
-				tempChart.series[2] = addSeries("outdoorTemp", "date", "Outdoor");
-				tempChart.series[3] = addSeries("desiredTemp", "date", "Desired");
-				tempChart.series[4] = addSeries("avg", "date", "Average");
+				addAllUserSelectedSeries(new MouseEvent(""));
+				
 				
 				tempChart.dataProvider = mImportedTempData;
 				
@@ -138,6 +161,37 @@
 				dateAxis.minimum = viewportMin;
 				viewportMax = new Date(viewportMin.getTime() + ScrollingGraph.GRAPHTIMEWINDOW);
 				dateAxis.maximum = viewportMax;
+			}
+			
+			private function addAllUserSelectedSeries(e:MouseEvent):void
+			{
+				tempChart.series = new Array();
+				var currentSeries:int = 0;
+				if(ThermostatTempChkBox.selected)
+				{
+					tempChart.series[0] = addSeries("upstairsTemp", "date", "Upstairs", 0xFF0000);
+					currentSeries++;
+				}
+				if(DownstairsTempChkBox.selected)
+				{
+					tempChart.series[currentSeries] = addSeries("downstairsTemp", "date", "Downstairs", 0x00FF00);
+					currentSeries++;
+				}
+				if(OutdoorTempChkBox.selected)
+				{
+					tempChart.series[currentSeries] = addSeries("outdoorTemp", "date", "Outdoor", 0x0000FF);
+					currentSeries++;
+				}
+				if(DesiredTempChkBox.selected)
+				{
+					tempChart.series[currentSeries] = addSeries("desiredTemp", "date", "Desired", 0x008080);
+					currentSeries++;
+				}
+				if(AverageTempChkBox.selected)
+				{
+					tempChart.series[currentSeries] = addSeries("avg", "date", "Average", 0x912CEE);	
+					currentSeries++;
+				}
 			}
 			
 			private function calcAvg(index:int, property:int):Number
@@ -170,13 +224,13 @@
 				}
 			}
 			
-			private function addSeries(idY:String, idX:String,displayName:String):LineSeries
+			private function addSeries(idY:String, idX:String,displayName:String, color:uint):LineSeries
 			{
 				var series:LineSeries = new LineSeries();
 				series.xField = idX;
 				series.yField = idY;
 				series.displayName = displayName;
-				series.setStyle("lineStroke", new Stroke(Math.random() * 0xFFFFFF,1,1));
+				series.setStyle("lineStroke", new Stroke(color,1,1));
 				return series;
 			}
 			
@@ -185,6 +239,7 @@
 				var newDate:Date = new Date(s);
 				return newDate;
 			}
+
 			
 			
 		]]>
@@ -206,7 +261,6 @@
 						   showDataTips="true" 
 						   paddingLeft="10" paddingRight="10" 
 						   paddingTop="10" paddingBottom="10"
-						   dataProvider="desiredTempData"
 						   mouseDown="mScrollingGraph.mouseDownHandler(event)">
 				<mx:horizontalAxis>
 					<mx:DateTimeAxis id="dateAxis" dataUnits="minutes" dataInterval="5" title="Date" parseFunction="parseDate"/>
@@ -222,9 +276,17 @@
 			<s:layout>
 				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
 			</s:layout>
-			<s:Button id="LoadButton" label="LOAD" width="130" height="60" click="onLoad(event)"/>
-			<s:Button id="OtherButton" label="ADD +" width="130" height="60" click="onAddTime(event)"/>
-			<s:Button id="reloadBtn" label="RELOAD" width="130" height="60" click="reloadFile(event)"/>
+			<s:Button id="LoadButton" label="LOAD" width="150" height="60" click="onLoad(event)"/>
+			<s:Button id="reloadBtn" label="RELOAD" width="150" height="60" click="reloadFile(event)"/>
+			
+			<s:VGroup left="10" right="10" top="10" bottom="10" height="100%">
+				<s:Label fontSize="12" text="Select Visible Lines:" />
+				<s:CheckBox id="ThermostatTempChkBox" color="0xFF0000" fontSize="30" label="Thermostat(F)" click="addAllUserSelectedSeries(event);"/>
+				<s:CheckBox id="DownstairsTempChkBox" color="0x00FF00" fontSize="30" label="Downstairs(F)" click="addAllUserSelectedSeries(event);"/>
+				<s:CheckBox id="AverageTempChkBox" color="Purple" fontSize="30" label="Average(F)" click="addAllUserSelectedSeries(event);"/>
+				<s:CheckBox id="DesiredTempChkBox" color="0x008080" fontSize="30" label="Desired(F)" click="addAllUserSelectedSeries(event);"/>
+				<s:CheckBox id="OutdoorTempChkBox" color="0x0000FF" fontSize="30" label="Outdoor(F)" click="addAllUserSelectedSeries(event);"/>
+			</s:VGroup>
 		</s:Panel>
 		
 	</s:Panel>
