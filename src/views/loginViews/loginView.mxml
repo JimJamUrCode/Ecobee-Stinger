@@ -4,6 +4,7 @@
 		creationComplete="viewLoaded()">
 	<fx:Script>
 		<![CDATA[
+			import views.GraphsView;
 			
 			
 			public function viewLoaded():void 
@@ -19,6 +20,7 @@
 				var userName:String = usernameTF.text;
 				var pass:String = passwordTF.text;
 				
+				navigator.pushView(GraphsView);
 			}
 			
 		]]>

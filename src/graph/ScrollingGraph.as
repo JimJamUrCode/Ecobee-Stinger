@@ -12,7 +12,7 @@ package graph
 
 	public class ScrollingGraph
 	{
-		public static const GRAPHTIMEWINDOW:Number = (1000*60*60*18);//This is used to set the zoom of the graph
+		public static var GRAPHTIMEWINDOW:Number = (1000*60*60*18);//This is used to set the zoom of the graph
 		private static const DELTADIVIDER:Number = (1000*60*60*18)/1000/60;//This is used to adjust slider sensitivity
 		
 		private var mLastX:Number = 0;
@@ -45,6 +45,25 @@ package graph
 		{
 			mDateAxis.minimum = new Date(mDateAxis.minimum.getTime() + 1000*60*60*4);//add 4 hours
 			mDateAxis.maximum = new Date(mDateAxis.maximum.getTime() + 1000*60*60*4);
+		}
+		
+		public function zoom(hours:int):void
+		{
+			GRAPHTIMEWINDOW += (1000*60*60) * hours;
+			
+			var max:Date = mDateAxis.maximum;
+			var min:Date = mDateAxis.minimum;
+			trace("New Min Date: " + min);
+			trace("New Max Date: " + max);
+			
+			if((max.getTime() - min.getTime()) != GRAPHTIMEWINDOW)
+			{
+				trace("Max date changed due to visible range being out of scope");
+				max = new Date(min.getTime() + GRAPHTIMEWINDOW);
+			}
+			
+			mDateAxis.minimum = min;
+			mDateAxis.maximum = max;
 		}
 		
 		private function mouseMoveHandler(event:MouseEvent):void
@@ -108,6 +127,14 @@ package graph
 					var min:Date = new Date(mDateAxis.minimum.getTime() + delta);
 					trace("New Min Date: " + min);
 					trace("New Max Date: " + max);
+					
+					
+					if((max.getTime() - min.getTime()) != GRAPHTIMEWINDOW)
+					{
+						trace("Max date changed due to visible range being out of scope");
+						max = new Date(min.getTime() + GRAPHTIMEWINDOW);
+					}
+					
 					mDateAxis.minimum = min;
 					mDateAxis.maximum = max;
 				}

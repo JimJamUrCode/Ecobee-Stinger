@@ -13,11 +13,13 @@
 			
 			import spark.components.CheckBox;
 			
+			import ecobeeTools.EcobeeAPI;
 			import ecobeeTools.EcobeeDataParser;
+			import ecobeeTools.RegisterOptions;
 			
 			import graph.ScrollingGraph;
 			
-			import tools.FileManager;
+			import tools.FileManager;	
 			
 			private var mFileManager:FileManager;
 			private var mScrollingGraph:ScrollingGraph;
@@ -37,6 +39,10 @@
 				LoadButton.scaleY = .5;
 				reloadBtn.scaleX = .5;
 				reloadBtn.scaleY = .5;
+				zoomMinusBtn.scaleX = .5;
+				zoomMinusBtn.scaleY = .5;
+				zoomPlusBtn.scaleX = .5;
+				zoomPlusBtn.scaleY = .5;
 			}
 			
 			private function loadFile(evt:Event):void
@@ -99,6 +105,7 @@
 			
 			private function createAllCheckBoxes():void
 			{
+				mAllCheckBoxes = new Object();    
 				var headers:Array = mEcobeeDataParser.getHeaders();
 				var cb:CheckBox;
 				var len:int = headers.length;
@@ -175,6 +182,16 @@
 				return new Date(s);
 			}
 			
+			private function zoomOut(e:Event):void
+			{
+				mScrollingGraph.zoom(4);
+			}
+			
+			private function zoomIn(e:Event):void
+			{
+				mScrollingGraph.zoom(-4);
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -209,8 +226,19 @@
 			<s:layout>
 				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
 			</s:layout>
-			<s:Button id="LoadButton" label="LOAD" width="150" height="60" click="loadFile(event)"/>
-			<s:Button id="reloadBtn" label="RELOAD" width="150" height="60" click="reloadFile(event)"/>
+			
+			<s:HGroup width="100%" height="10%" horizontalAlign="center">
+				<s:Button id="LoadButton" label="LOAD" width="150" height="60" click="loadFile(event)"/>
+				<s:Button id="reloadBtn" label="RELOAD" width="150" height="60" click="reloadFile(event)"/>	
+			</s:HGroup>
+			
+			<s:HGroup width="100%" height="20%" verticalAlign="middle" horizontalAlign="center">
+				<s:Label fontSize="12" text="Zoom:" verticalAlign="middle"/>
+				<s:HGroup height="100%" verticalAlign="middle" horizontalAlign="center">
+					<s:Button id="zoomMinusBtn" label="-" width="60" fontSize="35" height="60" click="zoomOut(event)"/>
+					<s:Button id="zoomPlusBtn" label="+" width="60" fontSize="35" height="60" click="zoomIn(event)"/>
+				</s:HGroup>
+			</s:HGroup>
 			
 			<s:Scroller width="100%" height="100%" horizontalScrollPolicy="off">
 				<s:VGroup id="vgroup" left="10" right="10" top="10" bottom="10" width="100%" height="100%">

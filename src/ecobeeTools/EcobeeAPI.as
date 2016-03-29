@@ -6,9 +6,7 @@ package ecobeeTools
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
-	import flash.text.ReturnKeyLabel;
 
 	public class EcobeeAPI
 	{
@@ -36,6 +34,13 @@ package ecobeeTools
 			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleSecurityError);
 			
 			loader.load(request);
+		}
+		
+		public function register():void
+		{
+//			var mEcobeeAPI:EcobeeAPI = new EcobeeAPI();
+//			var registerOptions:RegisterOptions = new RegisterOptions("email","pass", "appkey", EcobeeAPI.SCOPE);
+//			mEcobeeAPI.login(registerOptions);
 		}
 		
 		public function hasRegisteredApp():Boolean
