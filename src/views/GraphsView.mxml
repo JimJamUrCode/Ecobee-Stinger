@@ -9,7 +9,6 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.charts.series.LineSeries;
-			import mx.collections.ArrayCollection;
 			import mx.graphics.Stroke;
 			
 			import spark.components.CheckBox;
@@ -175,8 +174,6 @@
 			{ 
 				return new Date(s);
 			}
-
-			
 			
 		]]>
 	</fx:Script>

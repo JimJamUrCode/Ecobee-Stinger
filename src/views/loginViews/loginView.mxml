@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Settings"
+		creationComplete="viewLoaded()">
+	<fx:Script>
+		<![CDATA[
+			
+			
+			public function viewLoaded():void 
+			{
+//				passwordTF.scaleX = .5;
+//				passwordTF.scaleY = .5;
+//				usernameTF.scaleX = .5;
+//				usernameTF.scaleY = .5;
+			}
+			
+			private function login(e:Event):void
+			{
+				var userName:String = usernameTF.text;
+				var pass:String = passwordTF.text;
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Panel title="Login" fontSize="15" width="100%" height="100%" horizontalCenter="true" verticalCenter="true">
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
+		</s:layout>
+		
+		<s:Label height="10%" text="Enter your ecoBee login credentials to continue:"/>
+		
+		<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+			<s:Label text="Username: "/>
+			<s:TextInput id="usernameTF" width="25%" />
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+			<s:Label text="Password: "/>
+			<s:TextInput displayAsPassword="true" id="passwordTF" width="25%" />
+		</s:HGroup>
+		
+		<s:Spacer height="10%"/>
+		<s:Button height="5%" label="Login" click="login(event)"/>
+	</s:Panel>
+</s:View>
