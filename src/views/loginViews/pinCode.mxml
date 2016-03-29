@@ -5,32 +5,64 @@
 	<fx:Script>
 		<![CDATA[
 			import ecobeeTools.EcobeeAPI;
+			
+			import tools.Logger;
 			private var mEBAPI:EcobeeAPI
 			
 			public function viewLoaded():void 
 			{
 				mEBAPI = new EcobeeAPI();
 				
-				if(mEBAPI.hasRegisteredApp())
+				if(mEBAPI.hasRefreshToken())
 				{
-					
+					Logger.log(this, "Logging in using refresh token...");
+					spinnerLbl.text = "Logging in...";
+					mEBAPI.login(loggedIn);
 				}
 				else
 				{
-					//mEBAPI.getPin(gotPin);
-					pinText.text = "Pin Code: " + "Hello";
+					Logger.log(this, "Retreiving pin...");
+					mEBAPI.getPin(gotPin);
+					spinnerLbl.visible = false;
+					spinner.visible = false;
+					explainLbl.visible = true;
+					pinText.text = "Retreiving pin...";
+					pinText.visible = true;
+					loginLbl.visible = true;
+					loginBtn.visible = true;
 				}
 			}
 			
 			public function gotPin(data:Object):void
 			{
-				data = JSON.parse(data.toString());
 				pinText.text = "Pin Code: " + data.ecobeePin + "";
 			}
 			
-			private function gotoLoginCredentialsScreen(e:Event):void
+			private function login(e:Event):void
 			{
-				navigator.pushView(loginView);
+				mEBAPI.login(loggedIn);
+			}
+			
+			private function loggedIn(loginResponse:Object):void
+			{
+				if(loginResponse.error != null)
+				{
+					Logger.log(this, "Login Error: " + JSON.stringify(loginResponse.error));
+				}
+				else
+				{
+					Logger.log(this, "Logged in...");
+				}
+			}
+			
+			private function test(e:Event)
+			{
+				mEBAPI.login(done);
+				
+				function done():void
+				{
+					Logger.log(this, "Done");
+				}
 			}
 		]]>
 	</fx:Script>
@@ -43,10 +75,15 @@
 			<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" variableRowHeight="true"/>
 		</s:layout>
 		
-		<s:Label height="10%" text="Sign in to your ecoBee web portal and grant access to this app by entering the pin you see below."/>
-		<s:Label id="pinText" height="10%" fontWeight="bold" horizontalCenter="true"/>
+		<s:BusyIndicator visible="true" width="50%" id="spinner" rotationInterval="100" horizontalCenter="true" />
+		<s:Label visible="true" id="spinnerLbl" height="10%" text="Determining State..." horizontalCenter="true"/>
 		
-		<s:Label height="10%" text="Once you have enabled access, click continue."/>
-		<s:Button height="5%" label="Continue" click="gotoLoginCredentialsScreen(event)"/>
+		<s:Label visible="false" id="explainLbl" height="10%" text="Sign in to your ecoBee web portal and grant access to this app by entering the pin you see below."/>
+		<s:Label visible="false" id="pinText" height="10%" fontWeight="bold" horizontalCenter="true"/>
+		
+		<s:Label visible="false" id="loginLbl" height="10%" text="Once you have enabled access, click continue."/>
+		<s:Button visible="false" id="loginBtn" height="5%" label="Continue" click="login(event)"/>
+		
+		<s:Button visible="true" id="testBTN" height="5%" label="test" click="test(event)"/>
 	</s:Panel>
 </s:View>
