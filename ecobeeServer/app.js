@@ -39,7 +39,9 @@ app.get('/login/error', login.error); // error page
 app.post('/login', login.create);  // login post handler
 
 //New Functions
-app.get('/login/getPinCode', login.getpincode);
+app.get('/login/StingerGetPinCode', login.StingerGetPinCode);
+app.post('/login/StingerLogin', login.StingerLogin); //Login used for the stinger ecobee app
+app.post('/login/StingerLoginRefresh', login.StingerLoginRefresh);//Refresh login used for the Stinger ecobee app
 
 // check routes/thermostats.js for the implementation details of the thermostat routes
 app.post('/thermostats/:id/sethold', thermostats.hold);  // adjust a specific thermostat hold

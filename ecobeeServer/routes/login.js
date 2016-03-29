@@ -21,7 +21,7 @@ exports.list = function(req, res){
 	} else {
 		res.redirect('/login/getpin');
 	}
-};
+},
 
 exports.create = function(req, res) {
 	// get the users login credentials
@@ -29,6 +29,8 @@ exports.create = function(req, res) {
 	  , appKey = config.appKey
 	  , scope = config.scope;
   
+	console.log("AUTH CODE: " + authcode);
+	
 	api.calls.registerPin(appKey, authcode, function(err, registerResultObject) {
 		var tooFast = false;
 		if(err) {
@@ -48,7 +50,8 @@ exports.create = function(req, res) {
 			res.redirect('/thermostats');
 		}  	
 	});	
-}
+},
+
 exports.error = function(req, res) {
 	res.render('login/error');
 },
@@ -68,7 +71,7 @@ exports.getpin = function(req, res) {
 	});	
 },
 
-exports.getpincode = function(req, res) {
+exports.StingerGetPinCode = function(req, res) {
 	var scope = 'smartWrite'
 	  , client_id = config.appKey;
 
@@ -80,7 +83,61 @@ exports.getpincode = function(req, res) {
 		else {
 			
 			console.log(pinResults);
+			req.session.authcode = pinResults.code;
+			req.session.pin = pinResults.ecobeePin;
+			req.session.interval = pinResults.interval;
 			res.json(pinResults);
 		}
 	});	
+},
+
+exports.StingerLogin = function(req, res) {
+	// get the users login credentials
+	var authcode = req.param('authcode')
+	  , appKey = config.appKey
+	  , scope = config.scope;
+  
+	api.calls.registerPin(appKey, authcode, function(err, registerResultObject) {
+		var tooFast = false;
+		
+		console.log("Stinger Login Response: " + registerResultObject);
+		
+		var obj = {
+			error: err,
+			registerResultObject: registerResultObject
+		};
+		
+		req.session.tokens = registerResultObject;
+		res.json(obj);
+	});	
+},
+
+exports.StingerLoginRefresh = function(req, res) 
+{
+	var refresh_token = req.param('refreshtoken');
+	
+	if(refresh_token != null && refresh_token != undefined)// have we already authenticated before? 
+	{
+		var obj;
+		api.calls.refresh(refresh_token, function(err, registerResultObject) 
+		{
+			obj = {
+				error: err,
+				registerResultObject: registerResultObject
+			};
+			if(err)// if we error refreshing the token clear session and re-log
+				req.session.destroy();
+			else// refresh of the tokens was successful to we can proceed to the main app
+				req.session.tokens = registerResultObject;
+			
+			res.json(obj);
+		});
+	}
+	else 
+	{
+		obj = {
+				error: "No Refresh Token"
+			};
+			res.json(obj);
+	}
 }
