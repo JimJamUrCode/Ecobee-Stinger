@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.billyg.myapp.Screens.GetPinScreen;
-import com.billyg.myapp.display.Screen;
-import com.billyg.myapp.display.ScreenNavigator;
+import com.billygoatpharmacy.ecobeestinger.display.Screen;
+import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
+import com.billygoatpharmacy.ecobeestinger.screens.GetPinScreen;
 
 public class ecobeeStinger extends ApplicationAdapter {
 	

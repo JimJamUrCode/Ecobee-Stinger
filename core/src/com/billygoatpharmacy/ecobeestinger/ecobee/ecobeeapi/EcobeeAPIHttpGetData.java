@@ -1,4 +1,4 @@
-package com.billygoatpharmacy.ecobeestinger.ecobeeapi;
+package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi;
 
 public class EcobeeAPIHttpGetData 
 {

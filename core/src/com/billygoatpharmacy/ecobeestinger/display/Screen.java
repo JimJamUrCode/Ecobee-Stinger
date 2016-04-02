@@ -1,22 +1,25 @@
-package com.billyg.myapp.display;
+package com.billygoatpharmacy.ecobeestinger.display;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Screen extends Group 
 {
 	final float SPEED = 5.0f;
 	
 	protected Stage mStage;
+	protected RunnableAction mShowAction;
+	protected Label mTitle;
+	
 	private float mXDestination;
 	private float mYDestination;
 	private float mXDirection;
-	protected RunnableAction mShowAction;
 	
 	public Screen()
 	{
-		
+		super();
 	}
 	
 	public Screen(RunnableAction showAction)
@@ -30,6 +33,7 @@ public class Screen extends Group
 		this.setWidth(nWidth);
 		this.setHeight(nHeight);
 		
+//		mTitle
 		mStage.addActor(this);
 		mXDirection = -1.0f;
 		mShowAction.run();
@@ -70,11 +74,5 @@ public class Screen extends Group
 			float newY = delta * (yDifference*SPEED);
 			this.setY(newY);
 		}
-	}
-	
-	public void resize(int nWidth, int nHeight)
-	{
-		this.setWidth(nWidth);
-		this.setHeight(nHeight);
 	}
 }
