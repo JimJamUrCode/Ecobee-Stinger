@@ -1,1 +1,4 @@
-/bin-debug
+/android/bin
+/core/bin
+/desktop/bin
+/ios/bin

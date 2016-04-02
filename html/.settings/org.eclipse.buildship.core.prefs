@@ -1,0 +1,3 @@
+GRADLE_BUILD_COMMANDS=org.eclipse.jdt.core.javabuilder,com.google.gwt.eclipse.core.gwtProjectValidator,com.google.gdt.eclipse.core.webAppProjectValidator
+GRADLE_NATURES=org.eclipse.jdt.core.javanature,com.google.gwt.eclipse.core.gwtNature
+eclipse.preferences.version=1

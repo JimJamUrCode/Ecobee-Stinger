@@ -1,25 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ecobee</name>
-	<comment></comment>
+	<name>ecobeeStinger</name>
+	<comment>Project ecobeeStinger created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>com.adobe.flexbuilder.project.flexbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>com.adobe.flexbuilder.project.apollobuilder</name>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.adobe.flexide.project.multiplatform.multiplatformnature</nature>
-		<nature>com.adobe.flexbuilder.project.apollonature</nature>
-		<nature>com.adobe.flexbuilder.project.flexnature</nature>
-		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1459581847186</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-android</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847228</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-core</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847263</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-desktop</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847294</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-html</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847314</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-ios</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847334</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-build</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1459581847353</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-.gradle</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
