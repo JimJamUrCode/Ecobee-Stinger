@@ -1,4 +1,4 @@
-package com.billygoatpharmacy.ecobeestinger.ecobeeapi;
+package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.billygoatpharmacy.ecobeestinger.Logger;
-import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.HttpGetPinResponseData;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.HttpGetPinResponseData;
 
 public class EcobeeAPI {
 
@@ -26,7 +26,7 @@ public class EcobeeAPI {
 	private static String APIROOT = "api/1/";
 	private static String ROOT = "https://www.ecobee.com/";
 	private static String SCOPE = "smartWrite";
-	private static String APPKEY = "UUViLdsY2RgRNTAcrQUJXQm7lOxL87We";
+	private static String APPKEY = "";
 	
 	public EcobeeAPI()
 	{

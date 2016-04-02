@@ -1,4 +1,4 @@
-package com.billyg.myapp.Screens;
+package com.billygoatpharmacy.ecobeestinger.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
-import com.billyg.myapp.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.Logger;
-import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.HttpGetPinResponseData;
-import com.billygoatpharmacy.ecobeestinger.ecobeeapi.EcobeeAPI;
-import com.billygoatpharmacy.ecobeestinger.ecobeeapi.EcobeeAPIHttpCallback;
+import com.billygoatpharmacy.ecobeestinger.display.Screen;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.HttpGetPinResponseData;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallback;
 
 public class GetPinScreen extends Screen 
 {

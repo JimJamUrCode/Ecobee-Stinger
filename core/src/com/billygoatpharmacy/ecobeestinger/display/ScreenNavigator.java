@@ -1,4 +1,4 @@
-package com.billyg.myapp.display;
+package com.billygoatpharmacy.ecobeestinger.display;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -64,6 +64,5 @@ public final class ScreenNavigator extends SpriteDrawable
 	public static void resize(int nWidth, int nHeight)
 	{
 		mStage.getViewport().update(nWidth, nHeight, true);
-		//mTransitioningScreen.resize(nWidth, nHeight);
 	}
 }

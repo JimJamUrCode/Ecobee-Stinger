@@ -1,4 +1,4 @@
-package com.billygoatpharmacy.ecobeestinger.ecobeeObjects;
+package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects;
 
 public class HttpGetPinResponseData 
 {
