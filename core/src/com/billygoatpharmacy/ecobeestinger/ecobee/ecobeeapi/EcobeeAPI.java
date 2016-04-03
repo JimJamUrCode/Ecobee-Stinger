@@ -16,11 +16,7 @@ import com.billygoatpharmacy.fileTools.FileManager;
 
 public class EcobeeAPI {
 
-	private static final String USER_AGENT = "demo-api-app";
-	private static final String APIROOT = "api/1/";
-	private static final String ROOT = "https://api.ecobee.com/";
-	private static final String SCOPE = "smartWrite";
-	private static final String APPKEY = "UUViLdsY2RgRNTAcrQUJXQm7lOxL87We";
+	private static EcobeeConfig sEcobeeConfig;
 	
 	private static RequestPinResponseData sTempAuthCode;
 	private static RequestPinAuthenticationResponseData sPinAuthResponse;
@@ -37,6 +33,8 @@ public class EcobeeAPI {
 		sJson.setUsePrototypes(false);
 		//sJson.setIgnoreUnknownFields(true);
 		sJson.setOutputType(OutputType.json);
+		
+		sEcobeeConfig = sJson.fromJson(EcobeeConfig.class, FileManager.readFile("ecobeeConfig.cfg", true));
 	}
 	
 	public static Boolean login(EcobeeAPIHttpCallback loginAction)
@@ -44,7 +42,7 @@ public class EcobeeAPI {
 		mLoginExternalCallback = loginAction;
 		if(FileManager.doesFileExist("accessData.dat"))
 		{
-			sPinAuthResponse = sJson.fromJson(RequestPinAuthenticationResponseData.class, FileManager.readFile("accessData.dat"));
+			sPinAuthResponse = sJson.fromJson(RequestPinAuthenticationResponseData.class, FileManager.readFile("accessData.dat", false));
 			
 			if(sPinAuthResponse != null && sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "")
 			{
@@ -92,13 +90,13 @@ public class EcobeeAPI {
 		
 		//Creating parameters for the request
 		HttpRequestDataType request_type = new HttpRequestDataType("response_type", "ecobeePin");
-		HttpRequestDataType scope = new HttpRequestDataType("scope", SCOPE);
-		HttpRequestDataType client_id = new HttpRequestDataType("client_id", APPKEY);
+		HttpRequestDataType scope = new HttpRequestDataType("scope", sEcobeeConfig.scope);
+		HttpRequestDataType client_id = new HttpRequestDataType("client_id", sEcobeeConfig.appkey);
 		
 		HttpRequestDataType[] dt = {request_type, scope, client_id};
 		HttpRequestData data = new HttpRequestData(dt);
 		
-		makeGetRequest(ROOT + "authorize", data, getGetPinCallback());
+		makeGetRequest(sEcobeeConfig.http_root + "authorize", data, getGetPinCallback());
 	}
 	
 	/**Internal action callback for the getPin() function. This 
@@ -132,12 +130,12 @@ public class EcobeeAPI {
 		mExternalCallback = action;
 		HttpRequestDataType grant_type = new HttpRequestDataType("grant_type", grantType);
 		HttpRequestDataType code = new HttpRequestDataType("code", sTempAuthCode.code);
-		HttpRequestDataType client_id = new HttpRequestDataType("client_id", APPKEY);
+		HttpRequestDataType client_id = new HttpRequestDataType("client_id", sEcobeeConfig.appkey);
 		
 		HttpRequestDataType[] dt = {grant_type, code, client_id};
 		HttpRequestData data = new HttpRequestData(dt);
 		
-		makePostRequest(ROOT + "token", data, getAccessTokenCallback());
+		makePostRequest(sEcobeeConfig.http_root + "token", data, getAccessTokenCallback());
 	}
 	
 	/**Internal action callback for the getAccessToken() function.
@@ -174,7 +172,7 @@ public class EcobeeAPI {
 	    httpRequest.setUrl(path);
 	    
 	    //Setting Headers
-	    httpRequest.setHeader("User-Agent", USER_AGENT);
+	    httpRequest.setHeader("User-Agent", sEcobeeConfig.user_agent);
 	    httpRequest.setHeader("Accept", "application/json");
 	    httpRequest.setHeader("Content-Type", "application/json");
 	    httpRequest.setContent(data.toQueryString());
@@ -214,7 +212,7 @@ public class EcobeeAPI {
 	    httpRequest.setUrl(path);
 	    
 	    //Setting Headers
-	    httpRequest.setHeader("User-Agent", USER_AGENT);
+	    httpRequest.setHeader("User-Agent", sEcobeeConfig.user_agent);
 	    httpRequest.setHeader("Accept", "application/json");
 	    httpRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
 	    httpRequest.setHeader("Content-Length", "" + data.toQueryString().length());

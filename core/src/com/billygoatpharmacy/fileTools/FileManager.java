@@ -24,14 +24,20 @@ public class FileManager
 		return true;
 	}
 	
-	public static String readFile(String fileName)
+	public static String readFile(String fileName, Boolean isAsset)
 	{
 		String data = "";
 		try
 		{
-			FileHandle file = Gdx.files.local(STORAGEDIR + fileName);
+			FileHandle file;
+			if(isAsset)
+				file = Gdx.files.local(fileName);
+			else
+				file = Gdx.files.local(STORAGEDIR + fileName);
 			data = file.readString();
-			data = Base64Coder.decodeString(data);
+			
+			if(isAsset == false)
+				data = Base64Coder.decodeString(data);
 		}
 		catch(Exception e)
 		{
