@@ -3,6 +3,7 @@ package com.billygoatpharmacy.ecobeestinger.display;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -10,34 +11,37 @@ public final class ScreenNavigator extends SpriteDrawable
 {
 	private static Screen mCurrentScreen;
 	private static Screen mTransitioningScreen;
+	
+	private static Table mRootTable;
 	private static Stage mStage;
 	
-	public static void init()
+	public static void init(Stage newStage)
 	{
-		mStage = new Stage(new ExtendViewport(1366, 768));
-		Gdx.input.setInputProcessor(mStage);
-		mCurrentScreen = null;
+		if(mStage == null)
+		{
+			mStage = newStage;
+			mCurrentScreen = null;
+		}
 	}
 	
 	public static void showScreen(Screen screen)
 	{
+		float w = mStage.getWidth();
 		mTransitioningScreen = screen;
-		
-		mTransitioningScreen.setX(mStage.getWidth());
-		mTransitioningScreen.setY(0);
-		
+		mTransitioningScreen.show(w, mStage.getHeight(), mStage);
 		mTransitioningScreen.setOriginX(0);
 		mTransitioningScreen.setOriginY(0);
 		
+		
+		mTransitioningScreen.setX(w);
+		mTransitioningScreen.setY(0);
+		
 		mTransitioningScreen.setDestination(0, 0);
 		
-		mTransitioningScreen.show(mStage.getWidth(), mStage.getHeight(), mStage);
 		if(mCurrentScreen != null)
-		{
-			mCurrentScreen.setDestination(mStage.getWidth()*-1, 0);
-		}
-		mStage.addActor(mTransitioningScreen);
+			mCurrentScreen.setDestination(w*-1, 0);
 		
+	    mStage.addActor(mTransitioningScreen);
 	}
 	
 	public static Stage getStage()
@@ -51,7 +55,7 @@ public final class ScreenNavigator extends SpriteDrawable
 		Gdx.gl.glClearColor(.3f, .3f, .3f, 1);
 		
 		mStage.act(Gdx.graphics.getDeltaTime());
-		mStage.draw();
+		
 		if(mTransitioningScreen != null)
 			mTransitioningScreen.update(delta);
 		
@@ -59,10 +63,5 @@ public final class ScreenNavigator extends SpriteDrawable
 			mCurrentScreen.update(delta);
 		
 		mStage.draw();
-	}
-	
-	public static void resize(int nWidth, int nHeight)
-	{
-		mStage.getViewport().update(nWidth, nHeight, true);
 	}
 }
