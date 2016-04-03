@@ -1,10 +1,10 @@
-package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi;
+package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request;
 
-public class EcobeeAPIHttpGetData 
+public class HttpRequestData 
 {
-	private EcobeeAPIHttpGetDataType[] mAllData;
+	private HttpRequestDataType[] mAllData;
 	
-	public EcobeeAPIHttpGetData(EcobeeAPIHttpGetDataType[] data)
+	public HttpRequestData(HttpRequestDataType[] data)
 	{
 		mAllData = data;
 	}

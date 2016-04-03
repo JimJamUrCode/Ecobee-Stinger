@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -14,7 +15,9 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.HttpGetPinResponseData;
+import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.RequestPinResponseData;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.RequestPinAuthenticationResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallback;
 
@@ -22,12 +25,18 @@ public class GetPinScreen extends Screen
 {
 	private Skin mAuthButtonSkin;
 	private ClickListener mAuthBtnClickListener;
-	private EcobeeAPIHttpCallback mGetPinCallback;
-	private HttpGetPinResponseData mPinCodeData;
+	private RequestPinResponseData mPinCodeData;
+	private StingerLabel mPinCodeLbl;
+	private Json mJson;
 	
 	public GetPinScreen()
 	{
 		super();
+		mJson = new Json();
+		mJson.setTypeName(null);
+		mJson.setUsePrototypes(false);
+		mJson.setIgnoreUnknownFields(true);
+		mJson.setOutputType(OutputType.json);
 		mShowAction = new RunnableAction() {
 			@Override
 			public void run()
@@ -37,19 +46,149 @@ public class GetPinScreen extends Screen
 		};
 	}
 	
+	@Override
+	public void update(float delta)
+	{
+		super.update(delta);
+	}
+	
 	public void onShow()//Create stuff here
 	{
-		//Setup 'Authorize' button
-		addAuthorizeInfo();
+		this.setTitle("Register ecobeeStinger");
+		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
 		
-		addDescriptionText();
-		
-		getPinFromEcobee();
+		attemptEcobeeLogin();
 	}
 	
 	public void onHide()//Destroy stuff here
 	{
 		
+	}
+	
+	//Visual Functions
+	public void addLoggingInText()
+	{
+		Logger.log(this.getClass().getName(), "Adding Logging in Text...");
+		float nwidth = this.getWidth();
+		
+		CharSequence txt = "Logging in...";
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
+		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
+		this.row();
+	}
+	
+	public void addLoggingInErrorText(String error)
+	{
+		this.clearChildren();
+		Logger.log(this.getClass().getName(), "Error logging in: " + error);
+		float nwidth = this.getWidth();
+		
+		CharSequence txt = "Error logging in: " + error;
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
+		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
+		this.row();
+		
+		TextButton button = new TextButton("Re-Authorize App", mAuthButtonSkin, "default");
+		button.addListener(reAuthorizeBtnClick());
+		button.setColor(Color.GREEN);
+		this.add(button).height(75).width(225);	
+		this.row();
+	}
+	
+	private void startAuthorizationProcess()
+	{
+		this.clearChildren();
+		
+		//Setting up visuals
+		addDescriptionText();
+		addPinCodeText();
+		addAuthorizeInfo();
+		
+		//Making a request to the ecobee servers to get a pin code for the user
+		getPinFromEcobee();
+	}
+	
+	public void addDescriptionText()
+	{
+		Logger.log(this.getClass().getName(), "Adding Pin Description Text...");
+		float nwidth = this.getWidth();
+		
+		CharSequence txt = "Go to the ecobee portal and register this app using the pin code below:";
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
+		this.add(descriptionLbl).height(this.getHeight()*.16f).width(nwidth);
+		this.row();
+	}
+	
+	public void addPinCodeText()
+	{
+		Logger.log(this.getClass().getName(), "Adding Pin Code...");
+		CharSequence txt = "Pin Code: ";
+		mPinCodeLbl = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, true, 1.5f);
+		mPinCodeLbl.setColor(Color.YELLOW);
+		this.add(mPinCodeLbl).width(this.getWidth()).padBottom(this.getHeight()*.07f);
+		this.row();
+	}
+	
+	public void updatePinCode()
+	{
+		CharSequence txt = "Pin Code: " + mPinCodeData.ecobeePin;
+		mPinCodeLbl.setText(txt);
+	}
+	
+	public void addAuthorizeInfo()
+	{
+		Logger.log(this.getClass().getName(), "Adding Authorization Description...");
+		
+		CharSequence txt = "After registering this app through the ecobee portal, grant authorization by clicking the button below:"; 
+		StingerLabel authDescriptionLbl = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, true, 1.2f);
+		this.add(authDescriptionLbl).height(200).width(this.getWidth());
+		this.row();
+		
+		TextButton button = new TextButton("Authorize App", mAuthButtonSkin, "default");
+		button.addListener(authorizeBtnClick());
+		button.setColor(Color.GREEN);
+		this.add(button).height(75).width(225);	
+		this.row();
+	}
+	
+	//Ecobee functions
+	private void attemptEcobeeLogin()
+	{
+		Boolean success = EcobeeAPI.login(attemptEcobeeLoginCallback());
+		
+		if(success)
+		{
+			Logger.log(EcobeeAPI.class.getName(), "Attempting Ecobee Login...");
+			addLoggingInText();
+		}
+		else
+		{
+			Logger.log(EcobeeAPI.class.getName(), "No stored credentials, redirecting to pin code authentication...");
+			startAuthorizationProcess();
+		}
+	}
+	
+	private EcobeeAPIHttpCallback attemptEcobeeLoginCallback()
+	{
+		return new EcobeeAPIHttpCallback() {
+			@Override
+			public void done(String response)
+			{
+				Logger.log(EcobeeAPI.class.getName(), "Ecobee Attempted Login Got A Response...");
+				
+				RequestPinAuthenticationResponseData data = mJson.fromJson(RequestPinAuthenticationResponseData.class, response);
+				
+				if(data.error != null)//Error happened while logging in
+					addLoggingInErrorText(data.error_description);
+				else
+				{
+					if(data.access_token != null && data.access_token != "")
+					{
+						Logger.log(EcobeeAPI.class.getName(), "Login was a success...");
+					}
+				}
+			}
+		};
 	}
 	
 	private void getPinFromEcobee()
@@ -59,78 +198,38 @@ public class GetPinScreen extends Screen
 	
 	private EcobeeAPIHttpCallback getPinCallback()
 	{
-		if(mGetPinCallback == null)
-		{
-			mGetPinCallback = new EcobeeAPIHttpCallback() {
-				@Override
-				public void done(String response)
-				{
-					Logger.log(EcobeeAPI.class.getName(), "Ecobee Pin Received...");
-					Json json = new Json();
-					json.setTypeName(null);
-					json.setUsePrototypes(false);
-					json.setIgnoreUnknownFields(true);
-					json.setOutputType(OutputType.json);
-
-					mPinCodeData = json.fromJson(HttpGetPinResponseData.class, response);
-					
-					Logger.log(this.getClass().getName(), json.toJson(mPinCodeData));
-					
-					//Add a textfield to the screen that shows the user the pin
-					addPinCodeText();
-				}
-			};
-		}
-		
-		return mGetPinCallback;
+		return new EcobeeAPIHttpCallback() {
+			@Override
+			public void done(String response)
+			{
+				Logger.log(EcobeeAPI.class.getName(), "Ecobee Pin Received...");
+				
+				mPinCodeData = mJson.fromJson(RequestPinResponseData.class, response);
+				
+				Logger.log(this.getClass().getName(), mJson.toJson(mPinCodeData));
+				
+				//Add a textfield to the screen that shows the user the pin
+				updatePinCode();
+			}
+		};
 	}
 	
-	public void addDescriptionText()
+	private void getAccessTokenFromEcobee()
 	{
-		Label descriptionLbl = new Label("Go to the ecobee portal and register this app using the pin code below:", mAuthButtonSkin);
-		descriptionLbl.setWidth(this.getWidth());
-		descriptionLbl.setAlignment(Align.center);
-		descriptionLbl.setWrap(true);
-		descriptionLbl.setFontScale(1.2f);
-		descriptionLbl.setX(this.getWidth()/2 - descriptionLbl.getWidth()/2);
-		descriptionLbl.setY(this.getHeight()*.66f);
-		this.addActor(descriptionLbl);
+		EcobeeAPI.getAccessToken(getAccessTokenCallback(), "ecobeePin");
 	}
 	
-	public void addPinCodeText()
+	private EcobeeAPIHttpCallback getAccessTokenCallback()
 	{
-		Label pincodeLbl = new Label("Pin Code: " + mPinCodeData.ecobeePin, mAuthButtonSkin);
-		pincodeLbl.setAlignment(Align.center);
-		pincodeLbl.setFontScale(1.5f);
-		pincodeLbl.setColor(Color.YELLOW);
-		pincodeLbl.setX(this.getWidth()/2 - pincodeLbl.getWidth()/2);
-		pincodeLbl.setY(this.getHeight()*.56f);
-		this.addActor(pincodeLbl);
-	}
-	
-	public void addAuthorizeInfo()
-	{
-		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
-		
-		Label authDescriptionLbl = new Label("After registering this app through the ecobee portal, grant authrization by clicking the button below:", mAuthButtonSkin);
-		authDescriptionLbl.setWidth(this.getWidth());
-		authDescriptionLbl.setAlignment(Align.center);
-		authDescriptionLbl.setFontScale(1.2f);
-		authDescriptionLbl.setX(this.getWidth()/2 - authDescriptionLbl.getWidth()/2);
-		authDescriptionLbl.setY(this.getHeight()*.33f);
-		authDescriptionLbl.setWrap(true);
-		this.addActor(authDescriptionLbl);
-		
-		final TextButton button = new TextButton("Authorize App", mAuthButtonSkin, "default");
-		button.setWidth(225);
-		button.setHeight(75);
-
-		button.setX(this.getWidth()/2 - button.getWidth()/2);
-		button.setY(this.getHeight()*.20f);
-
-		this.addActor(button);
-
-		button.addListener(authorizeBtnClick());
+		return new EcobeeAPIHttpCallback() {
+			@Override
+			public void done(String response)
+			{
+				RequestPinAuthenticationResponseData data = mJson.fromJson(RequestPinAuthenticationResponseData.class, response);
+				
+				Logger.log(this.getClass().getName(), mJson.toJson(data));
+			}
+		};
 	}
 	
 	private ClickListener authorizeBtnClick()
@@ -142,7 +241,23 @@ public class GetPinScreen extends Screen
 				@Override
 				public void clicked(InputEvent event, float x, float y)
 				{ 
-					 
+					getAccessTokenFromEcobee();
+				}
+			};
+		}
+		return mAuthBtnClickListener;
+	}
+	
+	private ClickListener reAuthorizeBtnClick()
+	{
+		if(mAuthBtnClickListener == null)
+		{
+			mAuthBtnClickListener = new ClickListener()
+			{
+				@Override
+				public void clicked(InputEvent event, float x, float y)
+				{ 
+					startAuthorizationProcess();
 				}
 			};
 		}

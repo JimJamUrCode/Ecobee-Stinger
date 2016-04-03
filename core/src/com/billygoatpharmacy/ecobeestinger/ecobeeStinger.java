@@ -5,20 +5,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
 import com.billygoatpharmacy.ecobeestinger.screens.GetPinScreen;
 
 public class ecobeeStinger extends ApplicationAdapter {
+	//Static vars
+	public static Stage sStage;
 	
 	//Screen Stuffs
 	private Screen mGetPinScreen;
 	
 	@Override
-	public void create () {
-		ScreenNavigator.init();
-		mGetPinScreen = new GetPinScreen();
-		ScreenNavigator.showScreen(mGetPinScreen);
+	public void create () 
+	{
+		sStage = new Stage(new ExtendViewport(1366, 768));
+		EcobeeAPI.init();
 	}
 
 	@Override
@@ -34,8 +39,16 @@ public class ecobeeStinger extends ApplicationAdapter {
 	
 	@Override
 	public void resize (int width, int height) {
-	    // See below for what true means.
-		ScreenNavigator.resize(width, height);
-//	    mStage.getViewport().update(width, height, true);
+	    //Adjusting the size of the stage to fit our ExtendViewport
+		sStage.getViewport().update(width, height, true);
+		Gdx.input.setInputProcessor(sStage);
+		
+		//Initializing the Screen Navigator
+		ScreenNavigator.init(sStage);
+		
+		if(mGetPinScreen == null)
+			mGetPinScreen = new GetPinScreen();
+		
+		ScreenNavigator.showScreen(mGetPinScreen);
 	}
 }

@@ -1,25 +1,34 @@
 package com.billygoatpharmacy.ecobeestinger.display;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.billygoatpharmacy.ecobeestinger.Logger;
+import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 
-public class Screen extends Group 
+public class Screen extends Table 
 {
 	final float SPEED = 5.0f;
 	
 	protected Stage mStage;
 	protected RunnableAction mShowAction;
-	protected Label mTitle;
+	protected StingerLabel mTitle;
 	
 	private float mXDestination;
 	private float mYDestination;
 	private float mXDirection;
 	
+	private Boolean mHasBeenInitialized;
+	
 	public Screen()
 	{
 		super();
+		mHasBeenInitialized = false;
 	}
 	
 	public Screen(RunnableAction showAction)
@@ -29,19 +38,35 @@ public class Screen extends Group
 	
 	public void show(float nWidth, float nHeight, Stage newStage)
 	{
-		this.mStage = newStage;
 		this.setWidth(nWidth);
 		this.setHeight(nHeight);
+		this.mStage = newStage;
+		this.setFillParent(true);
+		//this.setDebug(true);
 		
-//		mTitle
 		mStage.addActor(this);
 		mXDirection = -1.0f;
-		mShowAction.run();
+		
+		if(mHasBeenInitialized == false)
+		{
+			mShowAction.run();
+			mHasBeenInitialized = true;
+		}
 	}
 	
 	public void hide()
 	{
 		mXDirection = -1.0f;
+	}
+	
+	public void setTitle(CharSequence txt)
+	{
+		mTitle = new StingerLabel(txt, this.getWidth(), null, new Skin(Gdx.files.internal("uiskin.json")), Align.center, false, 3f);
+		
+		Logger.log(this.getClass().getName(), "Title Width: " + mTitle.getPrefWidth());
+		this.add(mTitle).padBottom(50);
+		this.top();
+		this.row();
 	}
 	
 	public void setDestination(float newXDestination, float newYDestination)
