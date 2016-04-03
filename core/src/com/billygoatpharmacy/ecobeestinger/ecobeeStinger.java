@@ -2,14 +2,12 @@ package com.billygoatpharmacy.ecobeestinger;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
+import com.billygoatpharmacy.ecobeestinger.screens.AllThermostatsScreen;
 import com.billygoatpharmacy.ecobeestinger.screens.GetPinScreen;
 
 public class ecobeeStinger extends ApplicationAdapter {
@@ -18,12 +16,18 @@ public class ecobeeStinger extends ApplicationAdapter {
 	
 	//Screen Stuffs
 	private Screen mGetPinScreen;
+	private Screen mAllThermostatsScreen;
 	
 	@Override
 	public void create () 
 	{
 		sStage = new Stage(new ExtendViewport(1366, 768));
 		EcobeeAPI.init();
+		mGetPinScreen = new GetPinScreen();
+		mAllThermostatsScreen = new AllThermostatsScreen();
+		
+		ScreenNavigator.addScreen(mGetPinScreen);
+		ScreenNavigator.addScreen(mAllThermostatsScreen);
 	}
 
 	@Override
@@ -33,12 +37,14 @@ public class ecobeeStinger extends ApplicationAdapter {
 	}
 	
 	@Override
-	public void dispose() {
+	public void dispose() 
+	{
 	    
 	}
 	
 	@Override
-	public void resize (int width, int height) {
+	public void resize (int width, int height) 
+	{
 	    //Adjusting the size of the stage to fit our ExtendViewport
 		sStage.getViewport().update(width, height, true);
 		Gdx.input.setInputProcessor(sStage);
@@ -46,9 +52,12 @@ public class ecobeeStinger extends ApplicationAdapter {
 		//Initializing the Screen Navigator
 		ScreenNavigator.init(sStage);
 		
-		if(mGetPinScreen == null)
-			mGetPinScreen = new GetPinScreen();
+		String currentScreen = ScreenNavigator.getCurrentScreen();
+		if(currentScreen == "")
+			ScreenNavigator.setCurrentScreen(GetPinScreen.class.getName());
+		else
+			ScreenNavigator.setCurrentScreen(currentScreen);
 		
-		ScreenNavigator.showScreen(mGetPinScreen);
+		ScreenNavigator.resizeScreen(width, height);
 	}
 }
