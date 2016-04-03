@@ -1,23 +1,23 @@
 package com.billygoatpharmacy.ecobeestinger.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
+import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.RequestPinResponseData;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.RequestPinAuthenticationResponseData;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.Selection;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequestObject;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinAuthenticationResponseData;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinRequestResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallback;
 
@@ -25,18 +25,12 @@ public class GetPinScreen extends Screen
 {
 	private Skin mAuthButtonSkin;
 	private ClickListener mAuthBtnClickListener;
-	private RequestPinResponseData mPinCodeData;
+	private PinRequestResponseData mPinCodeData;
 	private StingerLabel mPinCodeLbl;
-	private Json mJson;
-	
+
 	public GetPinScreen()
 	{
 		super();
-		mJson = new Json();
-		mJson.setTypeName(null);
-		mJson.setUsePrototypes(false);
-		mJson.setIgnoreUnknownFields(true);
-		mJson.setOutputType(OutputType.json);
 		mShowAction = new RunnableAction() {
 			@Override
 			public void run()
@@ -56,6 +50,21 @@ public class GetPinScreen extends Screen
 	{
 		this.setTitle("Register ecobeeStinger");
 		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
+		
+		ThermostatRequestObject obj = new ThermostatRequestObject();
+		obj.selection = new Selection();
+		obj.selection.includeAlerts = true;
+		
+		HttpRequestBuilder build = new HttpRequestBuilder();
+		build.newRequest();
+		build.method("POST");
+		build.url("https://api.ecobee.com/thermostat");
+		build.header("Accept", "application/json");
+		build.jsonContent(obj);
+		
+		HttpRequest newrequest = build.build();
+		
+		Logger.log(GetPinScreen.class.getName(), mJson.toJson(newrequest));
 		
 		attemptEcobeeLogin();
 	}
@@ -176,7 +185,7 @@ public class GetPinScreen extends Screen
 			{
 				Logger.log(EcobeeAPI.class.getName(), "Ecobee Attempted Login Got A Response...");
 				
-				RequestPinAuthenticationResponseData data = mJson.fromJson(RequestPinAuthenticationResponseData.class, response);
+				PinAuthenticationResponseData data = mJson.fromJson(PinAuthenticationResponseData.class, response);
 				
 				if(data.error != null)//Error happened while logging in
 					addLoggingInErrorText(data.error_description);
@@ -185,6 +194,7 @@ public class GetPinScreen extends Screen
 					if(data.access_token != null && data.access_token != "")
 					{
 						Logger.log(EcobeeAPI.class.getName(), "Login was a success...");
+						ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
 					}
 				}
 			}
@@ -204,7 +214,7 @@ public class GetPinScreen extends Screen
 			{
 				Logger.log(EcobeeAPI.class.getName(), "Ecobee Pin Received...");
 				
-				mPinCodeData = mJson.fromJson(RequestPinResponseData.class, response);
+				mPinCodeData = mJson.fromJson(PinRequestResponseData.class, response);
 				
 				Logger.log(this.getClass().getName(), mJson.toJson(mPinCodeData));
 				
@@ -225,7 +235,7 @@ public class GetPinScreen extends Screen
 			@Override
 			public void done(String response)
 			{
-				RequestPinAuthenticationResponseData data = mJson.fromJson(RequestPinAuthenticationResponseData.class, response);
+				PinAuthenticationResponseData data = mJson.fromJson(PinAuthenticationResponseData.class, response);
 				
 				Logger.log(this.getClass().getName(), mJson.toJson(data));
 			}

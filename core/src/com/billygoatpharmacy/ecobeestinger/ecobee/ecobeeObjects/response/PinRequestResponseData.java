@@ -1,6 +1,6 @@
 package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response;
 
-public class RequestPinResponseData 
+public class PinRequestResponseData 
 {
 	public String ecobeePin;
 	public String code;
@@ -11,7 +11,7 @@ public class RequestPinResponseData
 	public String error_description;
 	public String error_uri;
 	
-	public RequestPinResponseData()
+	public PinRequestResponseData()
 	{
 		
 	}
