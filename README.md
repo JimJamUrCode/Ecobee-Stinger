@@ -12,4 +12,4 @@ Ideally this application will:
 This is needed to get the application working. You will need to sign up as a developer with the ecoBee portal. Once you are an ecoBee developer, you should be presented with an appkey. Copy the appkey and put it in "android/assets/ecobeeConfig.cfg". The application should now be able to properly authenticate.
 
 ###IDE Choice
-Since this porject is using the gradle based build system, pretty much any IDE that is compatible with gradle will work here. I started the project using eclipse, transitioned to Android Studio, and havae setup Intellij IDEA to work with this project as well.
+Since this porject is using the gradle based build system, pretty much any IDE that is compatible with gradle will work here. I started the project using eclipse, transitioned to Android Studio, and have setup Intellij IDEA to work with this project.
