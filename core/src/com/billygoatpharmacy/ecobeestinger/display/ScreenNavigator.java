@@ -144,7 +144,7 @@ public final class ScreenNavigator extends SpriteDrawable
 		}
 		else
 		{
-			Logger.log(ScreenNavigator.class.getName(), "Transitioning Screen is null");
+//			Logger.log(ScreenNavigator.class.getName(), "Transitioning Screen is null");
 		}
 		
 		if(mCurrentScreen != null)
@@ -154,7 +154,7 @@ public final class ScreenNavigator extends SpriteDrawable
 		}
 		else
 		{
-			Logger.log(ScreenNavigator.class.getName(), "Current Screen is null");
+//			Logger.log(ScreenNavigator.class.getName(), "Current Screen is null");
 		}
 		
 		mStage.draw();

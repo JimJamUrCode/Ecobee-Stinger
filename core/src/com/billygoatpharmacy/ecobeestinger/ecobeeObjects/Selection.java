@@ -1,4 +1,4 @@
-package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request;
+package com.billygoatpharmacy.ecobeestinger.ecobeeObjects;
 
 public class Selection 
 {

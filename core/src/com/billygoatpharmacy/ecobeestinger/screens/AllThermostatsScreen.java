@@ -91,7 +91,7 @@ public class AllThermostatsScreen extends Screen
 				if(mThermostatData.error != null && mThermostatData.error != "")
 					Logger.log(this.getClass().getName(), "Error Getting Thermostat Data: " + mJson.toJson(mThermostatData));
 				else
-					Logger.log(EcobeeAPI.class.getName(), "Ecobee Thermostats Received...");
+					Logger.log(this.getClass().getName(), "Ecobee Thermostats Received...");
 				
 				showAllThermostats();
 			}

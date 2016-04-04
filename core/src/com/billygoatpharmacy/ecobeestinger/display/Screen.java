@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
+import com.billygoatpharmacy.fileTools.FileManager;
 
 public class Screen extends Table 
 {
@@ -27,7 +28,8 @@ public class Screen extends Table
 	public Boolean mNeedsShowAndResize;
 	
 	private Boolean mHasBeenInitialized;
-	
+	protected Skin mAuthButtonSkin;
+
 	public Screen()
 	{
 		super();
@@ -40,6 +42,8 @@ public class Screen extends Table
 		
 		mHasBeenInitialized = false;
 		mNeedsShowAndResize = false;
+
+		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
 	}
 	
 	/**Resizes this screen to the new dimensions of the view port
@@ -82,7 +86,7 @@ public class Screen extends Table
 	 */
 	public void setTitle(CharSequence txt)
 	{
-		mTitle = new StingerLabel(txt, this.getWidth(), null, new Skin(Gdx.files.internal("uiskin.json")), Align.center, false, 3f);
+		mTitle = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, false, 3f);
 		
 		Logger.log(this.getClass().getName(), "Title Width: " + mTitle.getPrefWidth());
 		this.add(mTitle).padBottom(50);

@@ -6,4 +6,12 @@
 
 /ios/bin
 
-/desktop/savedata
+/android/assets/savedata
+
+/android/build
+
+/build
+
+/desktop/build
+
+/core/build
