@@ -1,12 +1,10 @@
 package com.billygoatpharmacy.ecobeestinger.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -14,8 +12,8 @@ import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.Selection;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequestObject;
+import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Selection;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequest;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinAuthenticationResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinRequestResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
@@ -23,7 +21,6 @@ import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallbac
 
 public class GetPinScreen extends Screen 
 {
-	private Skin mAuthButtonSkin;
 	private ClickListener mAuthBtnClickListener;
 	private PinRequestResponseData mPinCodeData;
 	private StingerLabel mPinCodeLbl;
@@ -49,9 +46,8 @@ public class GetPinScreen extends Screen
 	public void onShow()//Create stuff here
 	{
 		this.setTitle("Register ecobeeStinger");
-		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
 		
-		ThermostatRequestObject obj = new ThermostatRequestObject();
+		ThermostatRequest obj = new ThermostatRequest();
 		obj.selection = new Selection();
 		obj.selection.includeAlerts = true;
 		
@@ -64,7 +60,7 @@ public class GetPinScreen extends Screen
 		
 		HttpRequest newrequest = build.build();
 		
-		Logger.log(GetPinScreen.class.getName(), mJson.toJson(newrequest));
+		Logger.log(this.getClass().getName(), mJson.toJson(newrequest));
 		
 		attemptEcobeeLogin();
 	}
@@ -107,7 +103,8 @@ public class GetPinScreen extends Screen
 	private void startAuthorizationProcess()
 	{
 		this.clearChildren();
-		
+
+		this.setTitle("Register ecobeeStinger");
 		//Setting up visuals
 		addDescriptionText();
 		addPinCodeText();
@@ -212,7 +209,7 @@ public class GetPinScreen extends Screen
 			@Override
 			public void done(String response)
 			{
-				Logger.log(EcobeeAPI.class.getName(), "Ecobee Pin Received...");
+				Logger.log(this.getClass().getName(), "Ecobee Pin Received...");
 				
 				mPinCodeData = mJson.fromJson(PinRequestResponseData.class, response);
 				

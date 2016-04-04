@@ -1,7 +1,13 @@
 {
-	com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: {file: Arial.fnt}},
+	com.badlogic.gdx.graphics.g2d.BitmapFont: { 
+		default-font: {
+			file: Arial.fnt
+		}
+	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-		default:{ down: default-round-down, up:default-round, font: default-font}
+		default:{ 
+			down: default-round-down, up:default-round, font: default-font
+		}
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		default: {

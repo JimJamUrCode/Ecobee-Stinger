@@ -31,10 +31,14 @@ public class FileManager
 		{
 			FileHandle file;
 			if(isAsset)
-				file = Gdx.files.local(fileName);
+				file = Gdx.files.internal(fileName);
 			else
 				file = Gdx.files.local(STORAGEDIR + fileName);
-			data = file.readString();
+
+			if(file.exists())
+				data = file.readString();
+			else
+				data = "File doesnt exist";
 			
 			if(isAsset == false)
 				data = Base64Coder.decodeString(data);

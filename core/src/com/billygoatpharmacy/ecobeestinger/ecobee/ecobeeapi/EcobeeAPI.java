@@ -1,16 +1,6 @@
 package com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.Net.HttpResponseListener;
@@ -18,19 +8,21 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.billygoatpharmacy.ecobeestinger.Logger;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.HttpRequestData;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.HttpRequestDataType;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.PinRequestObject;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.Selection;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequestObject;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.PinAuthenticationRequest;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.PinRequest;
+import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Selection;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequest;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinRequestResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.ThermostatsResposeData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinAuthenticationResponseData;
 import com.billygoatpharmacy.fileTools.FileManager;
+
+import java.lang.reflect.Field;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EcobeeAPI {
 
@@ -45,9 +37,6 @@ public class EcobeeAPI {
 	
 	private static Json sJson;
 	
-	
-	private static HttpRequest mHttpPostRequest;
-	
 	public static void init()
 	{
 		sJson = new Json();
@@ -55,7 +44,7 @@ public class EcobeeAPI {
 		sJson.setUsePrototypes(false);
 		//sJson.setIgnoreUnknownFields(true);
 		sJson.setOutputType(OutputType.json);
-		
+
 		sEcobeeConfig = sJson.fromJson(EcobeeConfig.class, FileManager.readFile("ecobeeConfig.cfg", true));
 	}
 	
@@ -93,7 +82,7 @@ public class EcobeeAPI {
 			{
 				PinAuthenticationResponseData data = sJson.fromJson(PinAuthenticationResponseData.class, response);
 
-				Logger.log(this.getClass().getName(), sJson.toJson(data));
+				Logger.log(EcobeeAPI.class.getName(), sJson.toJson(data));
 				mLoginExternalCallback.done(response);
 				mLoginExternalCallback = null;
 			}
@@ -111,11 +100,11 @@ public class EcobeeAPI {
 		mExternalCallback = action;
 		
 		//Creating parameters for the request
-		PinRequestObject pinRequest = new PinRequestObject("ecobeePin", sEcobeeConfig.scope, sEcobeeConfig.appkey);
+		PinRequest pinRequest = new PinRequest("ecobeePin", sEcobeeConfig.scope, sEcobeeConfig.appkey);
 		
 		try
 		{
-			String queryString = getQueryString(pinRequest);
+			String queryString = getQueryString(pinRequest);//"json=" + sJson.toJson(pinRequest);
 			
 			Array<HttpHeader> headers = new Array<HttpHeader>();
 			headers.add(new HttpHeader("Accept", "application/json"));
@@ -124,7 +113,7 @@ public class EcobeeAPI {
 			
 			makeGetRequest(sEcobeeConfig.http_root + "authorize", queryString, headers, getGetPinCallback());
 		}
-		catch(IllegalAccessException e)
+		catch(Exception e)
 		{
 			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
 			PinRequestResponseData resp = new PinRequestResponseData();
@@ -162,14 +151,31 @@ public class EcobeeAPI {
 		Logger.log(EcobeeAPI.class.getName(), "POST Ecobee Pin Auth...");
 		
 		mExternalCallback = action;
-		HttpRequestDataType grant_type = new HttpRequestDataType("grant_type", grantType);
-		HttpRequestDataType code = new HttpRequestDataType("code", sTempAuthCode.code);
-		HttpRequestDataType client_id = new HttpRequestDataType("client_id", sEcobeeConfig.appkey);
-		
-		HttpRequestDataType[] dt = {grant_type, code, client_id};
-		HttpRequestData data = new HttpRequestData(dt);
-		
-		makePostRequest(sEcobeeConfig.http_root + "token", data, getAccessTokenCallback());
+		PinAuthenticationRequest req = new PinAuthenticationRequest();
+		req.grant_type = grantType;
+		req.code = sTempAuthCode.code;
+		req.client_id = sEcobeeConfig.appkey;
+
+		try
+		{
+			String queryString = getQueryString(req);//"json=" + sJson.toJson(req);
+
+			//Setting Headers
+			Array<HttpHeader> headers = new Array<HttpHeader>();
+			headers.add(new HttpHeader("Content-Length", "" + queryString.length()));
+			headers.add(new HttpHeader("Accept", "application/json"));
+			headers.add(new HttpHeader("User-Agent", sEcobeeConfig.user_agent));
+			headers.add(new HttpHeader("Content-Type", "application/x-www-form-urlencoded"));
+
+			makePostRequest(sEcobeeConfig.http_root + "token", queryString, headers, getAccessTokenCallback());
+		}
+		catch(Exception e)
+		{
+			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
+			PinAuthenticationRequest resp = new PinAuthenticationRequest();
+			resp.error = "Illegal Access Exceptions";
+			mExternalCallback.done(sJson.toJson(resp));
+		}
 	}
 	
 	/**Internal action callback for the getAccessToken() function.
@@ -206,7 +212,7 @@ public class EcobeeAPI {
 		Logger.log(EcobeeAPI.class.getName(), "POST Ecobee Pin Auth...");
 		
 		mExternalCallback = action;
-		ThermostatRequestObject req = new ThermostatRequestObject();
+		ThermostatRequest req = new ThermostatRequest();
 		req.selection = new Selection();
 		req.selection.includeAlerts = true;
 		req.selection.selectionType = Selection.SelectionType.registered;
@@ -287,7 +293,6 @@ public class EcobeeAPI {
 			
 			@Override
 			public void failed(Throwable t) {
-				// TODO Auto-generated method stub
 				Logger.log(EcobeeAPI.class.getName(), "HTTP GET Failed..." + t.toString());
 				action.done("Error: " + t.toString());
 			}
@@ -309,26 +314,28 @@ public class EcobeeAPI {
 		Class<?> aClass = data.getClass();
 		Field[] declaredFields = aClass.getDeclaredFields();
 		Map<String, String> logEntries = new HashMap<String, String>();
-		
+
 		String queryString = "";
-		  
-		for (Field field : declaredFields) 
+
+		for (Field field : declaredFields)
 		{
 			field.setAccessible(true);
-			
+
 			Object[] arguments = new Object[]{
 			field.getName(),
 			field.getType().getSimpleName(),
 			String.valueOf(field.get(data))
 			};
-			
+
 			String template = "{0}={2}&";
 			String property = MessageFormat.format(template, arguments);
-			
-			queryString += property;
-			Logger.log(EcobeeAPI.class.getName(), property);
+
+			if(property.contains("null") == false) {
+				queryString += property;
+				Logger.log(EcobeeAPI.class.getName(), property);
+			}
 		}
-	  
+
 		queryString = queryString.substring(0, queryString.lastIndexOf("&"));
 		Logger.log(EcobeeAPI.class.getName(), "Entire Query String: " + queryString);
 		return queryString;
@@ -336,21 +343,23 @@ public class EcobeeAPI {
 	
 	/**Function to create an http POST request. This get request is specific to the ecobee api.
 	 **/
-	private static void makePostRequest(String path, HttpRequestData data, final EcobeeAPIHttpCallback action)
+	private static void makePostRequest(String path, String data, Array<HttpHeader> headers, final EcobeeAPIHttpCallback action)
 	{
-		mHttpPostRequest = new HttpRequest(Net.HttpMethods.POST);
-		mHttpPostRequest.setUrl(path);
-	    
-	    //Setting Headers
-		mHttpPostRequest.setHeader("User-Agent", sEcobeeConfig.user_agent);
-		mHttpPostRequest.setHeader("Accept", "application/json");
-		mHttpPostRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
-		mHttpPostRequest.setHeader("Content-Length", "" + data.toQueryString().length());
-		mHttpPostRequest.setContent(data.toQueryString());
-	    
-	    Logger.log(EcobeeAPI.class.getName(), "HTTP POST Request: ", mHttpPostRequest);
+		HttpRequestBuilder build = new HttpRequestBuilder();
+		build.newRequest();
+		build.method("POST");
+		build.url(path);
 
-	    Gdx.net.sendHttpRequest(mHttpPostRequest, new HttpResponseListener() {
+		//Adding all headers
+		for(HttpHeader header: headers)
+			build.header(header.mHeaderName, header.mHeaderValue);
+
+		build.content(data);
+		HttpRequest httpPostRequest = build.build();
+	    
+	    Logger.log(EcobeeAPI.class.getName(), "HTTP POST Request: ", httpPostRequest);
+
+	    Gdx.net.sendHttpRequest(httpPostRequest, new HttpResponseListener() {
 			
 			@Override
 			public void handleHttpResponse(HttpResponse httpResponse) 
@@ -358,12 +367,13 @@ public class EcobeeAPI {
 				HttpStatus status = httpResponse.getStatus();
 				if (status.getStatusCode() >= 200 && status.getStatusCode() < 300) 
 				{
-//					Gdx.net.cancelHttpRequest(mHttpPostRequest);
 					String response = httpResponse.getResultAsString();
 					Logger.log(EcobeeAPI.class.getName(), "HTTP POST Response" + status.getStatusCode() + ": " + response.replaceAll("\n", ""));
 					action.done(response);
 	            } else 
 	            {
+					String response = httpResponse.getResultAsString();
+					Logger.log(EcobeeAPI.class.getName(), "HTTP POST Response" + status.getStatusCode() + ": " + response.replaceAll("\n", ""));
 	            	Logger.log(EcobeeAPI.class.getName(), " HTTP POST Response: Something went wrong!");
 	            }
 				
