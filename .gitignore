@@ -19,3 +19,5 @@
 /ios/build
 
 /html/build
+
+/.gradle/2.10/taskArtifacts/
