@@ -45,7 +45,7 @@ public class GetPinScreen extends Screen
 	
 	public void onShow()//Create stuff here
 	{
-		this.setTitle("Register ecobeeStinger");
+		this.setTitle("Register ecobeeStinger", true);
 		
 		ThermostatRequest obj = new ThermostatRequest();
 		obj.selection = new Selection();
@@ -77,7 +77,7 @@ public class GetPinScreen extends Screen
 		float nwidth = this.getWidth();
 		
 		CharSequence txt = "Logging in...";
-		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
 		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
 		this.row();
 	}
@@ -89,11 +89,11 @@ public class GetPinScreen extends Screen
 		float nwidth = this.getWidth();
 		
 		CharSequence txt = "Error logging in: " + error;
-		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
 		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
 		this.row();
 		
-		TextButton button = new TextButton("Re-Authorize App", mAuthButtonSkin, "default");
+		TextButton button = new TextButton("Re-Authorize App", ScreenNavigator.sUISkin, "default");
 		button.addListener(reAuthorizeBtnClick());
 		button.setColor(Color.GREEN);
 		this.add(button).height(75).width(225);	
@@ -104,7 +104,7 @@ public class GetPinScreen extends Screen
 	{
 		this.clearChildren();
 
-		this.setTitle("Register ecobeeStinger");
+		this.setTitle("Register ecobeeStinger", true);
 		//Setting up visuals
 		addDescriptionText();
 		addPinCodeText();
@@ -120,8 +120,8 @@ public class GetPinScreen extends Screen
 		float nwidth = this.getWidth();
 		
 		CharSequence txt = "Go to the ecobee portal and register this app using the pin code below:";
-		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, mAuthButtonSkin, Align.center, true, 1.2f);
-		this.add(descriptionLbl).height(this.getHeight()*.16f).width(nwidth);
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
+		this.add(descriptionLbl).height(this.getHeight() * .16f).width(nwidth);
 		this.row();
 	}
 	
@@ -129,7 +129,7 @@ public class GetPinScreen extends Screen
 	{
 		Logger.log(this.getClass().getName(), "Adding Pin Code...");
 		CharSequence txt = "Pin Code: ";
-		mPinCodeLbl = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, true, 1.5f);
+		mPinCodeLbl = new StingerLabel(txt, this.getWidth(), null, ScreenNavigator.sUISkin, Align.center, true, 1.5f);
 		mPinCodeLbl.setColor(Color.YELLOW);
 		this.add(mPinCodeLbl).width(this.getWidth()).padBottom(this.getHeight()*.07f);
 		this.row();
@@ -146,11 +146,11 @@ public class GetPinScreen extends Screen
 		Logger.log(this.getClass().getName(), "Adding Authorization Description...");
 		
 		CharSequence txt = "After registering this app through the ecobee portal, grant authorization by clicking the button below:"; 
-		StingerLabel authDescriptionLbl = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, true, 1.2f);
+		StingerLabel authDescriptionLbl = new StingerLabel(txt, this.getWidth(), null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
 		this.add(authDescriptionLbl).height(200).width(this.getWidth());
 		this.row();
 		
-		TextButton button = new TextButton("Authorize App", mAuthButtonSkin, "default");
+		TextButton button = new TextButton("Authorize App", ScreenNavigator.sUISkin, "default");
 		button.addListener(authorizeBtnClick());
 		button.setColor(Color.GREEN);
 		this.add(button).height(75).width(225);	
@@ -160,17 +160,21 @@ public class GetPinScreen extends Screen
 	//Ecobee functions
 	private void attemptEcobeeLogin()
 	{
-		Boolean success = EcobeeAPI.login(attemptEcobeeLoginCallback());
-		
-		if(success)
+		if(AllThermostatsScreen.DEBUG)
 		{
-			Logger.log(EcobeeAPI.class.getName(), "Attempting Ecobee Login...");
-			addLoggingInText();
+			Logger.log(EcobeeAPI.class.getName(), "In DEBUG mode, no need to login...");
+			ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
 		}
-		else
-		{
-			Logger.log(EcobeeAPI.class.getName(), "No stored credentials, redirecting to pin code authentication...");
-			startAuthorizationProcess();
+		else {
+			Boolean success = EcobeeAPI.login(attemptEcobeeLoginCallback());
+
+			if (success) {
+				Logger.log(EcobeeAPI.class.getName(), "Attempting Ecobee Login...");
+				addLoggingInText();
+			} else {
+				Logger.log(EcobeeAPI.class.getName(), "No stored credentials, redirecting to pin code authentication...");
+				startAuthorizationProcess();
+			}
 		}
 	}
 	

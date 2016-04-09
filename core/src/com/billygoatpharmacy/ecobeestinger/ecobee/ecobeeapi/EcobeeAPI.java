@@ -54,7 +54,7 @@ public class EcobeeAPI {
 		if(FileManager.doesFileExist("accessData.dat"))
 		{
 			sPinAuthResponse = sJson.fromJson(PinAuthenticationResponseData.class, FileManager.readFile("accessData.dat", false));
-			
+
 			if(sPinAuthResponse != null && sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "")
 			{
 				//Setting the temp code to our refresh code so that our pre-existing function will work without changes.
@@ -218,6 +218,7 @@ public class EcobeeAPI {
 		req.selection.selectionType = Selection.SelectionType.registered;
 		req.selection.selectionMatch = "includeEvents";
 		req.selection.includeSettings = true;
+		req.selection.includeRuntime = true;
 		
 		try
 		{
@@ -376,7 +377,6 @@ public class EcobeeAPI {
 					Logger.log(EcobeeAPI.class.getName(), "HTTP POST Response" + status.getStatusCode() + ": " + response.replaceAll("\n", ""));
 	            	Logger.log(EcobeeAPI.class.getName(), " HTTP POST Response: Something went wrong!");
 	            }
-				
 			}
 			
 			@Override

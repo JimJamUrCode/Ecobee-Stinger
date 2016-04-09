@@ -9,14 +9,16 @@ import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
 import com.billygoatpharmacy.ecobeestinger.screens.AllThermostatsScreen;
 import com.billygoatpharmacy.ecobeestinger.screens.GetPinScreen;
+import com.billygoatpharmacy.ecobeestinger.screens.ThermostatGraphScreen;
 
 public class ecobeeStinger extends ApplicationAdapter {
 	//Static vars
 	public static Stage sStage;
 	
 	//Screen Stuffs
-	private Screen mGetPinScreen;
-	private Screen mAllThermostatsScreen;
+	private GetPinScreen mGetPinScreen;
+	private AllThermostatsScreen mAllThermostatsScreen;
+	private ThermostatGraphScreen mThermostatGraphScreen;
 	
 	@Override
 	public void create () 
@@ -25,9 +27,11 @@ public class ecobeeStinger extends ApplicationAdapter {
 		EcobeeAPI.init();
 		mGetPinScreen = new GetPinScreen();
 		mAllThermostatsScreen = new AllThermostatsScreen();
-		
+		mThermostatGraphScreen = new ThermostatGraphScreen();
+
 		ScreenNavigator.addScreen(mGetPinScreen);
 		ScreenNavigator.addScreen(mAllThermostatsScreen);
+		ScreenNavigator.addScreen(mThermostatGraphScreen);
 	}
 
 	@Override

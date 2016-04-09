@@ -1,23 +1,30 @@
 package com.billygoatpharmacy.ecobeestinger.display;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.billygoatpharmacy.ecobeestinger.Logger;
+import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 
 public final class ScreenNavigator extends SpriteDrawable 
 {
 	private static Screen mCurrentScreen;
 	private static Screen mLeavingScreen;
-	
 	private static Stage mStage;
-	
 	private static Array<Screen> mAllScreens;
-	
+	private static FPSLogger sFPS;
+
+	public static Skin sUISkin = new Skin(Gdx.files.internal("uiskin.json"));
+
 	/**Used to set the initial stage
 	 * 
 	 * @param newStage
@@ -26,6 +33,8 @@ public final class ScreenNavigator extends SpriteDrawable
 	{
 		if(newStage != null)
 			mStage = newStage;
+
+		sFPS = new FPSLogger();
 	}
 	
 	/**Adds a screen to be referenced later on
@@ -129,9 +138,11 @@ public final class ScreenNavigator extends SpriteDrawable
 	{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(.3f, .3f, .3f, 1);
-		
+
 		mStage.act(Gdx.graphics.getDeltaTime());
-		
+
+		sFPS.log();
+
 		if(mCurrentScreen.mNeedsShowAndResize)
 		{
 			mCurrentScreen.resize(mStage);

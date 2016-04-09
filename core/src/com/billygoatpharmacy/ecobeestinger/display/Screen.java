@@ -3,6 +3,7 @@ package com.billygoatpharmacy.ecobeestinger.display;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
@@ -24,11 +25,9 @@ public class Screen extends Table
 	private float mXDestination;
 	private float mYDestination;
 	private float mXDirection;
-	
-	public Boolean mNeedsShowAndResize;
-	
 	private Boolean mHasBeenInitialized;
-	protected Skin mAuthButtonSkin;
+
+	public Boolean mNeedsShowAndResize;
 
 	public Screen()
 	{
@@ -42,8 +41,6 @@ public class Screen extends Table
 		
 		mHasBeenInitialized = false;
 		mNeedsShowAndResize = false;
-
-		mAuthButtonSkin = new Skin(Gdx.files.internal("uiskin.json"));
 	}
 	
 	/**Resizes this screen to the new dimensions of the view port
@@ -84,14 +81,17 @@ public class Screen extends Table
 	 * 
 	 * @param txt
 	 */
-	public void setTitle(CharSequence txt)
+	public Cell setTitle(CharSequence txt,Boolean shouldEndRow)
 	{
-		mTitle = new StingerLabel(txt, this.getWidth(), null, mAuthButtonSkin, Align.center, false, 3f);
+		mTitle = new StingerLabel(txt, mStage.getWidth(), null, ScreenNavigator.sUISkin, Align.center, false, 2f);
 		
 		Logger.log(this.getClass().getName(), "Title Width: " + mTitle.getPrefWidth());
-		this.add(mTitle).padBottom(50);
 		this.top();
-		this.row();
+		if(shouldEndRow == false)
+			return this.add(mTitle).height(mStage.getHeight() * .1f);//padBottom(50);
+		else
+			this.add(mTitle).height(mStage.getHeight() * .1f);//padBottom(50);
+			return this.row();
 	}
 	
 	/**Sets a new X and Y coordinate for the screen, the screen will then 
