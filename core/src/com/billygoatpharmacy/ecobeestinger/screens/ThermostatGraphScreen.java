@@ -3,23 +3,14 @@ package com.billygoatpharmacy.ecobeestinger.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
-import com.billygoatpharmacy.ecobeestinger.display.ecobee.TherostatQuickInfoPanel;
 import com.billygoatpharmacy.ecobeestinger.display.ecobee.graph.LineGraph;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 import com.billygoatpharmacy.ecobeestinger.display.utils.TextButtonClickListener;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.ThermostatsResposeData;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallback;
-import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Thermostat;
-import com.billygoatpharmacy.fileTools.FileManager;
 
 public class ThermostatGraphScreen extends Screen
 {

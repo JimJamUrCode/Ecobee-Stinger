@@ -100,20 +100,6 @@ public class GetPinScreen extends Screen
 		this.row();
 	}
 	
-	private void startAuthorizationProcess()
-	{
-		this.clearChildren();
-
-		this.setTitle("Register ecobeeStinger", true);
-		//Setting up visuals
-		addDescriptionText();
-		addPinCodeText();
-		addAuthorizeInfo();
-		
-		//Making a request to the ecobee servers to get a pin code for the user
-		getPinFromEcobee();
-	}
-	
 	public void addDescriptionText()
 	{
 		Logger.log(this.getClass().getName(), "Adding Pin Description Text...");
@@ -131,7 +117,7 @@ public class GetPinScreen extends Screen
 		CharSequence txt = "Pin Code: ";
 		mPinCodeLbl = new StingerLabel(txt, this.getWidth(), null, ScreenNavigator.sUISkin, Align.center, true, 1.5f);
 		mPinCodeLbl.setColor(Color.YELLOW);
-		this.add(mPinCodeLbl).width(this.getWidth()).padBottom(this.getHeight()*.07f);
+		this.add(mPinCodeLbl).width(this.getWidth()).padBottom(this.getHeight() * .07f);
 		this.row();
 	}
 	
@@ -176,6 +162,20 @@ public class GetPinScreen extends Screen
 				startAuthorizationProcess();
 			}
 		}
+	}
+
+	private void startAuthorizationProcess()
+	{
+		this.clearChildren();
+
+		this.setTitle("Register ecobeeStinger", true);
+		//Setting up visuals
+		addDescriptionText();
+		addPinCodeText();
+		addAuthorizeInfo();
+
+		//Making a request to the ecobee servers to get a pin code for the user
+		getPinFromEcobee();
 	}
 	
 	private EcobeeAPIHttpCallback attemptEcobeeLoginCallback()

@@ -19,11 +19,11 @@ import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 import com.billygoatpharmacy.ecobeestinger.display.utils.TextButtonClickListener;
 import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Thermostat;
 
-public class TherostatQuickInfoPanel extends Table
+public class ThermostatQuickInfoPanel extends Table
 {
     private ShapeRenderer shapeRenderer;
 
-    public TherostatQuickInfoPanel()
+    public ThermostatQuickInfoPanel()
     {
 //        this.setDebug(true);
     }

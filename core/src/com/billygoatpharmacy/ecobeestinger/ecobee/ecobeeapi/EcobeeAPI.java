@@ -21,12 +21,13 @@ import com.billygoatpharmacy.fileTools.FileManager;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EcobeeAPI {
 
-	private static EcobeeConfig sEcobeeConfig;
+	public static EcobeeConfig sEcobeeConfig;
 	
 	private static PinRequestResponseData sTempAuthCode;
 	private static PinAuthenticationResponseData sPinAuthResponse;
@@ -55,12 +56,25 @@ public class EcobeeAPI {
 		{
 			sPinAuthResponse = sJson.fromJson(PinAuthenticationResponseData.class, FileManager.readFile("accessData.dat", false));
 
-			if(sPinAuthResponse != null && sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "")
+			long timeDiff = (new Date().getTime() - sPinAuthResponse.receieved_on) / 1000;
+			if(sPinAuthResponse != null && sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "" &&
+					sPinAuthResponse.expires_in > timeDiff && sPinAuthResponse.receieved_on != 0)
 			{
+				loginAction.done(sJson.toJson(sPinAuthResponse));
+				return true;
+			}
+			else if(sPinAuthResponse == null || sPinAuthResponse.refresh_token == null)//No way to authenticate, user needs to repin auth
+			{
+				//Pin authentication need to occur
+				return false;
+			}
+			else if(sPinAuthResponse.expires_in < timeDiff || sPinAuthResponse.receieved_on == 0)//The access codes have expired, try and get re-issued
+			{
+				//note sure what to do here, or how to get access tokens without the user needing to go through the pin flow.
 				//Setting the temp code to our refresh code so that our pre-existing function will work without changes.
 				sTempAuthCode = new PinRequestResponseData();
 				sTempAuthCode.code = sPinAuthResponse.refresh_token;
-				getAccessToken(loginCallback(), "refresh_token");
+				getAccessTokenFromRefreshToken(loginCallback(), "refresh_token");
 				return true;
 			}
 			else
@@ -177,7 +191,39 @@ public class EcobeeAPI {
 			mExternalCallback.done(sJson.toJson(resp));
 		}
 	}
-	
+
+	public static void getAccessTokenFromRefreshToken(EcobeeAPIHttpCallback action, String grantType)
+	{
+		Logger.log(EcobeeAPI.class.getName(), "POST attemping reauthentication...");
+
+		mExternalCallback = action;
+		PinAuthenticationRequest req = new PinAuthenticationRequest();
+		req.grant_type = grantType;
+		req.refresh_token = sTempAuthCode.code;
+		req.client_id = sEcobeeConfig.appkey;
+
+		try
+		{
+			String queryString = getQueryString(req);//"json=" + sJson.toJson(req);
+
+			//Setting Headers
+			Array<HttpHeader> headers = new Array<HttpHeader>();
+			headers.add(new HttpHeader("Content-Length", "" + queryString.length()));
+			headers.add(new HttpHeader("Accept", "application/json"));
+			headers.add(new HttpHeader("User-Agent", sEcobeeConfig.user_agent));
+			headers.add(new HttpHeader("Content-Type", "application/x-www-form-urlencoded"));
+
+			makePostRequest(sEcobeeConfig.http_root + "token", queryString, headers, getAccessTokenCallback());
+		}
+		catch(Exception e)
+		{
+			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
+			PinAuthenticationRequest resp = new PinAuthenticationRequest();
+			resp.error = "Illegal Access Exceptions";
+			mExternalCallback.done(sJson.toJson(resp));
+		}
+	}
+
 	/**Internal action callback for the getAccessToken() function.
 	 * 
 	 **/
@@ -191,7 +237,8 @@ public class EcobeeAPI {
 				Logger.log(EcobeeAPI.class.getName(), "Ecobee Access Token Received...");
 
 				sPinAuthResponse = sJson.fromJson(PinAuthenticationResponseData.class, response);
-				
+				sPinAuthResponse.receieved_on = new Date().getTime();
+
 				if(sPinAuthResponse.error != null && sPinAuthResponse.error != "")
 					FileManager.saveFile("errorAccess.dat", sJson.toJson(sPinAuthResponse));
 				else

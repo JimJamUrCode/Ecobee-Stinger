@@ -8,6 +8,7 @@ public class PinAuthenticationRequest
     public String grant_type;
     public String code;
     public String client_id;
+    public String refresh_token;
     public String error;
     public String error_description;
     public String error_uri;

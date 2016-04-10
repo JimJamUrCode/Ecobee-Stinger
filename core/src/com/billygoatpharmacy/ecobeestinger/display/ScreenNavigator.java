@@ -141,7 +141,7 @@ public final class ScreenNavigator extends SpriteDrawable
 
 		mStage.act(Gdx.graphics.getDeltaTime());
 
-		sFPS.log();
+		//sFPS.log();
 
 		if(mCurrentScreen.mNeedsShowAndResize)
 		{

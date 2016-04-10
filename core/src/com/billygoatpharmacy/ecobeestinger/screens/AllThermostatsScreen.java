@@ -11,8 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
-import com.billygoatpharmacy.ecobeestinger.display.ecobee.graph.LineGraph;
-import com.billygoatpharmacy.ecobeestinger.display.ecobee.TherostatQuickInfoPanel;
+import com.billygoatpharmacy.ecobeestinger.display.ecobee.ThermostatQuickInfoPanel;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 import com.billygoatpharmacy.ecobeestinger.display.utils.TextButtonClickListener;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.ThermostatsResposeData;
@@ -24,7 +23,9 @@ import com.billygoatpharmacy.fileTools.FileManager;
 public class AllThermostatsScreen extends Screen 
 {
 	private ThermostatsResposeData mThermostatData;
-	public static Boolean DEBUG = true;
+	private boolean mUpdateThermostatView;
+
+	public static Boolean DEBUG = false;
 
 	public AllThermostatsScreen()
 	{
@@ -42,11 +43,23 @@ public class AllThermostatsScreen extends Screen
 	public void update(float delta)
 	{
 		super.update(delta);
+
+		if(mUpdateThermostatView) {
+			mUpdateThermostatView = false;
+			if (mThermostatData != null) {
+				if (mThermostatData.error != null)
+					showRetryButton();
+				else
+					showAllThermostats();
+			}
+		}
+
 	}
 	
 	public void onShow()//Create stuff here
 	{
 		this.setTitle("Thermostats", true);
+		mUpdateThermostatView = false;
 		getAllThermostats();
 	}
 	
@@ -54,7 +67,7 @@ public class AllThermostatsScreen extends Screen
 	{
 		
 	}
-	
+
 	//Visual Functions
 
 	/**If the getAllThermostats() function succeeds
@@ -76,7 +89,7 @@ public class AllThermostatsScreen extends Screen
 		//Iterate through all available thermostats adding a button for each one
 		for(Thermostat stat: mThermostatData.thermostatList)
 			{
-			TherostatQuickInfoPanel quickInfo = new TherostatQuickInfoPanel();
+			ThermostatQuickInfoPanel quickInfo = new ThermostatQuickInfoPanel();
 			quickInfo.setWidth(mStage.getWidth() / 3);
 			quickInfo.setHeight(mStage.getHeight() * .5f);
 			quickInfo.init(stat, thermostatButtonClicked(stat.identifier));
@@ -135,17 +148,15 @@ public class AllThermostatsScreen extends Screen
 			public void done(String response)
 			{
 				mThermostatData = mJson.fromJson(ThermostatsResposeData.class, response);
-				
-				if(mThermostatData.error != null && mThermostatData.error != "")
-				{
+				mUpdateThermostatView = true;
+
+				if(mThermostatData.error != null && mThermostatData.error != "") {
 					Logger.log(this.getClass().getName(), "Error Getting Thermostat Data: " + mJson.toJson(mThermostatData));
-					showRetryButton();
 				}
 				else
 				{
 					Logger.log(this.getClass().getName(), "Ecobee Thermostats Received...");
 					FileManager.saveFile("ThermostatResponse.resp", response);
-					showAllThermostats();
 				}
 			}
 		};
