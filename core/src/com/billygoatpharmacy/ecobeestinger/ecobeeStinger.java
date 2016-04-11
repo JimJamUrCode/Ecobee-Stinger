@@ -14,7 +14,8 @@ import com.billygoatpharmacy.ecobeestinger.screens.ThermostatGraphScreen;
 public class ecobeeStinger extends ApplicationAdapter {
 	//Static vars
 	public static Stage sStage;
-	
+	private boolean mHasInitialized;
+
 	//Screen Stuffs
 	private GetPinScreen mGetPinScreen;
 	private AllThermostatsScreen mAllThermostatsScreen;
@@ -24,6 +25,11 @@ public class ecobeeStinger extends ApplicationAdapter {
 	public void create () 
 	{
 		sStage = new Stage(new ExtendViewport(1366, 768));
+		mHasInitialized = false;
+	}
+
+	public void initialize()
+	{
 		EcobeeAPI.init();
 		mGetPinScreen = new GetPinScreen();
 		mAllThermostatsScreen = new AllThermostatsScreen();
@@ -32,6 +38,8 @@ public class ecobeeStinger extends ApplicationAdapter {
 		ScreenNavigator.addScreen(mGetPinScreen);
 		ScreenNavigator.addScreen(mAllThermostatsScreen);
 		ScreenNavigator.addScreen(mThermostatGraphScreen);
+
+		ScreenNavigator.setCurrentScreen(GetPinScreen.class.getName());
 	}
 
 	@Override
@@ -49,18 +57,12 @@ public class ecobeeStinger extends ApplicationAdapter {
 	@Override
 	public void resize (int width, int height) 
 	{
+		if(mHasInitialized == false)
+			initialize();
 	    //Adjusting the size of the stage to fit our ExtendViewport
-		sStage.getViewport().update(width, height, true);
+		sStage.getViewport().update(width, height, false);
+		sStage.setDebugAll(false);
 		Gdx.input.setInputProcessor(sStage);
-		
-		//Initializing the Screen Navigator
-		ScreenNavigator.init(sStage);
-		
-		String currentScreen = ScreenNavigator.getCurrentScreen();
-		if(currentScreen == "")
-			ScreenNavigator.setCurrentScreen(GetPinScreen.class.getName());
-		else
-			ScreenNavigator.setCurrentScreen(currentScreen);
 		
 		ScreenNavigator.resizeScreen(width, height);
 	}

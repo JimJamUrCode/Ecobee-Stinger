@@ -15,6 +15,7 @@ import com.billygoatpharmacy.ecobeestinger.display.utils.TextButtonClickListener
 public class ThermostatGraphScreen extends Screen
 {
 	private LineGraph mLineGraph;
+	private Table mGraphTable;
 	private Table mRightGraphControlPanel;
 
 	public ThermostatGraphScreen()
@@ -29,6 +30,7 @@ public class ThermostatGraphScreen extends Screen
 		};
 		mLineGraph = new LineGraph();
 		LineGraph.createTestDataSet(mLineGraph);
+		mGraphTable = new Table();
 		mRightGraphControlPanel = new Table();
 //		this.setDebug(true);
 	}
@@ -42,12 +44,14 @@ public class ThermostatGraphScreen extends Screen
 	
 	public void onShow()//Create stuff here
 	{
-		this.setTitle("Graph", false).colspan(2);
+		this.setTitle("Graph", true);
 		this.row();
-		this.add(mLineGraph).height(mStage.getHeight() * .55f).width(this.getWidth() * .9f).pad(0, 0, 0, 10);
+
+		mGraphTable.add(mLineGraph).height(getHeight() * .55f).width(this.getWidth() * .9f).pad(0, 0, 0, 10);
 
 		mRightGraphControlPanel.setWidth(getWidth() * .1f);
-		this.add(mRightGraphControlPanel);
+		mGraphTable.add(mRightGraphControlPanel);
+		this.add(mGraphTable);
 		addZoomButtons();
 		addTimeButtons();
 //		getAllThermostats();

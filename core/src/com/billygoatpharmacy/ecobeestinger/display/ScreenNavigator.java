@@ -3,40 +3,25 @@ package com.billygoatpharmacy.ecobeestinger.display;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.billygoatpharmacy.ecobeestinger.Logger;
-import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
+import com.billygoatpharmacy.ecobeestinger.ecobeeStinger;
 
 public final class ScreenNavigator extends SpriteDrawable 
 {
 	private static Screen mCurrentScreen;
 	private static Screen mLeavingScreen;
-	private static Stage mStage;
 	private static Array<Screen> mAllScreens;
-	private static FPSLogger sFPS;
+	private static Array<Screen> mScreenTrail;
 
 	public static Skin sUISkin = new Skin(Gdx.files.internal("uiskin.json"));
 
-	/**Used to set the initial stage
-	 * 
-	 * @param newStage
-	 */
-	public static void init(Stage newStage)
-	{
-		if(newStage != null)
-			mStage = newStage;
-
-		sFPS = new FPSLogger();
-	}
-	
 	/**Adds a screen to be referenced later on
 	 * 
 	 * @param newScreenClass The actual screen class that you want to add
@@ -46,7 +31,9 @@ public final class ScreenNavigator extends SpriteDrawable
 		Logger.log(ScreenNavigator.class.getName(), "Adding Screen: " + newScreenClass.getClass().getName());
 		if(mAllScreens == null)
 			mAllScreens = new Array<Screen>();
-		
+		if(mScreenTrail == null)
+			mScreenTrail = new Array<Screen>();
+
 		mAllScreens.add(newScreenClass);
 	}
 	
@@ -57,22 +44,21 @@ public final class ScreenNavigator extends SpriteDrawable
 	public static void setCurrentScreen(String setScreen)
 	{		
 		Logger.log(ScreenNavigator.class.getName(), "Setting current Screen: " + setScreen);
-		float w = mStage.getWidth();
-		
-		if(mCurrentScreen != null)
-		{
-			if(mCurrentScreen.equals(getScreenFromString(setScreen)))
+		Screen newScr = getScreenFromString(setScreen);
+		float w = ecobeeStinger.sStage.getWidth();
+
+		if(mScreenTrail.size > 0) {
+			if (mScreenTrail.get(0).equals(newScr))
 				return;
-			
-			mLeavingScreen = mCurrentScreen;
-			mLeavingScreen.setDestination(w*-1, 0);
+
+			mScreenTrail.get(mScreenTrail.size - 1).setDestination(0, ecobeeStinger.sStage.getHeight() * -1);
 		}
-		
-		mCurrentScreen = getScreenFromString(setScreen);
-		mCurrentScreen.mNeedsShowAndResize = true;
-		mCurrentScreen.setX(w);
-		mCurrentScreen.setY(0);
-		mCurrentScreen.setDestination(0, 0);
+
+		mCurrentScreen = newScr;
+		mCurrentScreen.mNeedsShow = true;
+		mCurrentScreen.setPosition(w, 0);//Getting the screen ready to show
+		mCurrentScreen.setDestination(0, 0);//Starting the animation for the screen to move on screen
+		mScreenTrail.add(mCurrentScreen);
 	}
 	
 	/**Returns the string name of the current screen
@@ -95,11 +81,7 @@ public final class ScreenNavigator extends SpriteDrawable
 	public static void resizeScreen(int nWidth, int nHeight)
 	{
 		Logger.log(ScreenNavigator.class.getName(), "Resizing Screen...");
-		mCurrentScreen.resize(mStage);
-		
-		mCurrentScreen.setX(mStage.getWidth());
-		mCurrentScreen.setY(0);
-		mCurrentScreen.setDestination(0, 0);
+		mCurrentScreen.resize(ecobeeStinger.sStage);
 	}
 	
 	/**Used to get a screen based off of its class name
@@ -120,16 +102,7 @@ public final class ScreenNavigator extends SpriteDrawable
 		
 		return null;
 	}
-	
-	/**Get the current stage that the screen navigator is using
-	 * 
-	 * @return The current stage the Screen Navigator is using
-	 */
-	public static Stage getStage()
-	{
-		return mStage;
-	}
-	
+
 	/**Used to update the screens that the Screen Navigator is managing
 	 * This needs to be called in the application render() function.
 	 * @param delta The difference in time from the last from to this frame
@@ -139,35 +112,18 @@ public final class ScreenNavigator extends SpriteDrawable
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(.3f, .3f, .3f, 1);
 
-		mStage.act(Gdx.graphics.getDeltaTime());
+		ecobeeStinger.sStage.act(Gdx.graphics.getDeltaTime());
 
-		//sFPS.log();
+		if(mCurrentScreen.mNeedsShow)
+			mCurrentScreen.show();
 
-		if(mCurrentScreen.mNeedsShowAndResize)
-		{
-			mCurrentScreen.resize(mStage);
-		}
-		
-		if(mLeavingScreen != null)
-		{
-			mStage.addActor(mLeavingScreen);
-			mLeavingScreen.update(delta);
-		}
-		else
-		{
-//			Logger.log(ScreenNavigator.class.getName(), "Transitioning Screen is null");
-		}
-		
-		if(mCurrentScreen != null)
-		{
-			mStage.addActor(mCurrentScreen);
-			mCurrentScreen.update(delta);
-		}
-		else
-		{
-//			Logger.log(ScreenNavigator.class.getName(), "Current Screen is null");
-		}
-		
-		mStage.draw();
+		ecobeeStinger.sStage.draw();
+	}
+
+	public static void goBackAScreen() {
+		float w = ecobeeStinger.sStage.getWidth();
+		mScreenTrail.pop().setDestination(w,0);
+		mCurrentScreen = mScreenTrail.get(mScreenTrail.size-1);
+		mCurrentScreen.setDestination(0, 0);
 	}
 }

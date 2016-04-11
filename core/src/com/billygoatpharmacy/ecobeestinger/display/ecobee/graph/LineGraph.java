@@ -478,7 +478,7 @@ public class LineGraph extends Table
             float fiveminutes = (1000 * 60) * 5;
             for (int i = 8640; i > 0; i--)//One days worth of logs
             {
-                float randomTemp = ((float) Math.random() * (39f - 36f + 1) + 36f);
+                float randomTemp = ((float) Math.random() * (101f - 36f + 1) + 36f);
                 if (k == 0) {
                     maxX = currentTime;
                     minX = currentTime;

@@ -5,59 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb39c235-1a94-4e83-8550-a6ebd3daf2c9" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\core_core_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\desktop_desktop_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_1_9_2_sources.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_android_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_gwt_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_gwt_1_9_2_sources.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_headless_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_lwjgl_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_backend_robovm_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_box2d_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_box2d_1_9_2_sources.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_box2d_gwt_1_9_2_sources.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_box2d_platform_1_9_2_natives_desktop.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_box2d_platform_1_9_2_natives_ios.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_freetype_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_freetype_platform_1_9_2_natives_desktop.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_platform_1_9_2_natives_desktop.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_platform_1_9_2_natives_ios.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gdx_tools_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gwt_servlet_2_6_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\gwt_user_2_6_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\ios_ios_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jinput_2_0_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jinput_platform_2_0_5_natives_linux.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jinput_platform_2_0_5_natives_osx.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jinput_platform_2_0_5_natives_windows.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jlayer_1_0_1_gdx.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jorbis_0_0_17.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\json_20090211.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\jutils_1_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\lwjgl_2_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\lwjgl_platform_2_9_2_natives_linux.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\lwjgl_platform_2_9_2_natives_osx.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\lwjgl_platform_2_9_2_natives_windows.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\lwjgl_util_2_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\robovm_cocoatouch_1_12_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\robovm_objc_1_12_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\robovm_rt_1_12_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\validation_api_1_0_0_GA.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\.idea\libraries\validation_api_1_0_0_GA_sources.xml" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\jhard_000\Desktop\Projects\Ecobee-Stinger\core\src\com\billygoatpharmacy\ecobeestinger\display\ecobee\TherostatQuickInfoPanel.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/ThermostatQuickInfoPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/AllThermostatsScreen.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/AllThermostatsScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/request/PinAuthenticationRequest.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/request/PinAuthenticationRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/PinAuthenticationResponseData.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/PinAuthenticationResponseData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/android.iml" afterPath="$PROJECT_DIR$/android/android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/ios.iml" afterPath="$PROJECT_DIR$/ios/ios.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java" afterPath="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Ecobee-Stinger.iws" />
@@ -86,30 +44,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EcobeeAPI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EcobeeAPI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.888889">
+              <caret line="310" column="32" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
               <folding>
-                <element signature="e#3602#3941#0" expanded="true" />
-                <element signature="e#3940#3941#0" expanded="true" />
                 <element signature="docComment;method#getPin#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="method#getPin#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="docComment;method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="docComment;method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
-                <element signature="e#6462#6474#0" expanded="true" />
-                <element signature="e#7698#7710#0" expanded="true" />
+                <element signature="method#getAccessTokenFromRefreshToken#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="docComment;method#getAccessTokenCallback#0;class#EcobeeAPI#0" expanded="false" />
-                <element signature="e#8547#9175#0" expanded="true" />
-                <element signature="e#9174#9175#0" expanded="true" />
                 <element signature="docComment;method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="docComment;method#getAllThermostatsCallback#0;class#EcobeeAPI#0" expanded="false" />
-                <element signature="docComment;method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="e#11115#11116#0" expanded="true" />
+                <element signature="e#11153#11154#0" expanded="true" />
+                <element signature="method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="class#11855:12487" expanded="false" />
+                <element signature="method#handleHttpResponse#0;class#11855:12487" expanded="false" />
+                <element signature="method#failed#0;class#11855:12487" expanded="false" />
+                <element signature="method#cancelled#0;class#11855:12487" expanded="false" />
                 <element signature="docComment;method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
                 <element signature="docComment;method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+                <element signature="class#14219:15362" expanded="false" />
+                <element signature="method#handleHttpResponse#0;class#14219:15362" expanded="false" />
+                <element signature="method#failed#0;class#14219:15362" expanded="false" />
+                <element signature="method#cancelled#0;class#14219:15362" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -118,25 +84,33 @@
       <file leaf-file-name="GetPinScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.2714286">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="-3.2857144">
+              <caret line="181" column="19" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
               <folding>
-                <element signature="e#1437#1521#0" expanded="true" />
-                <element signature="e#1573#1574#0" expanded="true" />
-                <element signature="e#1599#1600#0" expanded="true" />
+                <element signature="method#GetPinScreen#0;class#GetPinScreen#0" expanded="false" />
                 <element signature="method#onHide#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="method#addLoggingInText#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="method#addGettingThermostatsText#0;class#GetPinScreen#0" expanded="false" />
                 <element signature="method#addLoggingInErrorText#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="method#addDescriptionText#0;class#GetPinScreen#0" expanded="false" />
                 <element signature="method#addPinCodeText#0;class#GetPinScreen#0" expanded="false" />
                 <element signature="method#updatePinCode#0;class#GetPinScreen#0" expanded="false" />
-                <element signature="e#5992#6644#0" expanded="true" />
-                <element signature="e#6643#6644#0" expanded="true" />
-                <element signature="e#6685#6686#0" expanded="true" />
-                <element signature="e#6726#6727#0" expanded="true" />
-                <element signature="e#6790#7198#0" expanded="true" />
-                <element signature="e#7197#7198#0" expanded="true" />
-                <element signature="method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
-                <element signature="method#getAccessTokenCallback#0;class#GetPinScreen#0" expanded="false" />
-                <element signature="method#authorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="method#addAuthorizeInfo#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="docComment;method#attemptEcobeeLogin#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="e#6069#6854#0" expanded="true" />
+                <element signature="e#6713#6827#0" expanded="true" />
+                <element signature="e#6826#6827#0" expanded="true" />
+                <element signature="e#6853#6854#0" expanded="true" />
+                <element signature="method#addfakeScreen#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="class#6946:7012" expanded="false" />
+                <element signature="method#run#0;class#6946:7012" expanded="false" />
+                <element signature="method#startPinAuthorizationProcess#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="docComment;method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="docComment;method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+                <element signature="e#9547#9716#0" expanded="true" />
+                <element signature="e#9715#9716#0" expanded="true" />
+                <element signature="method#reAuthorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -146,28 +120,47 @@
         <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-              <folding />
+              <caret line="137" column="16" selection-start-line="137" selection-start-column="16" selection-end-line="137" selection-end-column="16" />
+              <folding>
+                <element signature="docComment;method#resize#0;class#Screen#0" expanded="false" />
+                <element signature="docComment;method#show#0;class#Screen#0" expanded="false" />
+                <element signature="method#show#0;class#Screen#0" expanded="false" />
+                <element signature="docComment;method#hide#0;class#Screen#0" expanded="false" />
+                <element signature="docComment;method#setTitle#0;class#Screen#0" expanded="false" />
+                <element signature="docComment;method#setDestination#0;class#Screen#0" expanded="false" />
+                <element signature="docComment;method#update#0;class#Screen#0" expanded="false" />
+                <element signature="e#4304#4490#0" expanded="true" />
+                <element signature="e#4489#4490#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EcobeeConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeConfig.java">
+      <file leaf-file-name="ScreenNavigator.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-              <folding />
+            <state vertical-scroll-proportion="0.74712646">
+              <caret line="126" column="39" selection-start-line="126" selection-start-column="39" selection-end-line="126" selection-end-column="39" />
+              <folding>
+                <element signature="docComment;method#addScreen#0;class#ScreenNavigator#0" expanded="false" />
+                <element signature="docComment;method#setCurrentScreen#0;class#ScreenNavigator#0" expanded="false" />
+                <element signature="docComment;method#resizeScreen#0;class#ScreenNavigator#0" expanded="false" />
+                <element signature="docComment;method#getScreenFromString#0;class#ScreenNavigator#0" expanded="false" />
+                <element signature="docComment;method#update#0;class#ScreenNavigator#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
+      <file leaf-file-name="ecobeeStinger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="93" column="75" selection-start-line="93" selection-start-column="75" selection-end-line="93" selection-end-column="75" />
-              <folding />
+            <state vertical-scroll-proportion="-12.294118">
+              <caret line="63" column="32" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
+              <folding>
+                <element signature="e#1506#1507#0" expanded="true" />
+                <element signature="e#1564#1565#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -175,11 +168,19 @@
       <file leaf-file-name="AllThermostatsScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/AllThermostatsScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.117647">
-              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+            <state vertical-scroll-proportion="-2.3428571">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding>
-                <element signature="method#retryBtnClick#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="method#AllThermostatsScreen#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="method#onHide#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="docComment;method#showAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="docComment;method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="method#getAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="method#getAllThermostatsCallback#0;class#AllThermostatsScreen#0" expanded="false" />
                 <element signature="method#thermostatButtonClicked#0;class#AllThermostatsScreen#0" expanded="false" />
+                <element signature="class#5326:5545" expanded="false" />
+                <element signature="method#clicked#0;class#5326:5545" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -188,10 +189,45 @@
       <file leaf-file-name="ThermostatGraphScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state vertical-scroll-proportion="-3.235294">
+              <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#918#1002#0" expanded="true" />
+                <element signature="e#1001#1002#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LineGraph.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="480" column="64" selection-start-line="480" selection-start-column="64" selection-end-line="480" selection-end-column="64" />
+              <folding>
+                <element signature="method#LineGraph#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#init#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#update#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#draw#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawBorder#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawXandYAxis#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawXAxisLabels#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawAllXAxisIndicators#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawXAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawAllYAxisIndicators#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawYAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawYAxisLabels#0;class#LineGraph#0" expanded="false" />
+                <element signature="e#9378#9409#0" expanded="false" />
+                <element signature="method#zoom#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#scroll#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#drawAllDataSeries#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#graphTouchedListener#0;class#LineGraph#0" expanded="false" />
+                <element signature="class#15472:16096" expanded="false" />
+                <element signature="method#touchDown#0;class#15472:16096" expanded="false" />
+                <element signature="method#touchDragged#0;class#15472:16096" expanded="false" />
+                <element signature="method#getMonthDayTimeText#0;class#LineGraph#0" expanded="false" />
+                <element signature="method#toRGB#0;class#LineGraph#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -3568,19 +3604,19 @@
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/LineGraph.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraphDataPoint.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraphDataSeries.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/TherostatQuickInfoPanel.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java" />
         <option value="$PROJECT_DIR$/core/src/net/watsonplace/ecobee/api/oauth2/RegistrationClient.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/PinAuthenticationResponseData.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java" />
-        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/request/PinAuthenticationRequest.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/AllThermostatsScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java" />
         <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java" />
+        <option value="$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java" />
       </list>
     </option>
   </component>
@@ -3745,6 +3781,108 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billygoatpharmacy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ecobeestinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="display" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billygoatpharmacy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ecobeestinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="display" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ecobee" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ecobee-Stinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billygoatpharmacy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ecobeestinger" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="display" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ecobee" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -3770,7 +3908,7 @@
     <property name="dynamic.classpath" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23" />
     <property name="FullScreen" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../EcobeeAPIWrapper" />
   </component>
@@ -3997,14 +4135,14 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983682" sideWeight="0.49785638" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3044907" sideWeight="0.38229167" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3044907" sideWeight="0.36979166" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25174826" sideWeight="0.43140408" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36254108" sideWeight="0.31875" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33187294" sideWeight="0.47239584" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983682" sideWeight="0.48285103" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983682" sideWeight="0.49356914" order="7" side_tool="false" content_ui="tabs" />
@@ -4012,13 +4150,13 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997669" sideWeight="0.5493033" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.184375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21577218" sideWeight="0.55260414" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18645833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33187294" sideWeight="0.52760416" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973205" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36254108" sideWeight="0.68125" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2015334" sideWeight="0.634375" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -4049,54 +4187,60 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>424</line>
+          <line>431</line>
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>430</line>
+          <line>437</line>
           <properties />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>436</line>
+          <line>443</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>81</line>
+          <line>79</line>
           <properties />
           <option name="timeStamp" value="161" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>86</line>
+          <line>84</line>
           <properties />
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>349</line>
+          <line>356</line>
           <properties />
           <option name="timeStamp" value="170" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>344</line>
+          <line>351</line>
           <properties />
           <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
-          <line>76</line>
+          <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java</url>
+          <line>270</line>
           <properties />
-          <option name="timeStamp" value="184" />
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java</url>
+          <line>244</line>
+          <properties />
+          <option name="timeStamp" value="186" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="185" />
+      <option name="time" value="202" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -4114,24 +4258,32 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3602#3941#0" expanded="true" />
-            <element signature="e#3940#3941#0" expanded="true" />
             <element signature="docComment;method#getPin#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getPin#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#6462#6474#0" expanded="true" />
-            <element signature="e#7698#7710#0" expanded="true" />
+            <element signature="method#getAccessTokenFromRefreshToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessTokenCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#8547#9175#0" expanded="true" />
-            <element signature="e#9174#9175#0" expanded="true" />
             <element signature="docComment;method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAllThermostatsCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="docComment;method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="e#11115#11116#0" expanded="true" />
+            <element signature="e#11153#11154#0" expanded="true" />
+            <element signature="method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#11855:12487" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#11855:12487" expanded="false" />
+            <element signature="method#failed#0;class#11855:12487" expanded="false" />
+            <element signature="method#cancelled#0;class#11855:12487" expanded="false" />
             <element signature="docComment;method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#14219:15362" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#14219:15362" expanded="false" />
+            <element signature="method#failed#0;class#14219:15362" expanded="false" />
+            <element signature="method#cancelled#0;class#14219:15362" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4141,22 +4293,30 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="237" column="0" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
           <folding>
-            <element signature="e#1437#1521#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
-            <element signature="e#1599#1600#0" expanded="true" />
+            <element signature="method#GetPinScreen#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#onHide#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addLoggingInText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addGettingThermostatsText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#addLoggingInErrorText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addDescriptionText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#addPinCodeText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#updatePinCode#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="e#5992#6644#0" expanded="true" />
-            <element signature="e#6643#6644#0" expanded="true" />
-            <element signature="e#6685#6686#0" expanded="true" />
-            <element signature="e#6726#6727#0" expanded="true" />
-            <element signature="e#6790#7198#0" expanded="true" />
-            <element signature="e#7197#7198#0" expanded="true" />
-            <element signature="method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#getAccessTokenCallback#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#authorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addAuthorizeInfo#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#attemptEcobeeLogin#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#6069#6854#0" expanded="true" />
+            <element signature="e#6713#6827#0" expanded="true" />
+            <element signature="e#6826#6827#0" expanded="true" />
+            <element signature="e#6853#6854#0" expanded="true" />
+            <element signature="method#addfakeScreen#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="class#6946:7012" expanded="false" />
+            <element signature="method#run#0;class#6946:7012" expanded="false" />
+            <element signature="method#startPinAuthorizationProcess#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#9547#9716#0" expanded="true" />
+            <element signature="e#9715#9716#0" expanded="true" />
+            <element signature="method#reAuthorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4166,8 +4326,16 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
           <folding>
-            <element signature="method#retryBtnClick#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#AllThermostatsScreen#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#onHide#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="docComment;method#showAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="docComment;method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#getAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#getAllThermostatsCallback#0;class#AllThermostatsScreen#0" expanded="false" />
             <element signature="method#thermostatButtonClicked#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="class#5326:5545" expanded="false" />
+            <element signature="method#clicked#0;class#5326:5545" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4211,24 +4379,32 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
           <folding>
-            <element signature="e#3602#3941#0" expanded="true" />
-            <element signature="e#3940#3941#0" expanded="true" />
             <element signature="docComment;method#getPin#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getPin#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#6462#6474#0" expanded="true" />
-            <element signature="e#7698#7710#0" expanded="true" />
+            <element signature="method#getAccessTokenFromRefreshToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessTokenCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#8547#9175#0" expanded="true" />
-            <element signature="e#9174#9175#0" expanded="true" />
             <element signature="docComment;method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAllThermostatsCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="docComment;method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="e#11115#11116#0" expanded="true" />
+            <element signature="e#11153#11154#0" expanded="true" />
+            <element signature="method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#11855:12487" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#11855:12487" expanded="false" />
+            <element signature="method#failed#0;class#11855:12487" expanded="false" />
+            <element signature="method#cancelled#0;class#11855:12487" expanded="false" />
             <element signature="docComment;method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#14219:15362" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#14219:15362" expanded="false" />
+            <element signature="method#failed#0;class#14219:15362" expanded="false" />
+            <element signature="method#cancelled#0;class#14219:15362" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4238,22 +4414,30 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
           <folding>
-            <element signature="e#1437#1521#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
-            <element signature="e#1599#1600#0" expanded="true" />
+            <element signature="method#GetPinScreen#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#onHide#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addLoggingInText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addGettingThermostatsText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#addLoggingInErrorText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addDescriptionText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#addPinCodeText#0;class#GetPinScreen#0" expanded="false" />
             <element signature="method#updatePinCode#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="e#5992#6644#0" expanded="true" />
-            <element signature="e#6643#6644#0" expanded="true" />
-            <element signature="e#6685#6686#0" expanded="true" />
-            <element signature="e#6726#6727#0" expanded="true" />
-            <element signature="e#6790#7198#0" expanded="true" />
-            <element signature="e#7197#7198#0" expanded="true" />
-            <element signature="method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#getAccessTokenCallback#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#authorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addAuthorizeInfo#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#attemptEcobeeLogin#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#6069#6854#0" expanded="true" />
+            <element signature="e#6713#6827#0" expanded="true" />
+            <element signature="e#6826#6827#0" expanded="true" />
+            <element signature="e#6853#6854#0" expanded="true" />
+            <element signature="method#addfakeScreen#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="class#6946:7012" expanded="false" />
+            <element signature="method#run#0;class#6946:7012" expanded="false" />
+            <element signature="method#startPinAuthorizationProcess#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#9547#9716#0" expanded="true" />
+            <element signature="e#9715#9716#0" expanded="true" />
+            <element signature="method#reAuthorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4293,13 +4477,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.2/b6c7422c6740f86a9a84fdcbc4c62a1f46db317d/gdx-1.9.2-sources.jar!/com/badlogic/gdx/scenes/scene2d/Actor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="455" column="0" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -4371,14 +4548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/ThermostatsResposeData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeObjects/Thermostat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5229794">
@@ -4432,52 +4601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.029412">
-          <caret line="53" column="8" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="44" />
-          <folding>
-            <element signature="e#1346#1347#0" expanded="true" />
-            <element signature="e#1404#1405#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.638889">
-          <caret line="423" column="60" selection-start-line="423" selection-start-column="60" selection-end-line="423" selection-end-column="60" />
-          <folding>
-            <element signature="method#init#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#update#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#draw#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawBorder#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawXandYAxis#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawXAxisLabels#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawXAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawAllYAxisIndicators#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawYAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#drawYAxisLabels#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#zoom#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#graphTouchedListener#0;class#LineGraph#0" expanded="false" />
-            <element signature="class#15472:16096" expanded="false" />
-            <element signature="method#touchDown#0;class#15472:16096" expanded="false" />
-            <element signature="method#touchDragged#0;class#15472:16096" expanded="false" />
-            <element signature="method#createTestDataSet#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#getMonthDayTimeText#0;class#LineGraph#0" expanded="false" />
-            <element signature="method#toRGB#0;class#LineGraph#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4510,14 +4633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.2/888ddbf116b94ab6dbe07178e035091031425b67/gdx-backend-lwjgl-1.9.2-sources.jar!/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3328551">
-          <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/PinAuthenticationResponseData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4534,47 +4649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2714286">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="e#1437#1521#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
-            <element signature="e#1599#1600#0" expanded="true" />
-            <element signature="method#onHide#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#addLoggingInErrorText#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#addPinCodeText#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#updatePinCode#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="e#5992#6644#0" expanded="true" />
-            <element signature="e#6643#6644#0" expanded="true" />
-            <element signature="e#6685#6686#0" expanded="true" />
-            <element signature="e#6726#6727#0" expanded="true" />
-            <element signature="e#6790#7198#0" expanded="true" />
-            <element signature="e#7197#7198#0" expanded="true" />
-            <element signature="method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#getAccessTokenCallback#0;class#GetPinScreen#0" expanded="false" />
-            <element signature="method#authorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.75">
-          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.2/b6c7422c6740f86a9a84fdcbc4c62a1f46db317d/gdx-1.9.2-sources.jar!/com/badlogic/gdx/net/NetJavaImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4583,58 +4657,225 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/ThermostatQuickInfoPanel.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.2/888ddbf116b94ab6dbe07178e035091031425b67/gdx-backend-lwjgl-1.9.2-sources.jar!/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.33263597">
+          <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31316727">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.2/b6c7422c6740f86a9a84fdcbc4c62a1f46db317d/gdx-1.9.2-sources.jar!/com/badlogic/gdx/utils/viewport/Viewport.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeObjects/response/ThermostatsResposeData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.2/b6c7422c6740f86a9a84fdcbc4c62a1f46db317d/gdx-1.9.2-sources.jar!/com/badlogic/gdx/scenes/scene2d/Actor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="466" column="0" selection-start-line="466" selection-start-column="0" selection-end-line="466" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#16306#16307#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/ThermostatQuickInfoPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="19" selection-start-line="100" selection-start-column="7" selection-end-line="104" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/AllThermostatsScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.117647">
-          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        <state vertical-scroll-proportion="-2.3428571">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="method#retryBtnClick#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#AllThermostatsScreen#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#onHide#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="docComment;method#showAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="docComment;method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#showRetryButton#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#getAllThermostats#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="method#getAllThermostatsCallback#0;class#AllThermostatsScreen#0" expanded="false" />
             <element signature="method#thermostatButtonClicked#0;class#AllThermostatsScreen#0" expanded="false" />
+            <element signature="class#5326:5545" expanded="false" />
+            <element signature="method#clicked#0;class#5326:5545" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/ThermostatGraphScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.235294">
+          <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#918#1002#0" expanded="true" />
+            <element signature="e#1001#1002#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobeeStinger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.294118">
+          <caret line="63" column="32" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
+          <folding>
+            <element signature="e#1506#1507#0" expanded="true" />
+            <element signature="e#1564#1565#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ecobee/graph/LineGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="480" column="64" selection-start-line="480" selection-start-column="64" selection-end-line="480" selection-end-column="64" />
+          <folding>
+            <element signature="method#LineGraph#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#init#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#update#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#draw#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawBorder#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawXandYAxis#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawXAxisLabels#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawAllXAxisIndicators#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawXAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawAllYAxisIndicators#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawYAxisIndicatorLine#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawYAxisLabels#0;class#LineGraph#0" expanded="false" />
+            <element signature="e#9378#9409#0" expanded="false" />
+            <element signature="method#zoom#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#scroll#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#drawAllDataSeries#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#graphTouchedListener#0;class#LineGraph#0" expanded="false" />
+            <element signature="class#15472:16096" expanded="false" />
+            <element signature="method#touchDown#0;class#15472:16096" expanded="false" />
+            <element signature="method#touchDragged#0;class#15472:16096" expanded="false" />
+            <element signature="method#getMonthDayTimeText#0;class#LineGraph#0" expanded="false" />
+            <element signature="method#toRGB#0;class#LineGraph#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/ecobee/ecobeeapi/EcobeeAPI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+        <state vertical-scroll-proportion="-8.888889">
+          <caret line="310" column="32" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
           <folding>
-            <element signature="e#3602#3941#0" expanded="true" />
-            <element signature="e#3940#3941#0" expanded="true" />
             <element signature="docComment;method#getPin#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getPin#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#getGetPinCallback#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAccessToken#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#6462#6474#0" expanded="true" />
-            <element signature="e#7698#7710#0" expanded="true" />
+            <element signature="method#getAccessTokenFromRefreshToken#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAccessTokenCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="e#8547#9175#0" expanded="true" />
-            <element signature="e#9174#9175#0" expanded="true" />
             <element signature="docComment;method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getAllThermostats#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#getAllThermostatsCallback#0;class#EcobeeAPI#0" expanded="false" />
-            <element signature="docComment;method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="e#11115#11116#0" expanded="true" />
+            <element signature="e#11153#11154#0" expanded="true" />
+            <element signature="method#makeGetRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#11855:12487" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#11855:12487" expanded="false" />
+            <element signature="method#failed#0;class#11855:12487" expanded="false" />
+            <element signature="method#cancelled#0;class#11855:12487" expanded="false" />
             <element signature="docComment;method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="method#getQueryString#0;class#EcobeeAPI#0" expanded="false" />
             <element signature="docComment;method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="method#makePostRequest#0;class#EcobeeAPI#0" expanded="false" />
+            <element signature="class#14219:15362" expanded="false" />
+            <element signature="method#handleHttpResponse#0;class#14219:15362" expanded="false" />
+            <element signature="method#failed#0;class#14219:15362" expanded="false" />
+            <element signature="method#cancelled#0;class#14219:15362" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/screens/GetPinScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2857144">
+          <caret line="181" column="19" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
+          <folding>
+            <element signature="method#GetPinScreen#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#onHide#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addLoggingInText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addGettingThermostatsText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addLoggingInErrorText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addDescriptionText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addPinCodeText#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#updatePinCode#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#addAuthorizeInfo#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#attemptEcobeeLogin#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#6069#6854#0" expanded="true" />
+            <element signature="e#6713#6827#0" expanded="true" />
+            <element signature="e#6826#6827#0" expanded="true" />
+            <element signature="e#6853#6854#0" expanded="true" />
+            <element signature="method#addfakeScreen#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="class#6946:7012" expanded="false" />
+            <element signature="method#run#0;class#6946:7012" expanded="false" />
+            <element signature="method#startPinAuthorizationProcess#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAccessTokenFromEcobee#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="docComment;method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="method#getAllThermostats#0;class#GetPinScreen#0" expanded="false" />
+            <element signature="e#9547#9716#0" expanded="true" />
+            <element signature="e#9715#9716#0" expanded="true" />
+            <element signature="method#reAuthorizeBtnClick#0;class#GetPinScreen#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/Screen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="16" selection-start-line="137" selection-start-column="16" selection-end-line="137" selection-end-column="16" />
+          <folding>
+            <element signature="docComment;method#resize#0;class#Screen#0" expanded="false" />
+            <element signature="docComment;method#show#0;class#Screen#0" expanded="false" />
+            <element signature="method#show#0;class#Screen#0" expanded="false" />
+            <element signature="docComment;method#hide#0;class#Screen#0" expanded="false" />
+            <element signature="docComment;method#setTitle#0;class#Screen#0" expanded="false" />
+            <element signature="docComment;method#setDestination#0;class#Screen#0" expanded="false" />
+            <element signature="docComment;method#update#0;class#Screen#0" expanded="false" />
+            <element signature="e#4304#4490#0" expanded="true" />
+            <element signature="e#4489#4490#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/billygoatpharmacy/ecobeestinger/display/ScreenNavigator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74712646">
+          <caret line="126" column="39" selection-start-line="126" selection-start-column="39" selection-end-line="126" selection-end-column="39" />
+          <folding>
+            <element signature="docComment;method#addScreen#0;class#ScreenNavigator#0" expanded="false" />
+            <element signature="docComment;method#setCurrentScreen#0;class#ScreenNavigator#0" expanded="false" />
+            <element signature="docComment;method#resizeScreen#0;class#ScreenNavigator#0" expanded="false" />
+            <element signature="docComment;method#getScreenFromString#0;class#ScreenNavigator#0" expanded="false" />
+            <element signature="docComment;method#update#0;class#ScreenNavigator#0" expanded="false" />
           </folding>
         </state>
       </provider>

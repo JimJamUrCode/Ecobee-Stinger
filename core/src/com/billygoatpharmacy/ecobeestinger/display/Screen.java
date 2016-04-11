@@ -1,33 +1,31 @@
 package com.billygoatpharmacy.ecobeestinger.display;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.Timer;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
-import com.billygoatpharmacy.fileTools.FileManager;
+import com.billygoatpharmacy.ecobeestinger.ecobeeStinger;
 
 public class Screen extends Table 
 {
-	final float SPEED = 5.0f;
-	
-	protected Stage mStage;
-	protected RunnableAction mShowAction;
+	public RunnableAction mShowAction;
 	protected StingerLabel mTitle;
 	protected Json mJson;
-	
-	private float mXDestination;
-	private float mYDestination;
-	private float mXDirection;
-	private Boolean mHasBeenInitialized;
 
-	public Boolean mNeedsShowAndResize;
+	private Boolean mHasBeenInitialized;
+	public Boolean mNeedsShow;
 
 	public Screen()
 	{
@@ -40,31 +38,39 @@ public class Screen extends Table
 		mJson.setOutputType(OutputType.json);
 		
 		mHasBeenInitialized = false;
-		mNeedsShowAndResize = false;
+		mNeedsShow = false;
 	}
 	
 	/**Resizes this screen to the new dimensions of the view port
 	 * If the stage has been initialized in the past, the onShow function
 	 * will not be called.
-	 * @param newStage
 	 */
-	public void resize(Stage newStage)
+	public void resize(Stage aStage)
 	{
-		Logger.log(this.getClass().getName(), "Resizing Screen...");
-		mNeedsShowAndResize = false;
-		this.mStage = newStage;
-		this.setWidth(mStage.getWidth());
-		this.setHeight(mStage.getHeight());
-		
+		Logger.log(this.getClass().getName(), "Base Class Resizing Screen...");
+		this.setWidth(aStage.getWidth());
+		this.setHeight(aStage.getHeight());
+	}
+
+	/**Shows the screen, if not already visible
+	 */
+	public void show()
+	{
+		Logger.log(this.getClass().getName(), "Base Class Show Screen...");
+		mNeedsShow = false;
 		this.setFillParent(true);
-		//this.setDebug(true);
-		
-		mStage.addActor(this);
-		mXDirection = -1.0f;
-		
+
+		ecobeeStinger.sStage.addActor(this);
+
 		if(mHasBeenInitialized == false)
 		{
-			mShowAction.run();
+			Timer.schedule(new Timer.Task() {
+				@Override
+				public void run() {
+					mShowAction.run();
+				}
+			}, .01f);
+
 			mHasBeenInitialized = true;
 		}
 	}
@@ -74,65 +80,77 @@ public class Screen extends Table
 	 */
 	public void hide()
 	{
-		mXDirection = -1.0f;
 	}
 	
 	/**Allows each screen to set its own title
-	 * 
-	 * @param txt
+	 * You can repeatedly call this function on the same screen to reset the title.
+	 * @param txt The text that will appeat as the title
+	 * @param includeBackBtn Should a page back button be displayed near the top of the screen?
 	 */
-	public Cell setTitle(CharSequence txt,Boolean shouldEndRow)
+	public void setTitle(CharSequence txt, Boolean includeBackBtn)
 	{
-		mTitle = new StingerLabel(txt, mStage.getWidth(), null, ScreenNavigator.sUISkin, Align.center, false, 2f);
-		
-		Logger.log(this.getClass().getName(), "Title Width: " + mTitle.getPrefWidth());
+		Logger.log(this.getClass().getName(), "Adding Title...: ");
+		Table titleTable = new Table();
 		this.top();
-		if(shouldEndRow == false)
-			return this.add(mTitle).height(mStage.getHeight() * .1f);//padBottom(50);
+		this.add(titleTable).width(getWidth());
+
+		if(mTitle == null)
+		{
+			mTitle = new StingerLabel(txt, getWidth(), null, ScreenNavigator.sUISkin, Align.center, false, 2f);
+		}
+
+		if(includeBackBtn)
+		{
+			TextButton button = new TextButton("<", ScreenNavigator.sUISkin, "default");
+			button.setColor(new Color().set(.3f, .3f, .3f, 1f));
+			button.addListener(backBtnClick());
+			titleTable.add(button).height(getHeight() * .1f).width(getWidth() * .1f);
+			titleTable.add(mTitle).height(getHeight() * .1f).width(getWidth() * .8f).colspan(2);
+			titleTable.add().height(getHeight() * .1f).width(getWidth() * .1f);
+		}
+		else if(txt != null && txt != "")
+		{
+			titleTable.add(mTitle).height(getHeight() * .1f).width(getWidth());
+		}
 		else
-			this.add(mTitle).height(mStage.getHeight() * .1f);//padBottom(50);
-			return this.row();
+			mTitle.setText(txt);
+		this.row();
 	}
 	
 	/**Sets a new X and Y coordinate for the screen, the screen will then 
-	 * move to that position on its own. This does require that the update function
-	 * be called on the screen navigator that manages this screen.
-	 * @param newXDestination
-	 * @param newYDestination
+	 * move to that position on its own.
+	 * @param newXDestination The new x destination
+	 * @param newYDestination Then new y destination
 	 */
 	public void setDestination(float newXDestination, float newYDestination)
 	{
-		mXDestination = newXDestination;
-		mYDestination = newYDestination;
+		MoveToAction action = new MoveToAction();
+		action.setPosition(newXDestination, newYDestination);
+		action.setDuration(1f);
+		action.setInterpolation(Interpolation.exp10Out);
+		this.addAction(action);
 	}
 	
-	/**Updates the position of this screen based on the destination coordinates
+	/**Update function for the sceen. This is called by the ScreenNavigator Class
 	 * 
-	 * @param delta
+	 * @param delta The change in time from this frame to last
 	 */
 	public void update(float delta)
 	{
-		float xDifference = this.getX() - mXDestination;
-		float yDifference = this.getY() - mYDestination;
-		
-		if(xDifference < 1 && xDifference > -1)//Done moving
+
+	}
+
+	//Button Listeners
+	private ClickListener backBtnClick()
+	{
+		return new ClickListener()
 		{
-			this.setX(mXDestination);
-		}
-		else
-		{
-			float newX = ((xDifference*SPEED)*mXDirection) * delta;
-			this.setX(this.getX() + newX);
-		}
-		
-		if(yDifference < 1 && yDifference > -1)//Done moving
-		{
-			this.setY(mYDestination);
-		}
-		else
-		{
-			float newY = delta * (yDifference*SPEED);
-			this.setY(newY);
-		}
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				//Transition to the previous screen
+				ScreenNavigator.goBackAScreen();
+			}
+		};
 	}
 }

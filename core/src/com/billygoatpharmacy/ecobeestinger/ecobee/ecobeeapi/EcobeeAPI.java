@@ -31,10 +31,10 @@ public class EcobeeAPI {
 	
 	private static PinRequestResponseData sTempAuthCode;
 	private static PinAuthenticationResponseData sPinAuthResponse;
-	private static ThermostatsResposeData sThermostatsResponse;
+	private static ThermostatsResposeData sThermostatsResponseData;
 	
-	private static EcobeeAPIHttpCallback mExternalCallback;
-	private static EcobeeAPIHttpCallback mLoginExternalCallback;
+	private static EcobeeAPIHttpCallback sExternalCallback;
+	private static EcobeeAPIHttpCallback sLoginExternalCallback;
 	
 	private static Json sJson;
 	
@@ -43,7 +43,6 @@ public class EcobeeAPI {
 		sJson = new Json();
 		sJson.setTypeName(null);
 		sJson.setUsePrototypes(false);
-		//sJson.setIgnoreUnknownFields(true);
 		sJson.setOutputType(OutputType.json);
 
 		sEcobeeConfig = sJson.fromJson(EcobeeConfig.class, FileManager.readFile("ecobeeConfig.cfg", true));
@@ -51,27 +50,26 @@ public class EcobeeAPI {
 	
 	public static Boolean login(EcobeeAPIHttpCallback loginAction)
 	{
-		mLoginExternalCallback = loginAction;
+		sLoginExternalCallback = loginAction;
 		if(FileManager.doesFileExist("accessData.dat"))
 		{
 			sPinAuthResponse = sJson.fromJson(PinAuthenticationResponseData.class, FileManager.readFile("accessData.dat", false));
 
 			long timeDiff = (new Date().getTime() - sPinAuthResponse.receieved_on) / 1000;
-			if(sPinAuthResponse != null && sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "" &&
-					sPinAuthResponse.expires_in > timeDiff && sPinAuthResponse.receieved_on != 0)
-			{
-				loginAction.done(sJson.toJson(sPinAuthResponse));
-				return true;
-			}
-			else if(sPinAuthResponse == null || sPinAuthResponse.refresh_token == null)//No way to authenticate, user needs to repin auth
+
+			if(sPinAuthResponse == null || sPinAuthResponse.refresh_token == null)//No way to authenticate, user needs to repin auth
 			{
 				//Pin authentication need to occur
 				return false;
 			}
+			else if(sPinAuthResponse.refresh_token != null && sPinAuthResponse.refresh_token != "" && sPinAuthResponse.expires_in > timeDiff &&
+					sPinAuthResponse.receieved_on != 0)
+			{
+				loginAction.done(sJson.toJson(sPinAuthResponse));
+				return true;
+			}
 			else if(sPinAuthResponse.expires_in < timeDiff || sPinAuthResponse.receieved_on == 0)//The access codes have expired, try and get re-issued
 			{
-				//note sure what to do here, or how to get access tokens without the user needing to go through the pin flow.
-				//Setting the temp code to our refresh code so that our pre-existing function will work without changes.
 				sTempAuthCode = new PinRequestResponseData();
 				sTempAuthCode.code = sPinAuthResponse.refresh_token;
 				getAccessTokenFromRefreshToken(loginCallback(), "refresh_token");
@@ -97,8 +95,8 @@ public class EcobeeAPI {
 				PinAuthenticationResponseData data = sJson.fromJson(PinAuthenticationResponseData.class, response);
 
 				Logger.log(EcobeeAPI.class.getName(), sJson.toJson(data));
-				mLoginExternalCallback.done(response);
-				mLoginExternalCallback = null;
+				sLoginExternalCallback.done(response);
+				sLoginExternalCallback = null;
 			}
 		};
 	}
@@ -111,7 +109,7 @@ public class EcobeeAPI {
 	public static void getPin(EcobeeAPIHttpCallback action)
 	{	
 		Logger.log(EcobeeAPI.class.getName(), "GET Ecobee Pin...");
-		mExternalCallback = action;
+		sExternalCallback = action;
 		
 		//Creating parameters for the request
 		PinRequest pinRequest = new PinRequest("ecobeePin", sEcobeeConfig.scope, sEcobeeConfig.appkey);
@@ -132,7 +130,7 @@ public class EcobeeAPI {
 			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
 			PinRequestResponseData resp = new PinRequestResponseData();
 			resp.error = "Illegal Access Exceptions";
-			mExternalCallback.done(sJson.toJson(resp));
+			sExternalCallback.done(sJson.toJson(resp));
 		}		
 	}
 	
@@ -150,8 +148,8 @@ public class EcobeeAPI {
 				Logger.log(EcobeeAPI.class.getName(), "Ecobee Pin Received...");
 
 				sTempAuthCode = sJson.fromJson(PinRequestResponseData.class, response);
-				mExternalCallback.done(response);
-				mExternalCallback = null;
+				sExternalCallback.done(response);
+				sExternalCallback = null;
 			}
 		};
 	}
@@ -164,7 +162,7 @@ public class EcobeeAPI {
 	{		
 		Logger.log(EcobeeAPI.class.getName(), "POST Ecobee Pin Auth...");
 		
-		mExternalCallback = action;
+		sExternalCallback = action;
 		PinAuthenticationRequest req = new PinAuthenticationRequest();
 		req.grant_type = grantType;
 		req.code = sTempAuthCode.code;
@@ -188,15 +186,15 @@ public class EcobeeAPI {
 			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
 			PinAuthenticationRequest resp = new PinAuthenticationRequest();
 			resp.error = "Illegal Access Exceptions";
-			mExternalCallback.done(sJson.toJson(resp));
+			sExternalCallback.done(sJson.toJson(resp));
 		}
 	}
 
-	public static void getAccessTokenFromRefreshToken(EcobeeAPIHttpCallback action, String grantType)
+	private static void getAccessTokenFromRefreshToken(EcobeeAPIHttpCallback action, String grantType)
 	{
 		Logger.log(EcobeeAPI.class.getName(), "POST attemping reauthentication...");
 
-		mExternalCallback = action;
+		sExternalCallback = action;
 		PinAuthenticationRequest req = new PinAuthenticationRequest();
 		req.grant_type = grantType;
 		req.refresh_token = sTempAuthCode.code;
@@ -220,7 +218,7 @@ public class EcobeeAPI {
 			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
 			PinAuthenticationRequest resp = new PinAuthenticationRequest();
 			resp.error = "Illegal Access Exceptions";
-			mExternalCallback.done(sJson.toJson(resp));
+			sExternalCallback.done(sJson.toJson(resp));
 		}
 	}
 
@@ -244,8 +242,8 @@ public class EcobeeAPI {
 				else
 					FileManager.saveFile("accessData.dat", sJson.toJson(sPinAuthResponse));
 				
-				mExternalCallback.done(response);
-				mExternalCallback = null;
+				sExternalCallback.done(response);
+				sExternalCallback = null;
 			}
 		};
 	}
@@ -258,7 +256,7 @@ public class EcobeeAPI {
 	{		
 		Logger.log(EcobeeAPI.class.getName(), "POST Ecobee Pin Auth...");
 		
-		mExternalCallback = action;
+		sExternalCallback = action;
 		ThermostatRequest req = new ThermostatRequest();
 		req.selection = new Selection();
 		req.selection.includeAlerts = true;
@@ -284,7 +282,7 @@ public class EcobeeAPI {
 			Logger.log(EcobeeAPI.class.getName(), "Illegal Access Exception: " + e.toString());
 			PinRequestResponseData resp = new PinRequestResponseData();
 			resp.error = "Illegal Access Exceptions";
-			mExternalCallback.done(sJson.toJson(resp));
+			sExternalCallback.done(sJson.toJson(resp));
 		}		
 	}
 
@@ -300,14 +298,23 @@ public class EcobeeAPI {
 			{
 				Logger.log(EcobeeAPI.class.getName(), "Ecobee Thermostats Received...");
 
-				sThermostatsResponse = sJson.fromJson(ThermostatsResposeData.class, response);
+				sThermostatsResponseData = sJson.fromJson(ThermostatsResposeData.class, response);
 				
-				mExternalCallback.done(response);
-				mExternalCallback = null;
+				sExternalCallback.done(response);
+				sExternalCallback = null;
 			}
 		};
 	}
-	
+
+	public static void setThermostatsResponseData(ThermostatsResposeData data)
+	{
+		sThermostatsResponseData = data;
+	}
+
+	public static ThermostatsResposeData getThermostatsResponse()
+	{
+		return sThermostatsResponseData;
+	}
 	
 	
 	/*General Functions*/

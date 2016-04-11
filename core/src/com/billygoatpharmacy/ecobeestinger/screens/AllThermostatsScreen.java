@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
@@ -43,24 +44,19 @@ public class AllThermostatsScreen extends Screen
 	public void update(float delta)
 	{
 		super.update(delta);
-
-		if(mUpdateThermostatView) {
-			mUpdateThermostatView = false;
-			if (mThermostatData != null) {
-				if (mThermostatData.error != null)
-					showRetryButton();
-				else
-					showAllThermostats();
-			}
-		}
-
 	}
 	
 	public void onShow()//Create stuff here
 	{
-		this.setTitle("Thermostats", true);
+		this.setTitle("Thermostats", false);
 		mUpdateThermostatView = false;
-		getAllThermostats();
+
+		mThermostatData = EcobeeAPI.getThermostatsResponse();
+
+		if (mThermostatData == null || mThermostatData.error != null)
+			showRetryButton();
+		else
+			showAllThermostats();
 	}
 	
 	public void onHide()//Destroy stuff here
@@ -75,14 +71,11 @@ public class AllThermostatsScreen extends Screen
 	 */
 	public void showAllThermostats()
 	{
-		this.clear();
-		this.setTitle("Thermostats", true);
-
 		Logger.log(this.getClass().getName(), "Showing all thermostats...");
 		
 		CharSequence txt = "Select a thermostat to view:"; 
 		StingerLabel authDescriptionLbl = new StingerLabel(txt, this.getWidth(), null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
-		this.add(authDescriptionLbl).height(mStage.getHeight()*.1f).width(this.getWidth());
+		this.add(authDescriptionLbl).height(getHeight() * .1f).width(this.getWidth());
 		this.row();
 
 		Table allThermostats = new Table();
@@ -90,16 +83,16 @@ public class AllThermostatsScreen extends Screen
 		for(Thermostat stat: mThermostatData.thermostatList)
 			{
 			ThermostatQuickInfoPanel quickInfo = new ThermostatQuickInfoPanel();
-			quickInfo.setWidth(mStage.getWidth() / 3);
-			quickInfo.setHeight(mStage.getHeight() * .5f);
+			quickInfo.setWidth(getWidth() / 3);
+			quickInfo.setHeight(getHeight() * .5f);
 			quickInfo.init(stat, thermostatButtonClicked(stat.identifier));
-			allThermostats.add(quickInfo).height(mStage.getHeight()*.65f).width(this.getWidth() / 3).pad(0,10,0,10);
+			allThermostats.add(quickInfo).height(getHeight() * .65f).width(this.getWidth() / 3).pad(0,10,0,10);
 			//this.row();
 		}
 
 		ScrollPane scroller = new ScrollPane(allThermostats);
 		scroller.setDebug(true);
-		this.add(scroller).height(getHeight()*.8f);
+		this.add(scroller).height(getHeight() * .8f);
 	}
 
 	/**If the get all thermostats function fails

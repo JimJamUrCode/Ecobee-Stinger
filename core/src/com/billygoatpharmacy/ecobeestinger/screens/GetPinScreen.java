@@ -1,23 +1,22 @@
 package com.billygoatpharmacy.ecobeestinger.screens;
 
-import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.display.Screen;
 import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
 import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
-import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Selection;
-import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequest;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.ThermostatsResposeData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinAuthenticationResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinRequestResponseData;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPI;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeapi.EcobeeAPIHttpCallback;
+import com.billygoatpharmacy.fileTools.FileManager;
 
 public class GetPinScreen extends Screen 
 {
@@ -45,24 +44,14 @@ public class GetPinScreen extends Screen
 	
 	public void onShow()//Create stuff here
 	{
-		this.setTitle("Register ecobeeStinger", true);
-		
-		ThermostatRequest obj = new ThermostatRequest();
-		obj.selection = new Selection();
-		obj.selection.includeAlerts = true;
-		
-		HttpRequestBuilder build = new HttpRequestBuilder();
-		build.newRequest();
-		build.method("POST");
-		build.url("https://api.ecobee.com/thermostat");
-		build.header("Accept", "application/json");
-		build.jsonContent(obj);
-		
-		HttpRequest newrequest = build.build();
-		
-		Logger.log(this.getClass().getName(), mJson.toJson(newrequest));
-		
-		attemptEcobeeLogin();
+		this.setTitle("Register ecobeeStinger", false);
+
+		Timer.schedule(new Timer.Task() {
+			@Override
+			public void run() {
+				attemptEcobeeLogin();
+			}
+		}, 1f);
 	}
 	
 	public void onHide()//Destroy stuff here
@@ -77,6 +66,17 @@ public class GetPinScreen extends Screen
 		float nwidth = this.getWidth();
 		
 		CharSequence txt = "Logging in...";
+		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
+		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
+		this.row();
+	}
+
+	public void addGettingThermostatsText()
+	{
+		Logger.log(this.getClass().getName(), "Adding Logging in Text...");
+		float nwidth = this.getWidth();
+
+		CharSequence txt = "Getting thermostats...";
 		StingerLabel descriptionLbl = new StingerLabel(txt, nwidth, null, ScreenNavigator.sUISkin, Align.center, true, 1.2f);
 		this.add(descriptionLbl).height(this.getHeight()*.5f).width(nwidth);
 		this.row();
@@ -142,14 +142,21 @@ public class GetPinScreen extends Screen
 		this.add(button).height(75).width(225);	
 		this.row();
 	}
-	
-	//Ecobee functions
-	private void attemptEcobeeLogin()
-	{
-		if(AllThermostatsScreen.DEBUG)
+
+	/**Attempts to login to the users ecobee account using pin authentication and the ecobee api.
+	 * If the app has never been authorized, pin authentication login will be presented.
+	 * Otherwise the app will attempt to refesh its access token and login automatically.
+	 */
+	private void attemptEcobeeLogin() {
+		if (AllThermostatsScreen.DEBUG)
 		{
 			Logger.log(EcobeeAPI.class.getName(), "In DEBUG mode, no need to login...");
-			ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
+//			ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
+
+			Screen scr = new Screen();
+			scr.setTitle("New Screen", false);
+			ScreenNavigator.addScreen(scr);
+			ScreenNavigator.setCurrentScreen(scr.getClass().getName());
 		}
 		else {
 			Boolean success = EcobeeAPI.login(attemptEcobeeLoginCallback());
@@ -159,12 +166,58 @@ public class GetPinScreen extends Screen
 				addLoggingInText();
 			} else {
 				Logger.log(EcobeeAPI.class.getName(), "No stored credentials, redirecting to pin code authentication...");
-				startAuthorizationProcess();
+				startPinAuthorizationProcess();
 			}
 		}
 	}
 
-	private void startAuthorizationProcess()
+	private EcobeeAPIHttpCallback attemptEcobeeLoginCallback()
+	{
+		return new EcobeeAPIHttpCallback() {
+			@Override
+			public void done(String response)
+			{
+				Logger.log(EcobeeAPI.class.getName(), "Ecobee Attempted Login Got A Response...");
+
+				PinAuthenticationResponseData data = mJson.fromJson(PinAuthenticationResponseData.class, response);
+
+				if(data.error != null)//Error happened while logging in
+					addLoggingInErrorText(data.error_description);
+				else {
+					if (data.access_token != null && data.access_token != "")
+					{
+						Logger.log(EcobeeAPI.class.getName(), "Login was a success...");
+//						ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
+
+						Timer.schedule(new Timer.Task(){
+							@Override
+							public void run()
+							{
+								getAllThermostats();
+							}
+						},1f);
+					}
+				}
+			}
+		};
+	}
+
+	private void addfakeScreen()
+	{
+		Screen scr = new Screen();
+		scr.mShowAction = new RunnableAction(){
+			@Override
+			public void run()
+			{
+
+			}
+		};
+		scr.setTitle("New Screen", true);
+		ScreenNavigator.addScreen(scr);
+		ScreenNavigator.setCurrentScreen(scr.getClass().getName());
+	}
+
+	private void startPinAuthorizationProcess()
 	{
 		this.clearChildren();
 
@@ -177,31 +230,7 @@ public class GetPinScreen extends Screen
 		//Making a request to the ecobee servers to get a pin code for the user
 		getPinFromEcobee();
 	}
-	
-	private EcobeeAPIHttpCallback attemptEcobeeLoginCallback()
-	{
-		return new EcobeeAPIHttpCallback() {
-			@Override
-			public void done(String response)
-			{
-				Logger.log(EcobeeAPI.class.getName(), "Ecobee Attempted Login Got A Response...");
-				
-				PinAuthenticationResponseData data = mJson.fromJson(PinAuthenticationResponseData.class, response);
-				
-				if(data.error != null)//Error happened while logging in
-					addLoggingInErrorText(data.error_description);
-				else
-				{
-					if(data.access_token != null && data.access_token != "")
-					{
-						Logger.log(EcobeeAPI.class.getName(), "Login was a success...");
-						ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
-					}
-				}
-			}
-		};
-	}
-	
+
 	private void getPinFromEcobee()
 	{
 		EcobeeAPI.getPin(getPinCallback());
@@ -224,7 +253,10 @@ public class GetPinScreen extends Screen
 			}
 		};
 	}
-	
+
+	/**Once the user has authorized the application using the pin code presented, the application
+	 * will then ask the ecobee servers for an access token
+	 */
 	private void getAccessTokenFromEcobee()
 	{
 		EcobeeAPI.getAccessToken(getAccessTokenCallback(), "ecobeePin");
@@ -242,7 +274,44 @@ public class GetPinScreen extends Screen
 			}
 		};
 	}
-	
+
+	/**Used to get all of the thermostats for a user account. This is here because it makes it so
+	 * we can load all of the tstats before the user even sees the next screen.
+	 * @return
+	 */
+	private void getAllThermostats()
+	{
+		addGettingThermostatsText();
+
+		if(AllThermostatsScreen.DEBUG)//If in debug mode, use a cached request as to not ping the server a million times developing
+		{
+			String cachedThermostat = FileManager.readFile("ThermostatResponse.resp", false);
+			if(cachedThermostat == "")
+				EcobeeAPI.getAllThermostats(getAllThermostatsCallback());
+			else
+			{
+				EcobeeAPI.setThermostatsResponseData(mJson.fromJson(ThermostatsResposeData.class, cachedThermostat));
+				ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
+			}
+		}
+		else
+		{
+			EcobeeAPI.getAllThermostats(getAllThermostatsCallback());
+		}
+	}
+
+	private EcobeeAPIHttpCallback getAllThermostatsCallback()
+	{
+		return new EcobeeAPIHttpCallback() {
+			@Override
+			public void done(String response)
+			{
+				ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
+			}
+		};
+	}
+
+	//Button Listeners
 	private ClickListener authorizeBtnClick()
 	{
 		if(mAuthBtnClickListener == null)
@@ -268,7 +337,7 @@ public class GetPinScreen extends Screen
 				@Override
 				public void clicked(InputEvent event, float x, float y)
 				{ 
-					startAuthorizationProcess();
+					startPinAuthorizationProcess();
 				}
 			};
 		}
