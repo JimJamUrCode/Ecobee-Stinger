@@ -9,9 +9,13 @@ import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.billygoatpharmacy.ecobeestinger.Logger;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.PinAuthenticationRequest;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.PinRequest;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRuntimeRequest;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRuntimeRequestColumnGenerator;
+import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.ThermostatRuntimeResposeData;
 import com.billygoatpharmacy.ecobeestinger.ecobeeObjects.Selection;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.request.ThermostatRequest;
 import com.billygoatpharmacy.ecobeestinger.ecobee.ecobeeObjects.response.PinRequestResponseData;
@@ -21,6 +25,8 @@ import com.billygoatpharmacy.fileTools.FileManager;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +38,8 @@ public class EcobeeAPI {
 	private static PinRequestResponseData sTempAuthCode;
 	private static PinAuthenticationResponseData sPinAuthResponse;
 	private static ThermostatsResposeData sThermostatsResponseData;
-	
+	private static ThermostatRuntimeResposeData sThermostatRuntimeResponseData;
+
 	private static EcobeeAPIHttpCallback sExternalCallback;
 	private static EcobeeAPIHttpCallback sLoginExternalCallback;
 	
@@ -316,7 +323,102 @@ public class EcobeeAPI {
 		return sThermostatsResponseData;
 	}
 	
-	
+	//*Function used to get runtime reports for a certain thermostat
+	public static void getThermostatRuntimeReport(EcobeeAPIHttpCallback action, String thermostatsIDCSV)
+	{
+		sExternalCallback = action;
+
+		ThermostatRuntimeResposeData data = sJson.fromJson(ThermostatRuntimeResposeData.class,FileManager.readFile("ThermostatRuntimeResponse.resp",false));
+
+		float fifteenMin = 1000*60*15L;
+
+		if(data != null && TimeUtils.millis() - data.receivedAt < fifteenMin)
+		{
+			Logger.log(EcobeeAPI.class.getName(), "Using cached ecobee thermostat runtime report...");
+			sExternalCallback.done(sJson.toJson(data));
+			sExternalCallback = null;
+			return;
+		}
+
+		//CONTINUING ONLY IF 15 MINUTES HASNT PASSED SINCE THE LAST REQUEST
+		Logger.log(EcobeeAPI.class.getName(), "Get ecobee thermostat runtime report...");
+		//Create the start and end dates for the data that we want to receive
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		String today = formatter.format(Calendar.getInstance().getTime());
+
+		String aMonthAgo= formatter.format(new Date(Calendar.getInstance().getTime().getTime() - (1000*60*60*24*2L)));
+
+
+		//Create list of things we want to get from ecobee
+		ThermostatRuntimeRequestColumnGenerator gen = new ThermostatRuntimeRequestColumnGenerator();
+		gen.outdoorTemp = true;
+		gen.outdoorHumidity = true;
+		gen.wind = true;
+		gen.zoneCoolTemp = true;
+		gen.zoneHeatTemp = true;
+		gen.zoneAveTemp = true;
+		gen.zoneHumidity = true;
+//		gen.zoneHvacMode = true;
+//		gen.zoneOccupancy = true;
+
+		//Setup all of the request data
+		ThermostatRuntimeRequest req = new ThermostatRuntimeRequest();
+		Selection newSelection = new Selection();
+		newSelection.selectionMatch = thermostatsIDCSV;
+		newSelection.selectionType = Selection.SelectionType.thermostats;
+		newSelection.includeRuntime = true;
+		newSelection.includeExtendedRuntime = true;
+
+
+		req.selection = newSelection;
+		req.startDate = aMonthAgo;
+		req.endDate = today;
+		req.includeSensors = true;
+		try
+		{
+			req.columns = ThermostatRuntimeRequestColumnGenerator.getCSV(gen);
+		}
+		catch (IllegalAccessException e)
+		{
+			req.columns = "zoneCoolTemp," + "zoneHeatTemp," + "zoneHumidity," + "zoneHvacMode,";
+		}
+
+		String queryString = "json=" + sJson.toJson(req);
+
+		Array<HttpHeader> headers = new Array<HttpHeader>();
+		headers.add(new HttpHeader("Accept", "application/json"));
+		headers.add(new HttpHeader("Authorization", "Bearer " + sPinAuthResponse.access_token));
+		headers.add(new HttpHeader("User-Agent", sEcobeeConfig.user_agent));
+		headers.add(new HttpHeader("Content-Type", "application/json;charset=UTF-8"));
+
+		makeGetRequest(sEcobeeConfig.http_root + sEcobeeConfig.api_root + "runtimeReport", queryString, headers, getThermostatRuntimeReportCallback());
+	}
+
+	/**Internal action callback for the getAllThermostats() function.
+	 *
+	 **/
+	private static EcobeeAPIHttpCallback getThermostatRuntimeReportCallback()
+	{
+		return new EcobeeAPIHttpCallback()
+		{
+			@Override
+			public void done(String response)
+			{
+				Logger.log(EcobeeAPI.class.getName(), "Ecobee Thermostat Runtime Report Received...");
+
+				sThermostatRuntimeResponseData = sJson.fromJson(ThermostatRuntimeResposeData.class, response);
+
+				if(sThermostatRuntimeResponseData != null && sThermostatRuntimeResponseData.error == null) {
+
+					sThermostatRuntimeResponseData.receivedAt = TimeUtils.millis();
+					FileManager.saveFile("ThermostatRuntimeResponse.resp", sJson.toJson(sThermostatRuntimeResponseData));
+					sExternalCallback.done(response);
+					sExternalCallback = null;
+				}
+			}
+		};
+	}
+
 	/*General Functions*/
 	/**Function to create an http GET request. This get request is specific to the ecobee api.
 	 **/
@@ -330,9 +432,9 @@ public class EcobeeAPI {
 		//Adding all headers
 		for(HttpHeader header: headers)
 			build.header(header.mHeaderName, header.mHeaderValue);
-		
+
 		build.content(data);
-		HttpRequest httpGetRequest = build.build();
+		final HttpRequest httpGetRequest = build.build();
 	    
 	    Logger.log(EcobeeAPI.class.getName(), "HTTP GET Request: ", httpGetRequest);
 
@@ -342,13 +444,23 @@ public class EcobeeAPI {
 			public void handleHttpResponse(HttpResponse httpResponse) 
 			{
 				String status = httpResponse.getResultAsString();
-				Logger.log(EcobeeAPI.class.getName(), "HTTP GET Response: " + status.replaceAll("\n", ""));
-				action.done(status);
+
+				if(status.length() < 5)
+				{
+					byte[] result = httpResponse.getResult();
+					HttpStatus nst = httpResponse.getStatus();
+					Logger.log(EcobeeAPI.class.getName(), "Waiting for more data: " + status.replaceAll("\n", ""));
+				}
+				else {
+					Logger.log(EcobeeAPI.class.getName(), "HTTP GET Response: " + status.replaceAll("\n", ""));
+					action.done(status);
+				}
 			}
 			
 			@Override
 			public void failed(Throwable t) {
 				Logger.log(EcobeeAPI.class.getName(), "HTTP GET Failed..." + t.toString());
+				t.printStackTrace();
 				action.done("Error: " + t.toString());
 			}
 			

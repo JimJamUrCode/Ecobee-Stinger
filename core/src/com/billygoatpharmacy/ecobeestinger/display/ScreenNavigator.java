@@ -20,7 +20,7 @@ public final class ScreenNavigator extends SpriteDrawable
 	private static Array<Screen> mAllScreens;
 	private static Array<Screen> mScreenTrail;
 
-	public static Skin sUISkin = new Skin(Gdx.files.internal("uiskin.json"));
+	public static Skin sUISkin = new Skin(Gdx.files.internal("ecobee-StingerSkin.json"));
 
 	/**Adds a screen to be referenced later on
 	 * 
@@ -89,13 +89,13 @@ public final class ScreenNavigator extends SpriteDrawable
 	 * @param screenString Used to get the single instance of a screen
 	 * @return
 	 */
-	private static Screen getScreenFromString(String screenString)
+	public static Screen getScreenFromString(String screenString)
 	{
 		for(Screen scr: mAllScreens)
 		{
 			if(scr.getClass().getName() == screenString)
 			{
-				Logger.log(ScreenNavigator.class.getName(), "Got Screen: " + scr.getClass().getName());
+//				Logger.log(ScreenNavigator.class.getName(), "Got Screen: " + scr.getClass().getName());
 				return scr;
 			}
 		}
@@ -114,8 +114,11 @@ public final class ScreenNavigator extends SpriteDrawable
 
 		ecobeeStinger.sStage.act(Gdx.graphics.getDeltaTime());
 
-		if(mCurrentScreen.mNeedsShow)
-			mCurrentScreen.show();
+		if(mCurrentScreen != null) {
+			if (mCurrentScreen.mNeedsShow)
+				mCurrentScreen.show();
+			mCurrentScreen.update(delta);
+		}
 
 		ecobeeStinger.sStage.draw();
 	}

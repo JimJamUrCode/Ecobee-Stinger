@@ -176,6 +176,8 @@ public class AllThermostatsScreen extends Screen
 			public void clicked(InputEvent event, float x, float y)
 			{
 				String id = getId();
+				ThermostatGraphScreen graphscreen = (ThermostatGraphScreen)ScreenNavigator.getScreenFromString(ThermostatGraphScreen.class.getName());
+				graphscreen.setThermostatID(id);
 				ScreenNavigator.setCurrentScreen(ThermostatGraphScreen.class.getName());
 			}
 		};

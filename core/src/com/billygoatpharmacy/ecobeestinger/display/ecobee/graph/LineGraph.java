@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,7 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.billygoatpharmacy.ecobeestinger.display.ScreenNavigator;
+import com.billygoatpharmacy.ecobeestinger.display.utils.StingerLabel;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +25,7 @@ import java.util.Calendar;
 
 public class LineGraph extends Table
 {
-    private static final Color[] LINECOLORS = {Color.MAGENTA, Color.LIME, Color.ROYAL, Color.FIREBRICK};
+    public static final Color[] LINECOLORS = {Color.MAGENTA, Color.LIME, Color.ROYAL, Color.LIGHT_GRAY, Color.TEAL, Color.VIOLET, Color.YELLOW, Color.GREEN};
     private static final float GRAPHLEFTPADDING = 120;//Inner portion of graph padding
     private static final float GRAPHTOPPADDING = 30f;//Inner portion of graph padding
     private static final int NUMYAXISLABELS = 5;
@@ -46,21 +51,32 @@ public class LineGraph extends Table
     private float mGraphTimeWindow = ((1000*60)*60*24)/6;//Show 4 hour time window to the user at the start
     private float mXPixelsPerMs;//The number of pixels to move for 1 millisecond of time currently displayed on the graph
     private float mYPixelsPerDeg;//The number of pixels to move for 1 degree displayed on the graph
+    private int mVisibleSeriesStartIndex;
 
     //Font for drawing labels that are present on the graph
-    BitmapFont mAxisLabelFont = new BitmapFont(Gdx.files.internal("Arial.fnt"), false);
+    BitmapFont mAxisLabelFont;
 
     //Vars used for scrolling
     private float mStartDragX;
 
+    //Vars for the legend
+    private Boolean mShouldDrawLegend;
+
     public LineGraph()
     {
         super();
-        super.addListener(graphTouchedListener("graph"));
+//        this.setDebug(true, true);
+        this.addListener(graphTouchedListener("graph"));
         this.setTouchable(Touchable.enabled);
         mShouldDrawGraph = false;
         //this.setDebug(true);
         shapeRenderer = new ShapeRenderer();
+        mShouldDrawLegend = true;
+        this.bottom();
+
+        TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("ecobee-StingerSkin.atlas"));
+        TextureRegion region = textureAtlas.findRegion("Arial");
+        mAxisLabelFont = new BitmapFont(Gdx.files.internal("Arial.fnt"), region);
     }
 
     public void init(float maxX, float minX, float maxY, float minY, ArrayList<LineGraphDataSeries> data)
@@ -89,6 +105,7 @@ public class LineGraph extends Table
         if(mShouldDrawGraph)
         {
             //mShouldDrawGraph = false;
+            findMaxandMinY();
 
             drawYAxisLabels(batch);
             drawXAxisLabels(batch);
@@ -109,12 +126,13 @@ public class LineGraph extends Table
             this.setBounds(tempx, tempy, tempw, temph);
 
             //Call all of our drawing functions
-            drawBorder(tempx, tempy, tempw, temph);
-            drawXandYAxis(tempx, tempy, tempw, temph);
+            drawBorder(tempx, tempy + temph*.2f, tempw, temph*.8f);
+            drawXandYAxis(tempx, tempy + temph*.2f, tempw, temph*.8f);
 //            drawAllXAxisIndicators();
             drawAllYAxisIndicators();
             drawAllDataSeries();
             drawXAxisIndicatorLine(mGraphX + (mGraphWidth / 2), Color.WHITE, false);
+            drawLegend();
 
             shapeRenderer.end();
             batch.begin();
@@ -351,6 +369,26 @@ public class LineGraph extends Table
         }
     }
 
+    /**Draws the legend to the graph
+     *
+     */
+    public void drawLegend()
+    {
+        if(mShouldDrawLegend) {
+            LineGraphDataSeries ds;
+
+            for (int i = 0; i < mAllDataSeries.size(); i++) {
+                ds = mAllDataSeries.get(i);
+
+                if(i % 3 == 0 && i != 0)
+                    this.row();
+
+                this.add(ds.mLegendLbl).height(50).left().pad(0f,10f,0f,10f);
+            }
+            mShouldDrawLegend = false;
+        }
+    }
+
     //Public graph manipulation functions
     public void zoom(int amount)
     {
@@ -385,6 +423,49 @@ public class LineGraph extends Table
         mTempMaxX = mZeroDate + mGraphTimeWindow;
     }
 
+    private void findMaxandMinY()
+    {
+        ArrayList<LineGraphDataPoint> ds;
+        mMaxY = mAllDataSeries.get(0).getAllDataPoints().get(0).getYVal();
+        mMinY = mAllDataSeries.get(0).getAllDataPoints().get(0).getYVal();
+        float currX;
+        float currY;
+        mVisibleSeriesStartIndex = 0;
+        boolean firstDataPointHit = false;
+
+        for(int i = 0; i < mAllDataSeries.size(); i++)
+        {
+            if(mAllDataSeries.get(i).getmIsVisible() == false)
+                continue;
+
+            ds = mAllDataSeries.get(i).getAllDataPoints();
+
+            for(int r = mVisibleSeriesStartIndex; r < ds.size(); r++) {
+
+                currX = ds.get(r).getXVal();
+                currY = ds.get(r).getYVal();
+
+                //Check to see if the date falls in the visible window
+                if(currX >= mZeroDate && currX <= (mZeroDate + mGraphTimeWindow)) {
+                    if(firstDataPointHit == false)
+                    {
+                        firstDataPointHit = true;
+                        mVisibleSeriesStartIndex = r;
+                    }
+                    if (currY > mMaxY)
+                        mMaxY = currY;
+                    if (currY < mMinY)
+                        mMinY = currY;
+                }
+            }
+        }
+        mMaxY += 10;
+        mMinY -= 10;
+
+        if(mMinY < 0 )
+            mMinY = 0;
+    }
+
     private void drawAllDataSeries()
     {
         ArrayList<LineGraphDataPoint> dps;
@@ -397,39 +478,49 @@ public class LineGraph extends Table
         //Setting up loop variables
         int numDataSeries = mAllDataSeries.size();
         int dataPointsLength;
+        float mLastXPos;
+        float mLastYPos;
+        float currX;
+        float currY;
+        float zeroDateDiffms;
+        float newX;
+        float newY;
 
         for(int i = 0; i < numDataSeries; i++)
         {
+            if(mAllDataSeries.get(i).getmIsVisible() == false)
+                continue;
+
             dps = mAllDataSeries.get(i).getAllDataPoints();
             dataPointsLength = dps.size();
 
-            float mLastXPos = mGraphX;
-            float mLastYPos = mGraphY;
-            for(int p = 0; p < dataPointsLength; p++)
+            mLastXPos = mGraphX;
+            mLastYPos = mGraphY;
+            for(int p = mVisibleSeriesStartIndex; p < dataPointsLength; p++)
             {
-                float currX = dps.get(p).getXVal();
-                float currY = dps.get(p).getYVal();
+                currX = dps.get(p).getXVal();
+                currY = dps.get(p).getYVal();
 
                 //Check to see if the date falls in the visible window
                 if(currX >= mZeroDate && currX <= (mZeroDate + mGraphTimeWindow))
                 {
                     //calculate the difference from zerodate
-                    float zeroDateDiffms = currX - mZeroDate;
-                    float newX = (mXPixelsPerMs * zeroDateDiffms) + mGraphX;
-
-                    float newY;
-                    if(p == 0)
-                        mLastYPos = ((currY - mMinY) * mYPixelsPerDeg) + mGraphY;
-
+                    zeroDateDiffms = currX - mZeroDate;
+                    newX = (mXPixelsPerMs * zeroDateDiffms) + mGraphX;
                     newY = ((currY - mMinY) * mYPixelsPerDeg) + mGraphY;
+
+                    if(mLastYPos == mGraphY)
+                        mLastYPos = newY;
 
                     shapeRenderer.setColor(LINECOLORS[i]);
                     shapeRenderer.rectLine(mLastXPos, mLastYPos, newX, newY, 1);
-
-                    shapeRenderer.setColor(LINECOLORS[i+1]);
-                    shapeRenderer.circle(newX, newY, 4);
                     mLastXPos = newX;
                     mLastYPos = newY;
+                }
+                else
+                {
+                    if(currX > (mZeroDate + mGraphTimeWindow))
+                        break;
                 }
             }
         }
@@ -466,25 +557,23 @@ public class LineGraph extends Table
         LineGraphDataSeries ds;
         ArrayList<LineGraphDataSeries> allDataSeries = new ArrayList<LineGraphDataSeries>();
 
-        float maxX = 0;
-        float minX = 0;
-        float maxY = 0;
-        float minY = 0;
+        float maxFakeTemp = 101f;
+        float minFakeTemp = 36f;
+        float currentTime = TimeUtils.millis();
+        float fiveminutes = (1000 * 60) * 5;
+
+        float maxX = currentTime;
+        float minX = currentTime;
+        float maxY = maxFakeTemp;
+        float minY = minFakeTemp;
 
         for(int k = 0; k < 3; k++)
         {
-            ds = new LineGraphDataSeries();
-            float currentTime = TimeUtils.millis();
-            float fiveminutes = (1000 * 60) * 5;
+            ds = new LineGraphDataSeries("Test Data", LINECOLORS[k]);
+
             for (int i = 8640; i > 0; i--)//One days worth of logs
             {
-                float randomTemp = ((float) Math.random() * (101f - 36f + 1) + 36f);
-                if (k == 0) {
-                    maxX = currentTime;
-                    minX = currentTime;
-                    maxY = randomTemp;
-                    minY = randomTemp;
-                }
+                float randomTemp = ((float) Math.random() * (maxFakeTemp - 36f + 1) + 36f);
 
                 if (currentTime - (fiveminutes * i) > maxX)
                     maxX = currentTime - (fiveminutes * i);
@@ -507,7 +596,6 @@ public class LineGraph extends Table
 
     private String getMonthDayTimeText(long millisecondDate)
     {
-        float oneday = 1000*60*60*24;
         Calendar tempDate = Calendar.getInstance();
         tempDate.setTimeInMillis(millisecondDate);
 

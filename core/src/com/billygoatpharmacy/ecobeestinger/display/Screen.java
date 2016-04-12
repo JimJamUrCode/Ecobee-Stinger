@@ -89,7 +89,7 @@ public class Screen extends Table
 	 */
 	public void setTitle(CharSequence txt, Boolean includeBackBtn)
 	{
-		Logger.log(this.getClass().getName(), "Adding Title...: ");
+		Logger.log(this.getClass().getName(), "Adding Title...: " + txt);
 		Table titleTable = new Table();
 		this.top();
 		this.add(titleTable).width(getWidth());

@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Base64Coder;
 
 public class FileManager 
 {
-	private static final String STORAGEDIR = "savedata/";
+	public static final String STORAGEDIR = "savedata/";
 	
 	public static Boolean saveFile(String fileName, String data)
 	{

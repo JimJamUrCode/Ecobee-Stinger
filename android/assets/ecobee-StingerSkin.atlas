@@ -1,0 +1,55 @@
+
+ecobee-StingerSkin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Arial
+  rotate: false
+  xy: 1, 180
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Calibri
+  rotate: false
+  xy: 515, 180
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+CalibriLight
+  rotate: false
+  xy: 1029, 180
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+fan
+  rotate: false
+  xy: 1, 38
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+checkboxChecked
+  rotate: false
+  xy: 1543, 657
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+checkboxUnchecked
+  rotate: false
+  xy: 1, 1
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+btn9sliceoutput
+  rotate: false
+  xy: 143, 148
+  size: 30, 30
+  split: 6, 6, 6, 6
+  orig: 30, 30
+  offset: 0, 0
+  index: -1

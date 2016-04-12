@@ -23,6 +23,7 @@ public class GetPinScreen extends Screen
 	private ClickListener mAuthBtnClickListener;
 	private PinRequestResponseData mPinCodeData;
 	private StingerLabel mPinCodeLbl;
+	private Boolean mShouldGetAllThermostats;
 
 	public GetPinScreen()
 	{
@@ -34,12 +35,25 @@ public class GetPinScreen extends Screen
 				onShow();
 			}
 		};
+		mShouldGetAllThermostats = false;
 	}
 	
 	@Override
 	public void update(float delta)
 	{
 		super.update(delta);
+
+		if(mShouldGetAllThermostats)
+		{
+			mShouldGetAllThermostats = false;
+			Timer.schedule(new Timer.Task(){
+				@Override
+				public void run()
+				{
+					getAllThermostats();
+				}
+			},1f);
+		}
 	}
 	
 	public void onShow()//Create stuff here
@@ -62,7 +76,7 @@ public class GetPinScreen extends Screen
 	//Visual Functions
 	public void addLoggingInText()
 	{
-		Logger.log(this.getClass().getName(), "Adding Logging in Text...");
+		Logger.log(this.getClass().getName(), "Adding 'Logging in' Text...");
 		float nwidth = this.getWidth();
 		
 		CharSequence txt = "Logging in...";
@@ -73,7 +87,7 @@ public class GetPinScreen extends Screen
 
 	public void addGettingThermostatsText()
 	{
-		Logger.log(this.getClass().getName(), "Adding Logging in Text...");
+		Logger.log(this.getClass().getName(), "Adding 'Getting Thermostat' Text...");
 		float nwidth = this.getWidth();
 
 		CharSequence txt = "Getting thermostats...";
@@ -189,13 +203,7 @@ public class GetPinScreen extends Screen
 						Logger.log(EcobeeAPI.class.getName(), "Login was a success...");
 //						ScreenNavigator.setCurrentScreen(AllThermostatsScreen.class.getName());
 
-						Timer.schedule(new Timer.Task(){
-							@Override
-							public void run()
-							{
-								getAllThermostats();
-							}
-						},1f);
+						mShouldGetAllThermostats = true;
 					}
 				}
 			}
